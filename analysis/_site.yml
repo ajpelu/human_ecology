@@ -1,0 +1,24 @@
+name: human_ecology
+output_dir: ../docs
+navbar:
+  title: human_ecology
+  left:
+  - text: Home
+    href: index.html
+  - text: About
+    href: about.html
+  - text: License
+    href: license.html
+  right:
+  - icon: fab fa-github
+    text: Source code
+    href: https://github.com/ajpelu/human_ecology
+output:
+  bookdown::html_document2:
+    base_format: workflowr::wflow_html
+    toc: yes
+    number_sections: false
+    toc_float: no
+    theme: cosmo
+    code_folding: show
+    highlight: textmate

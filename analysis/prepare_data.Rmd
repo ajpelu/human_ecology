@@ -1,0 +1,101 @@
+---
+title: "Prepare Data"
+author: "[@ajpelu](https://twitter.com/ajpelu)"
+date: "2022-07-24"
+output: 
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+bibliography: references.bib
+csl: ecology-letters.csl
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE,
+               autodep = TRUE)
+```
+
+```{r pkg}
+<<<<<<< HEAD
+library(tidyverse)
+=======
+library(tidyverse, warn.conflicts = FALSE)
+>>>>>>> ff5a0ad (update repo)
+library(here)
+library(janitor)
+library(kableExtra)
+library(DT)
+```
+
+
+
+```{r prepare-data}
+rawdata <- readxl::read_excel(
+  path = here::here("data/Datos_para_Antonio.xlsx"),
+  sheet = "Parametros_quadrat"
+) %>%
+  janitor::clean_names() %>%
+  unite(col = "id", cod_parcela:quadrat, sep = "_", remove = FALSE) %>% 
+  mutate(commonsSort = case_when(
+    localidad == "Castril" ~ "0_Castril", 
+    localidad == "Santiago" ~ "1_Santiago", 
+    localidad == "Pontones" ~ "2_Pontones"
+    )) %>% 
+  rename(commons = localidad) %>% 
+  mutate(transh = case_when(
+    str_detect(cod_parcela, "E") ~ "short", 
+    TRUE ~ "long"
+  )) %>% 
+  relocate(c(commonsSort, transh), .after = commons) %>% 
+  mutate(shannon = abs(i_shannon))
+
+
+metadata_parcela <- readxl::read_excel(
+  path = here::here("data/Datos_para_Antonio.xlsx"),
+  sheet = "Parametros_parcela"
+) %>%
+  janitor::clean_names() %>%
+  mutate(altitud_m = as.numeric(str_remove(altitud_m, " m")))
+
+
+d <- rawdata %>%
+  dplyr::select(!starts_with("carga") & !starts_with("altura")) %>%
+  inner_join(
+    (metadata_parcela %>%
+      dplyr::select(cod_parcela, starts_with("carga"), altitud_m, 
+                    cic = c_i_c, fosforo, mo=mat_org_oxid, ph=ph_agua, potasio, nitrogeno, carbono)),
+    by =
+      "cod_parcela"
+  ) %>% 
+  rename(sr.win = carga_invier, 
+         sr.spr = carga_primav,
+         sr.sum = carga_verano,
+         sr.aut = carga_otono, 
+         parcela = cod_parcela)
+
+write_csv(d, here::here("./data/cleaned_data.csv"))
+```
+
+```{r view-data}
+datatable(d,
+          filter = "top", 
+          option = list(
+            pageLength = nrow(d)/length(unique(d$commons)), 
+            autowidht = TRUE
+          )) %>% 
+  formatRound(c("i_shannon", "shannon","rec_total_porc", "rec_vegetal_porc",
+                "sr.win","sr.spr","sr.sum","sr.aut", "nitrogeno", "tasa_cons", "estiercol_kg_ha"), c(3,3,2,2,2,2,2,2,4,3,2)) 
+```
+

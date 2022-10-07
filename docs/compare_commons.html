@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="ajpelu" />
+
+<meta name="date" content="2022-08-24" />
+
+<title>Evaluate commons and transhumance</title>
+
+<<<<<<< HEAD
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+=======
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+>>>>>>> ff5a0ad (update repo)
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+<<<<<<< HEAD
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+=======
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+>>>>>>> ff5a0ad (update repo)
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">human_ecology</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/ajpelu/human_ecology">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Evaluate commons and transhumance</h1>
+<h4 class="author">ajpelu</h4>
+<h4 class="date">2022-08-24</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#research-questions" id="toc-research-questions">Research Questions:</a></li>
+<li><a href="#explore-data" id="toc-explore-data">Explore data</a></li>
+<li><a href="#exploration" id="toc-exploration">Exploration</a></li>
+<li><a href="#modelize" id="toc-modelize">Modelize</a>
+<ul>
+<li><a href="#richness" id="toc-richness">Richness</a>
+<ul>
+<li><a href="#model" id="toc-model">Model</a></li>
+<li><a href="#some-notes-before-continue" id="toc-some-notes-before-continue">Some notes (before continue)</a></li>
+</ul></li>
+<<<<<<< HEAD
+=======
+<li><a href="#variables-selection" id="toc-variables-selection">Variables Selection</a></li>
+>>>>>>> ff5a0ad (update repo)
+</ul></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</div>
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr
+<<<<<<< HEAD
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+=======
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+>>>>>>> ff5a0ad (update repo)
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks">
+<<<<<<< HEAD
+Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+=======
+Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+>>>>>>> ff5a0ad (update repo)
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<<<<<<< HEAD
+<strong>Last updated:</strong> 2022-08-30
+=======
+<strong>Last updated:</strong> 2022-10-07
+>>>>>>> ff5a0ad (update repo)
+</p>
+<p>
+<strong>Checks:</strong>
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<<<<<<< HEAD
+7
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+0
+=======
+5
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+1
+>>>>>>> ff5a0ad (update repo)
+</p>
+<p>
+<strong>Knit directory:</strong>
+<code>human_ecology/</code>
+<span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the
+reproducibility checks that were applied when the results were created.
+The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<<<<<<< HEAD
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you
+know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+=======
+>>>>>>> ff5a0ad (update repo)
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Environment:</strong> empty
+</a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global
+environment can affect the analysis in your R Markdown file in unknown ways.
+For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220620code">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Seed:</strong> <code>set.seed(20220620)</code>
+</a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220620code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220620)</code> was run prior to running the code in the R Markdown file.
+Setting a seed ensures that any results that rely on randomness, e.g.
+subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Session information:</strong> recorded
+</a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is
+critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Cache:</strong> none
+</a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident
+that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>File paths:</strong> relative
+</a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project
+makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<<<<<<< HEAD
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreefeee0a6106eb9fc589f2d53244132e60987b657dtargetblankfeee0a6a">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/feee0a6106eb9fc589f2d53244132e60987b657d" target="_blank">feee0a6</a>
+</a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreefeee0a6106eb9fc589f2d53244132e60987b657dtargetblankfeee0a6a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and
+connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/feee0a6106eb9fc589f2d53244132e60987b657d" target="_blank">feee0a6</a>.
+See the <em>Past versions</em> tab to see a history of the changes made to the
+R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the
+analysis have been committed to Git prior to generating the results (you can
+use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only
+checks the R Markdown file, but you know if there are other scripts or data
+files that it depends on. Below is the status of the Git repository when the
+results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in
+this status report because it is ok for generated content to have uncommitted
+changes.
+</p>
+=======
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongnoversioncontrol">
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<strong>Repository version:</strong> no version control
+</a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongnoversioncontrol" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Tracking code development and connecting the code version to the results is
+critical for reproducibility. To start using Git, open the Terminal and type
+<code>git init</code> in your project directory.</p>
+>>>>>>> ff5a0ad (update repo)
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<<<<<<< HEAD
+
+<p>
+These are the previous versions of the repository in which changes were made
+to the R Markdown (<code>analysis/compare_commons.Rmd</code>) and HTML (<code>docs/compare_commons.html</code>)
+files. If you’ve configured a remote Git repository (see
+<code>?wflow_git_remote</code>), click on the hyperlinks in the table below to
+view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/feee0a6106eb9fc589f2d53244132e60987b657d/analysis/compare_commons.Rmd" target="_blank">feee0a6</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+<td>
+wflow_publish("analysis/compare_commons.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/human_ecology/292ffde33e49d64325b2dc0828e530aa77781d1e/docs/compare_commons.html" target="_blank">292ffde</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/47a5ee2ffedd723906ae2a7a1cf341ac892c0ec6/analysis/compare_commons.Rmd" target="_blank">47a5ee2</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+=======
+<p>
+This project is not being versioned with Git. To obtain the full
+reproducibility benefits of using workflowr, please see
+<code>?wflow_start</code>.
+</p>
+>>>>>>> ff5a0ad (update repo)
+<hr>
+</div>
+</div>
+</div>
+<div id="research-questions" class="section level2">
+<h2>Research Questions:</h2>
+<ul>
+<li>RQ1: Commons and/or transhumance differences</li>
+</ul>
+<blockquote>
+<p>Aim: Explore differences between commons (higher to lower governance, <em>i.e.</em> PON, SAN and CAS) and/or transhumance treatment (short- and long-distance) for vegetation and soil parameters (<em>i.e.</em> richness, pH, …) taking into account other potentially influential variables such us elevation and seasonal stocking rates</p>
+</blockquote>
+<ul>
+<li>RQ2: Which variables do explain the variance of the interest-variable (<em>i.e.</em> vegetation parameters) independently of the commons?</li>
+</ul>
+<pre class="r"><code>library(tidyverse)
+library(here)
+library(janitor)
+<<<<<<< HEAD
+library(fuzzySim)  # Para renombrar nombres de especies 
+=======
+library(fuzzySim) # Para renombrar nombres de especies 
+>>>>>>> ff5a0ad (update repo)
+library(vegan)
+library(patchwork)
+library(correlation)
+library(corrplot)
+library(kableExtra)
+library(performance)
+library(DHARMa)
+library(nlme)
+<<<<<<< HEAD
+=======
+library(factoextra)
+library(leaps)
+>>>>>>> ff5a0ad (update repo)
+source(here::here(&quot;code/aux_functions.R&quot;))</code></pre>
+</div>
+<div id="explore-data" class="section level1">
+<h1>Explore data</h1>
+<ul>
+<li>Import data from <code>cleaned_data.csv</code>. See <a href="/prepare_data.Rmd"><code>prepare_data.Rmd</code></a> for more details.</li>
+</ul>
+<<<<<<< HEAD
+<pre class="r"><code>d &lt;- read_csv(here::here(&quot;data/cleaned_data.csv&quot;))</code></pre>
+<p>We have the following structure of the data:</p>
+<pre class="r"><code>xtabs(~commons + transh, data = d)</code></pre>
+=======
+<pre class="r"><code>d &lt;- read_csv(here::here(&quot;data/cleaned_data.csv&quot;), show_col_types = FALSE)</code></pre>
+<p>We have the following structure of the data:</p>
+<pre class="r"><code>xtabs(~commons+transh, data = d)</code></pre>
+>>>>>>> ff5a0ad (update repo)
+<pre><code>          transh
+commons    long short
+  Castril     9     9
+  Pontones    9     9
+  Santiago    9     9</code></pre>
+</div>
+<div id="exploration" class="section level1">
+<h1>Exploration</h1>
+<p>First, let’s explore how the different dependent variables vary with the covariates independently of the <code>commons</code> and <code>transhumance</code> <span class="citation">(see Zuur <em>et al.</em> 2010)</span>.</p>
+<<<<<<< HEAD
+<pre class="r"><code># Generate a vector of the dependent variable
+var_interes &lt;- d %&gt;% dplyr::select(riqueza, shannon, fitovol_dm3, rec_total_porc, 
+    rec_vegetal_porc) %&gt;% names()
+
+# Loop for each dependent variable
+for (v in var_interes) {
+
+    # Vector of covariables names
+    covariables &lt;- d %&gt;% dplyr::select(starts_with(&quot;sr.&quot;), altitud_m) %&gt;% names()
+
+    # V interest name
+    yvar &lt;- v
+
+    # Formula
+    f &lt;- as.formula(glue::glue(&quot;{yvar} ~ {glue::glue_collapse(covariables, sep = \&quot; + \&quot;)}&quot;))
+
+    # Adjust model
+    fit &lt;- d %&gt;% lm(formula = f)
+
+    # Loop to generate plots
+    for (i in covariables) {
+        p &lt;- visreg::visreg(fit, data = d, i, gg = TRUE) + theme_bw() + theme(panel.grid = element_blank())
+        name_indivual_plot &lt;- paste(yvar, i, sep = &quot;_&quot;)
+        assign(name_indivual_plot, p)
+    }
+
+    # Patchwork plot (vinterest level) s &lt;- purrr::map_chr(covariables, ~paste(yvar,
+    # ., sep = &#39;_&#39;)) %&gt;% glue::glue_collapse(sep = &#39; | &#39;)
+
+    
+    # Patchwork plot (vinterest level) Merge y-axis
+    saux &lt;- purrr::map_chr(covariables, ~paste(yvar, ., sep = &quot;_&quot;))
+
+    s &lt;- paste0(saux[1], &quot; | &quot;, purrr::map_chr(saux[-1], ~paste0(., &quot; + labs(y=NULL)&quot;)) %&gt;% 
+        glue::glue_collapse(sep = &quot; | &quot;))
+
+    # Evaluate
+    p_vinteres &lt;- eval(rlang::parse_expr(s))
+
+    
+    assign(paste0(&quot;plot_&quot;, yvar), p_vinteres)
+}</code></pre>
+<pre class="r"><code>all_plots_code &lt;- purrr::map_chr(var_interes, ~paste0(&quot;plot_&quot;, .)) %&gt;% glue::glue_collapse(sep = &quot; / &quot;)
+eval(rlang::parse_expr(all_plots_code))</code></pre>
+<p><img src="figure/compare_commons.Rmd/plot-visreg-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-visreg-1">
+Past versions of plot-visreg-1.png
+</button>
+</p>
+<div id="fig-plot-visreg-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/292ffde33e49d64325b2dc0828e530aa77781d1e/docs/figure/compare_commons.Rmd/plot-visreg-1.png" target="_blank">292ffde</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>A first concern is about the potential correlation of the seasonal stocking rates. So we evaluate the Variance Inflation factors (VIF) <span class="citation">(see Zuur <em>et al.</em> 2009)</span>.</p>
+<pre class="r"><code>myvars &lt;- d %&gt;% dplyr::select(starts_with(&quot;sr.&quot;), altitud_m, commons, transh) %&gt;% 
+    names()
+
+vif_table &lt;- corvif(d[, myvars])</code></pre>
+<pre class="r"><code>vif_table %&gt;% kbl(caption = &quot;VIF Table&quot;) %&gt;% kable_paper(&quot;hover&quot;, full_width = FALSE)</code></pre>
+=======
+<pre class="r"><code># Generate a vector of the dependent variable 
+var_interes &lt;- d %&gt;% 
+  dplyr::select(riqueza, shannon, fitovol_dm3, rec_total_porc, rec_vegetal_porc) %&gt;% 
+  names()
+
+# Loop for each dependent variable 
+for (v in var_interes) {
+
+# Vector of covariables names
+covariables  &lt;- d %&gt;%
+  dplyr::select(starts_with(&quot;sr.&quot;), altitud_m) %&gt;%
+  names() 
+
+# V interest name 
+yvar &lt;- v
+
+# Formula 
+f &lt;- as.formula(glue::glue(&#39;{yvar} ~ {glue::glue_collapse(covariables, sep = &quot; + &quot;)}&#39;))
+
+# Adjust model 
+fit &lt;- d %&gt;% lm(formula = f)
+
+# Loop to generate plots
+for (i in covariables) {
+  p &lt;- visreg::visreg(fit, data = d, i, gg = TRUE) + theme_bw() + theme(panel.grid = element_blank())
+  name_indivual_plot &lt;- paste(yvar, i, sep = &quot;_&quot;)
+  assign(name_indivual_plot, p)
+}
+
+# Patchwork plot (vinterest level)
+# s &lt;- purrr::map_chr(covariables, ~paste(yvar, ., sep = &quot;_&quot;)) %&gt;% 
+#  glue::glue_collapse(sep = &quot; | &quot;)
+
+
+# Patchwork plot (vinterest level) Merge y-axis
+saux &lt;- purrr::map_chr(covariables, ~paste(yvar, ., sep = &quot;_&quot;))
+
+s &lt;- paste0(saux[1], &quot; | &quot;, 
+      purrr::map_chr(saux[-1], ~paste0(., &quot; + labs(y=NULL)&quot;)) %&gt;% 
+        glue::glue_collapse(sep = &quot; | &quot;))
+
+# Evaluate 
+p_vinteres &lt;- eval(rlang::parse_expr(s))
+
+
+assign(paste0(&quot;plot_&quot;,yvar), p_vinteres)
+} </code></pre>
+<pre class="r"><code>all_plots_code &lt;- purrr::map_chr(var_interes, ~paste0(&quot;plot_&quot;, .)) %&gt;% 
+  glue::glue_collapse(sep = &quot; / &quot;)
+eval(rlang::parse_expr(all_plots_code))</code></pre>
+<p><img src="figure/compare_commons.Rmd/plot-visreg-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>A first concern is about the potential correlation of the seasonal stocking rates. So we evaluate the Variance Inflation factors (VIF) <span class="citation">(see Zuur <em>et al.</em> 2009)</span>.</p>
+<pre class="r"><code>myvars &lt;- d %&gt;% dplyr::select(starts_with(&quot;sr.&quot;), altitud_m, commons, transh) %&gt;% names() 
+
+vif_table &lt;- corvif(d[,myvars]) </code></pre>
+<pre class="r"><code>vif_table %&gt;% kbl(
+  caption = &quot;VIF Table&quot;
+) %&gt;% 
+  kable_paper(&quot;hover&quot;, full_width = FALSE)</code></pre>
+>>>>>>> ff5a0ad (update repo)
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:viftable">Table 1: </span>VIF Table
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+GVIF
+</th>
+<th style="text-align:right;">
+Df
+</th>
+<th style="text-align:right;">
+GVIF^(1/2Df)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+sr.win
+</td>
+<td style="text-align:right;">
+2.368726
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.539067
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sr.spr
+</td>
+<td style="text-align:right;">
+12.133427
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.483307
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sr.sum
+</td>
+<td style="text-align:right;">
+10.550275
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.248119
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sr.aut
+</td>
+<td style="text-align:right;">
+3.523894
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.877204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+altitud_m
+</td>
+<td style="text-align:right;">
+1.530023
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.236941
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+3.234072
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1.341027
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+11.750448
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.427893
+</td>
+</tr>
+</tbody>
+</table>
+<p>Higher VIF values indicate higher collinearity among variables. Several cut-off values have been proposed in the literature: 3, 5 or 10 <span class="citation">(see Zuur <em>et al.</em> 2013 for a revision)</span>. Our results shown (Table <a href="#tab:viftable">1</a>) several variables with high VIF values. So, previously to decide what variable discard to avoid collinearity, let’s explore about the correlation between seasonal stocking rates.</p>
+<pre class="r"><code>co &lt;- correlation((d %&gt;% dplyr::select(starts_with(&quot;sr.&quot;), altitud_m))) %&gt;% as.data.frame()
+<<<<<<< HEAD
+
+co_test &lt;- cor.mtest((d %&gt;% dplyr::select(starts_with(&quot;sr.&quot;), altitud_m)), conf.level = 0.95)
+
+p1 &lt;- corrplot(corr = cor((d %&gt;% dplyr::select(starts_with(&quot;sr.&quot;), altitud_m))), 
+    p.mat = co_test$p, method = &quot;ellipse&quot;, type = &quot;lower&quot;, insig = &quot;blank&quot;, diag = FALSE, 
+    addCoef.col = &quot;black&quot;, order = &quot;AOE&quot;)$corrPos
+
+text(p1$x, p1$y, round(p1$corr, 2))</code></pre>
+<p><img src="figure/compare_commons.Rmd/evaluate-correlation-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-evaluate-correlation-1">
+Past versions of evaluate-correlation-1.png
+</button>
+</p>
+<div id="fig-evaluate-correlation-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/292ffde33e49d64325b2dc0828e530aa77781d1e/docs/figure/compare_commons.Rmd/evaluate-correlation-1.png" target="_blank">292ffde</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><code>sr.sum</code> (<em>i.e.</em> summer stocking rate) is strongly and significantly correlated with <code>sr.aut</code> and more weekly correlated with <code>altitud_m</code>. In addition, <code>sr.sum</code> shown a high VIF-value (10.5502752, see Table <a href="#tab:viftable">1</a>).</p>
+<pre class="r"><code>myvars2 &lt;- myvars[-match(&quot;sr.sum&quot;, myvars)]
+vif_table2 &lt;- corvif(d[, myvars2])</code></pre>
+=======
+  
+co_test &lt;- cor.mtest((d %&gt;% dplyr::select(starts_with(&quot;sr.&quot;), altitud_m)), 
+          conf.level = .95)
+
+corrplot(corr = cor((d %&gt;% dplyr::select(starts_with(&quot;sr.&quot;), altitud_m))), 
+         p.mat = co_test$p, 
+         method = &#39;ellipse&#39;,
+         type = &#39;lower&#39;,
+         insig = &#39;blank&#39;,
+         diag = FALSE, 
+         addCoef.col = &#39;black&#39;, 
+         order = &#39;AOE&#39;)$corrPos -&gt; p1
+
+text(p1$x, p1$y, round(p1$corr, 2))</code></pre>
+<p><img src="figure/compare_commons.Rmd/evaluate-correlation-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><code>sr.sum</code> (<em>i.e.</em> summer stocking rate) is strongly and significantly correlated with <code>sr.aut</code> and more weekly correlated with <code>altitud_m</code>. In addition, <code>sr.sum</code> shown a high VIF-value (10.5502752, see Table <a href="#tab:viftable">1</a>).</p>
+<pre class="r"><code>myvars2 &lt;- myvars[-match(&quot;sr.sum&quot;, myvars)]
+vif_table2 &lt;- corvif(d[,myvars2]) </code></pre>
+>>>>>>> ff5a0ad (update repo)
+<pre><code>
+
+Variance inflation factors
+
+              GVIF Df GVIF^(1/2Df)
+sr.win    2.261726  1     1.503904
+sr.spr    4.300100  1     2.073668
+sr.aut    2.350798  1     1.533231
+altitud_m 1.436965  1     1.198735
+commons   2.782637  2     1.291559
+transh    4.208523  1     2.051468</code></pre>
+<p>Now, all VIF values are below 5.</p>
+</div>
+<div id="modelize" class="section level1">
+<h1>Modelize</h1>
+<ul>
+<li><p>We want to evaluate differences between commons and/or transhumance for the variables of interest (<span class="math inline">\(y\)</span>, <em>i.e.</em> richness) considering also others variables (seasonal stocking rates, elevation. The general form of the model will be <span class="math display">\[Y_{ij} = \alpha + \beta_1 \cdot elevation_{i} + \beta_2 \cdot sr.win_i + \beta_3 \cdot sr.spr_i + \\ \beta_4 \cdot sr.aut_i + \beta_5 \cdot transh_i + \beta_5\cdot commons + \epsilon_i\]</span></p></li>
+<li><p>Our first approach will be a GLM/LM depend on the error structure.</p></li>
+<li><p>Mixed model?</p>
+<ul>
+<li>Do we want to find for differences between level of the factor?</li>
+<li>Are the levels under study the only levels of interest (<em>i.e.</em> short-distance <em>vs</em> long-distance) or could be considered a random sample of a population of levels?</li>
+</ul></li>
+</ul>
+<p>Considering the answers to that questions, we should decided to include a factor as fixed or random. <code>transh</code> variable is considered as fixed factor. Several authors <span class="citation">(<em>e.g.</em> Zuur <em>et al.</em> 2007)</span> stated that factor with small numbers of levels (there is a ‘rule’ of &lt; 5 levels) must be considered as fixed to avoid problems <span class="citation">(Zuur <em>et al.</em> 2007)</span> but see <span class="citation">Oberpriller <em>et al.</em> (2022)</span>.</p>
+<ul>
+<li>The plot (<code>quadrat</code>) and the area (<code>cod_parcela</code>) should be considered as random part since we have a nested design: <code>+ (1|area/plot)</code></li>
+</ul>
+<div id="richness" class="section level2">
+<h2>Richness</h2>
+<div id="model" class="section level3">
+<h3>Model</h3>
+<<<<<<< HEAD
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>Generate a linear model with all covariables as fixed part (<em>nota bene</em>: we don’t include here the interaction among covariables to simplify the model. Let’s do it later)</li>
+</ol></li>
+</ul>
+=======
+<ol style="list-style-type: decimal">
+<li>Generate a linear model with all covariables as fixed part (<em>nota bene</em>: we don’t include here the interaction among covariables to simplify the model. Let’s do it later)</li>
+</ol>
+>>>>>>> ff5a0ad (update repo)
+<pre class="r"><code>full_covariates &lt;- glue::glue_collapse(myvars2, sep = &quot;+&quot;)
+
+yvar &lt;- &quot;riqueza&quot;
+f &lt;- reformulate(full_covariates, response = yvar)
+
+<<<<<<< HEAD
+# formula for lmer4
+=======
+# formula for lmer4 
+>>>>>>> ff5a0ad (update repo)
+random_part &lt;- &quot;(1 | parcela/quadrat)&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(myvars2, random_part), sep = &quot; + &quot;)
+f_lmer &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lm(f, data = d)</code></pre>
+<p>Explore the model</p>
+<pre class="r"><code>check_model(m)</code></pre>
+<p><img src="figure/compare_commons.Rmd/checkmodel-1.png" width="672" style="display: block; margin: auto;" /></p>
+<<<<<<< HEAD
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkmodel-1">
+Past versions of checkmodel-1.png
+</button>
+</p>
+<div id="fig-checkmodel-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/292ffde33e49d64325b2dc0828e530aa77781d1e/docs/figure/compare_commons.Rmd/checkmodel-1.png" target="_blank">292ffde</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>simulated_resid &lt;- DHARMa::simulateResiduals(m, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/compare_commons.Rmd/checkmodel-dharma-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkmodel-dharma-1">
+Past versions of checkmodel-dharma-1.png
+</button>
+</p>
+<div id="fig-checkmodel-dharma-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/292ffde33e49d64325b2dc0828e530aa77781d1e/docs/figure/compare_commons.Rmd/checkmodel-dharma-1.png" target="_blank">292ffde</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>There are no problems at first glance, but the richness data would fit better with Poisson distribution</p>
+<ul>
+<li><ol start="2" style="list-style-type: decimal">
+<li>Fit the model with GLS</li>
+</ol></li>
+</ul>
+<pre class="r"><code>m_gls &lt;- gls(f, data = d, method = &quot;REML&quot;)</code></pre>
+<ul>
+<li><ol start="3" style="list-style-type: decimal">
+<li>Fit the mixed model</li>
+</ol></li>
+</ul>
+<pre class="r"><code>m_lme &lt;- lme(f, random = ~1 | parcela/quadrat, method = &quot;REML&quot;, data = d)</code></pre>
+<ul>
+<li><ol start="4" style="list-style-type: decimal">
+<li>Compare the model</li>
+</ol></li>
+</ul>
+=======
+<pre class="r"><code>simulated_resid &lt;- DHARMa::simulateResiduals(m, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/compare_commons.Rmd/checkmodel-dharma-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>There are no problems at first glance, but the richness data would fit better with Poisson distribution</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Fit the model with GLS</li>
+</ol>
+<pre class="r"><code>m_gls &lt;- gls(f, data = d, method = &#39;REML&#39;)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Fit the mixed model</li>
+</ol>
+<pre class="r"><code>m_lme &lt;- lme(f, random = ~ 1 | parcela/quadrat, method = &#39;REML&#39;, data = d)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Compare the model</li>
+</ol>
+>>>>>>> ff5a0ad (update repo)
+<pre class="r"><code>anova(m_gls, m_lme)</code></pre>
+<pre><code>      Model df      AIC      BIC    logLik   Test  L.Ratio p-value
+m_gls     1  9 308.0154 324.4732 -145.0077                        
+m_lme     2 11 311.5793 331.6944 -144.7897 1 vs 2 0.436067  0.8041</code></pre>
+<p>The likelihood ratio test indicates that the mixed model is not considerably better. Anyway for design we include <code>parcela / quadrat</code> as random part.</p>
+<<<<<<< HEAD
+<ul>
+<li><ol start="5" style="list-style-type: decimal">
+<li>Check residuals</li>
+</ol></li>
+</ul>
+<pre class="r"><code># E &lt;- resid(m_lme, type=&#39;normalized&#39;) FI &lt;- fitted(m_lme) boxplot(E ~ commons,
+# data = d) boxplot(E ~ transh, data = d) plot(y=E, x=d$sr.win) plot(y=E,
+# x=d$sr.aut) plot(y=E, x=d$sr.spr) plot(y=E, x=d$altitud_m)</code></pre>
+=======
+<ol start="5" style="list-style-type: decimal">
+<li>Check residuals</li>
+</ol>
+<pre class="r"><code># E &lt;- resid(m_lme, type=&quot;normalized&quot;)
+# FI &lt;- fitted(m_lme)
+# 
+# boxplot(E ~ commons, data = d)
+# boxplot(E ~ transh, data = d)
+# plot(y=E, x=d$sr.win)
+# plot(y=E, x=d$sr.aut)
+# plot(y=E, x=d$sr.spr)
+# plot(y=E, x=d$altitud_m)</code></pre>
+>>>>>>> ff5a0ad (update repo)
+</div>
+<div id="some-notes-before-continue" class="section level3">
+<h3>Some notes (before continue)</h3>
+<ol style="list-style-type: decimal">
+<<<<<<< HEAD
+<li>I’m not sure that the RQ1 (Research question 1) and RQ2 should be separated, because I think they are the same model. The only difference would be how we interpreted the effects of several variables. Let have the following model:
+<span class="math display">\[Richness \sim elevation + sr.spr + \ldots + pH + \ldots + transh + commons\]</span></li>
+</ol>
+<p>If we want to explore how the different covariates (<em>i.e.</em> <code>sr.spr</code>, <code>estiercol</code>, <code>pH</code>, etc) affect to plant richness independently of the commons, we would explore how is the average response of richness to the covariate of interest (<em>e.g.</em> <code>pH</code>), and then see how that relationship varies for each of the commons. In addition, if we don’t consider the commons in the model (as proposed in RQ2) we could omit potential interaction between the commons and the covariate.</p>
+<p>For instance, look at the following plot:</p>
+<pre class="r"><code>covs &lt;- c(&quot;sr.win&quot;, &quot;sr.spr&quot;, &quot;sr.sum&quot;, &quot;sr.aut&quot;, &quot;altitud_m&quot;, &quot;cic&quot;, &quot;fosforo&quot;, 
+    &quot;mo&quot;, &quot;ph&quot;, &quot;potasio&quot;, &quot;nitrogeno&quot;, &quot;carbono&quot;)
+
+d %&gt;% dplyr::select(one_of(covs), riqueza, commons) %&gt;% pivot_longer(-c(riqueza, 
+    commons)) %&gt;% ggplot(aes(x = value, y = riqueza)) + geom_point(colour = &quot;gray&quot;) + 
+    geom_smooth(method = &quot;lm&quot;, se = FALSE, colour = &quot;black&quot;) + geom_smooth(aes(group = commons, 
+    colour = commons), method = &quot;lm&quot;, se = FALSE) + theme_bw() + theme(panel.grid = element_blank(), 
+    legend.position = &quot;bottom&quot;) + facet_wrap(~name, scales = &quot;free_x&quot;)</code></pre>
+<p><img src="figure/compare_commons.Rmd/compare-commons-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-compare-commons-13-1">
+Past versions of compare-commons-13-1.png
+</button>
+</p>
+<div id="fig-compare-commons-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/292ffde33e49d64325b2dc0828e530aa77781d1e/docs/figure/compare_commons.Rmd/compare-commons-13-1.png" target="_blank">292ffde</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+=======
+<li>I’m not sure that the RQ1 (Research question 1) and RQ2 should be separated, because I think they are the same model. The only difference would be how we interpreted the effects of several variables. Let have the following model: <span class="math display">\[Richness \sim elevation + sr.spr + \ldots + pH + \ldots + transh + commons\]</span></li>
+</ol>
+<p>If we want to explore how the different covariates (<em>i.e.</em> <code>sr.spr</code>, <code>estiercol</code>, <code>pH</code>, etc) affect to plant richness independently of the commons, we would explore how is the average response of richness to the covariate of interest (<em>e.g.</em> <code>pH</code>), and then see how that relationship varies for each of the commons. In addition, if we don’t consider the commons in the model (as proposed in RQ2) we could omit potential interaction between the commons and the covariate.</p>
+<p>For instance, look at the following plot:</p>
+<pre class="r"><code>covs &lt;- c(&quot;sr.win&quot;, &quot;sr.spr&quot;, &quot;sr.sum&quot;,&quot;sr.aut&quot;,&quot;altitud_m&quot;,&quot;cic&quot;,&quot;fosforo&quot;,&quot;mo&quot;,&quot;ph&quot;, &quot;potasio&quot;,&quot;nitrogeno&quot;,&quot;carbono&quot;)      
+
+d %&gt;% dplyr::select(one_of(covs), riqueza, commons) %&gt;% 
+  pivot_longer(-c(riqueza, commons)) %&gt;% 
+  ggplot(aes(x = value, y = riqueza)) +
+  geom_point(colour = &quot;gray&quot;) + 
+  geom_smooth(method = &quot;lm&quot;, se = FALSE, colour = &quot;black&quot;) + 
+  geom_smooth(aes(group = commons, colour = commons), method = &quot;lm&quot;, se = FALSE) +
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        legend.position = &quot;bottom&quot;) + 
+  facet_wrap(~name, scales = &quot;free_x&quot;) </code></pre>
+<p><img src="figure/compare_commons.Rmd/compare-commons-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+>>>>>>> ff5a0ad (update repo)
+<ol start="2" style="list-style-type: decimal">
+<li>Another question to consider is the number of covariates. The ratio observations/covariates should be as higher as we can. Several authors stated a minimum of 15 to 25 observations per variable. So in our RQ2, there are a lot of covariates.</li>
+</ol>
+<p>So, I would propose to the following approach:</p>
+<ol style="list-style-type: decimal">
+<li><p>To perform a potential covariates selection based on: <em>a)</em> our scientific interest, but <em>b)</em> also consider to applied any reduction techniques (clustering, PCA, etc.). for instance, the covariates <em>commons</em> and <em>transh</em> must be included (they are part of the research questions that we want to know).</p></li>
+<li><p>Then, to init the modelization process with those potential variables, and then to perform the model’s selection with the better covariates (most parsimonious model).</p></li>
+</ol>
+<<<<<<< HEAD
+<p>VAS por aquí</p>
+<pre class="r"><code>co_all &lt;- correlation((d %&gt;% dplyr::select(one_of(covs)))) %&gt;% as.data.frame()
+
+co_test &lt;- cor.mtest((d %&gt;% dplyr::select(one_of(covs))), conf.level = 0.95)
+
+p1 &lt;- corrplot(corr = cor((d %&gt;% dplyr::select(one_of(covs)))), p.mat = co_test$p, 
+    method = &quot;ellipse&quot;, type = &quot;lower&quot;, insig = &quot;blank&quot;, diag = FALSE, addCoef.col = &quot;black&quot;, 
+    order = &quot;AOE&quot;)$corrPos
+
+text(p1$x, p1$y, round(p1$corr, 2))</code></pre>
+<p><img src="figure/compare_commons.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+=======
+</div>
+</div>
+<div id="variables-selection" class="section level2">
+<h2>Variables Selection</h2>
+<ul>
+<li>In a first way, we would explore the correlation between all the potential covariables</li>
+</ul>
+<pre class="r"><code>co_all &lt;- correlation((d %&gt;% dplyr::select(one_of(covs)))) %&gt;% as.data.frame()
+  
+co_test &lt;- cor.mtest((d %&gt;% dplyr::select(one_of(covs))), 
+          conf.level = .95)
+
+corrplot(corr = cor((d %&gt;% dplyr::select(one_of(covs)))), 
+         p.mat = co_test$p, 
+         method = &#39;ellipse&#39;,
+         type = &#39;lower&#39;,
+         insig = &#39;blank&#39;,
+         diag = FALSE, 
+         addCoef.col = &#39;black&#39;, 
+         order = &#39;AOE&#39;)$corrPos -&gt; p1
+
+text(p1$x, p1$y, round(p1$corr, 2))</code></pre>
+<p><img src="figure/compare_commons.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Then we applied and hierarchical clustering</li>
+</ul>
+<pre class="r"><code>aux_d &lt;- d |&gt; dplyr::select(one_of(covs))
+
+covariates_corr &lt;- cor(aux_d)
+dfdis &lt;- dist(covariates_corr, method = &quot;euclidean&quot;)
+
+h &lt;- hcut(dfdis, k = 5, isdiss = TRUE)
+
+h |&gt; 
+  fviz_dend(., rect = TRUE, horiz = TRUE, lwd = 0.5, cex = .5)</code></pre>
+<p><img src="figure/compare_commons.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Based on the results, we performed a variable selection using an exhaustive search, <em>i.e.</em> checking every possible models of a maximum subsets of 12 variables. For each subset the algorithm select the best predictors. Then for a subset of 2 variables, the algorithm select the best model of two variables.</p>
+<pre class="r"><code>d_vs &lt;- d |&gt; 
+  dplyr::select(
+  riqueza, 
+  one_of(covs)
+)
+
+all_models &lt;- summary(
+  regsubsets(riqueza ~ ., data = d_vs, nvmax = 20, 
+             force.in = &quot;sr.aut&quot;))
+
+
+all_models$which |&gt; 
+  as.data.frame() |&gt; 
+  mutate(across(.fns = ~replace(., . == &quot;TRUE&quot;, &quot;+&quot;))) |&gt;
+  mutate(across(.fns = ~replace(., . == &quot;FALSE&quot;, &quot;&quot;))) |&gt; 
+  t() |&gt; 
+  kbl() |&gt; kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+2
+</th>
+<th style="text-align:left;">
+3
+</th>
+<th style="text-align:left;">
+4
+</th>
+<th style="text-align:left;">
+5
+</th>
+<th style="text-align:left;">
+6
+</th>
+<th style="text-align:left;">
+7
+</th>
+<th style="text-align:left;">
+8
+</th>
+<th style="text-align:left;">
+9
+</th>
+<th style="text-align:left;">
+10
+</th>
+<th style="text-align:left;">
+11
+</th>
+<th style="text-align:left;">
+12
+>>>>>>> ff5a0ad (update repo)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<<<<<<< HEAD
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/292ffde33e49d64325b2dc0828e530aa77781d1e/docs/figure/compare_commons.Rmd/unnamed-chunk-2-1.png" target="_blank">292ffde</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+=======
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sr.aut
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sr.win
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sr.spr
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sr.sum
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+altitud_m
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cic
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fosforo
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mo
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ph
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+potasio
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrogeno
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+carbono
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Which is the best subset? <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Using an <span class="math inline">\(R^2\)</span> approach, the best subset of parameters is 5, and using an AIC criteria, the best subset of parameters is 5.</p>
+<pre class="r"><code>plot(mod_aic ~ I(2:(p - 1)), ylab = &quot;AIC&quot;, xlab = &quot;parameters number&quot;, 
+     pch = 20, col = &quot;dodgerblue4&quot;, type = &quot;b&quot;)</code></pre>
+<p><img src="figure/compare_commons.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Using this information and expert knowledge, we will select the followings variables:</p>
+<pre class="r"><code>d |&gt; dplyr::select(one_of(selected_vars)) |&gt; names()</code></pre>
+<pre><code>[1] &quot;sr.spr&quot;    &quot;sr.aut&quot;    &quot;cic&quot;       &quot;fosforo&quot;   &quot;ph&quot;        &quot;potasio&quot;  
+[7] &quot;nitrogeno&quot;</code></pre>
+>>>>>>> ff5a0ad (update repo)
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Oberprilleretal2022FixedRandom" class="csl-entry">
+Oberpriller, J., Souza Leite, M. de &amp; Pichler, M. (2022). <a href="https://doi.org/10.1002/ece3.9062">Fixed or random? <span>On</span> the reliability of mixed-effects models for a small number of levels in grouping variables</a>. <em>Ecology and Evolution</em>, 12.
+</div>
+<div id="ref-Zuuretal2013BeginnerGuide" class="csl-entry">
+Zuur, A.F., Hilbe, J.M. &amp; Leno, E.N. (2013). <em>A beginner’s guide to <span>GLM</span> and <span>GLMM</span> with <span>R</span></em>. A beginner’s guide to. <span>Highland Statistics</span>, <span>Newburgh, Scotland</span>.
+</div>
+<div id="ref-Zuuretal2010ProtocolData" class="csl-entry">
+Zuur, A.F., Ieno, E.N. &amp; Elphick, C.S. (2010). <a href="https://doi.org/10.1111/j.2041-210X.2009.00001.x">A protocol for data exploration to avoid common statistical problems</a>. <em>Methods in Ecology and Evolution</em>, 1, 3–14.
+</div>
+<div id="ref-Zuuretal2007AnalysingEcological" class="csl-entry">
+Zuur, A.F., Ieno, E.N. &amp; Smith, G.M. (2007). <em>Analysing ecological data</em>. Statistics for biology and health. <span>Springer</span>, <span>New York</span>.
+</div>
+<div id="ref-Zuuretal2009MixedEffects" class="csl-entry">
+Zuur, A.F., Ieno, E.N., Walker, N., Saveliev, A.A. &amp; Smith, G.M. (2009). <em><a href="https://doi.org/10.1007/978-0-387-87458-6">Mixed effects models and extensions in ecology with <span>R</span></a></em>. Statistics for <span>Biology</span> and <span>Health</span>. <span>Springer New York</span>, <span>New York, NY</span>.
+</div>
+</div>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<<<<<<< HEAD
+<pre><code>R version 4.0.2 (2020-06-22)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+=======
+<pre><code>R version 4.2.1 (2022-06-23)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Monterey 12.3.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+>>>>>>> ff5a0ad (update repo)
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+<<<<<<< HEAD
+ [1] nlme_3.1-152      DHARMa_0.3.3.0    performance_0.8.0 kableExtra_1.3.1 
+ [5] corrplot_0.92     correlation_0.8.0 patchwork_1.1.1   vegan_2.5-7      
+ [9] lattice_0.20-41   permute_0.9-5     fuzzySim_3.0      janitor_2.1.0    
+[13] here_1.0.1        forcats_0.5.1     stringr_1.4.0     dplyr_1.0.6      
+[17] purrr_0.3.4       readr_1.4.0       tidyr_1.1.3       tibble_3.1.2     
+[21] ggplot2_3.3.5     tidyverse_1.3.1   rmdformats_1.0.1  knitr_1.31       
+[25] workflowr_1.7.0  
+
+loaded via a namespace (and not attached):
+  [1] TH.data_1.0-10     minqa_1.2.4        colorspace_2.0-2  
+  [4] ggridges_0.5.3     ellipsis_0.3.2     rprojroot_2.0.2   
+  [7] estimability_1.3   snakecase_0.11.0   parameters_0.17.0 
+ [10] fs_1.5.0           rstudioapi_0.13    farver_2.1.0      
+ [13] ggrepel_0.9.1      mvtnorm_1.1-1      fansi_0.4.2       
+ [16] lubridate_1.7.10   xml2_1.3.2         codetools_0.2-18  
+ [19] splines_4.0.2      doParallel_1.0.16  robustbase_0.93-7 
+ [22] jsonlite_1.7.2     nloptr_1.2.2.2     broom_0.7.9       
+ [25] cluster_2.1.0      dbplyr_2.1.1       shiny_1.6.0       
+ [28] effectsize_0.6.0.1 compiler_4.0.2     httr_1.4.2        
+ [31] emmeans_1.5.4      backports_1.2.1    assertthat_0.2.1  
+ [34] Matrix_1.3-2       fastmap_1.1.0      cli_2.5.0         
+ [37] later_1.1.0.1      formatR_1.8        htmltools_0.5.2   
+ [40] tools_4.0.2        coda_0.19-4        gtable_0.3.0      
+ [43] glue_1.4.2         Rcpp_1.0.7         cellranger_1.1.0  
+ [46] jquerylib_0.1.3    vctrs_0.3.8        visreg_2.7.0      
+ [49] iterators_1.0.13   insight_0.17.0     xfun_0.30         
+ [52] ps_1.5.0           lme4_1.1-27.1      rvest_1.0.0       
+ [55] mime_0.10          lifecycle_1.0.1    DEoptimR_1.0-8    
+ [58] zoo_1.8-8          getPass_0.2-2      MASS_7.3-53       
+ [61] scales_1.1.1.9000  hms_1.0.0          promises_1.2.0.1  
+ [64] sandwich_3.0-0     parallel_4.0.2     qqplotr_0.0.5     
+ [67] yaml_2.2.1         gridExtra_2.3      see_0.6.4         
+ [70] sass_0.4.1         stringi_1.7.4      highr_0.8         
+ [73] bayestestR_0.11.5  gap_1.2.2          foreach_1.5.1     
+ [76] boot_1.3-26        qgam_1.3.2         rlang_0.4.12      
+ [79] pkgconfig_2.0.3    evaluate_0.14      labeling_0.4.2    
+ [82] processx_3.5.1     tidyselect_1.1.1   plyr_1.8.6        
+ [85] magrittr_2.0.1     bookdown_0.21.6    R6_2.5.1          
+ [88] generics_0.1.0     multcomp_1.4-16    DBI_1.1.1         
+ [91] pillar_1.6.1       haven_2.3.1        whisker_0.4       
+ [94] withr_2.5.0        mgcv_1.8-33        survival_3.2-7    
+ [97] datawizard_0.4.0   modelr_0.1.8       crayon_1.4.1      
+[100] utf8_1.1.4         rmarkdown_2.14     grid_4.0.2        
+[103] readxl_1.3.1       callr_3.7.0        git2r_0.28.0      
+[106] reprex_2.0.0       digest_0.6.27      webshot_0.5.2     
+[109] xtable_1.8-4       httpuv_1.5.5       munsell_0.5.0     
+[112] viridisLite_0.4.0  bslib_0.3.1       </code></pre>
+</div>
+</div>
+=======
+ [1] leaps_3.1          factoextra_1.0.7   nlme_3.1-157       DHARMa_0.4.6      
+ [5] performance_0.10.0 kableExtra_1.3.4   corrplot_0.92      correlation_0.8.2 
+ [9] patchwork_1.1.2    vegan_2.6-2        lattice_0.20-45    permute_0.9-7     
+[13] fuzzySim_4.3       janitor_2.1.0      here_1.0.1         forcats_0.5.2     
+[17] stringr_1.4.1      dplyr_1.0.10       purrr_0.3.4        readr_2.1.2       
+[21] tidyr_1.2.1        tibble_3.1.8       ggplot2_3.3.6      tidyverse_1.3.2   
+[25] rmdformats_1.0.4   knitr_1.40        
+
+loaded via a namespace (and not attached):
+  [1] readxl_1.4.1        backports_1.4.1     workflowr_1.7.0    
+  [4] systemfonts_1.0.4   plyr_1.8.7          modEvA_3.5         
+  [7] splines_4.2.1       gap.datasets_0.0.5  digest_0.6.29      
+ [10] foreach_1.5.2       htmltools_0.5.3     viridis_0.6.2      
+ [13] fansi_1.0.3         magrittr_2.0.3      googlesheets4_1.0.1
+ [16] cluster_2.1.3       doParallel_1.0.17   tzdb_0.3.0         
+ [19] see_0.7.3           modelr_0.1.9        vroom_1.5.7        
+ [22] svglite_2.1.0       colorspace_2.0-3    rvest_1.0.3        
+ [25] ggrepel_0.9.1       haven_2.5.1         xfun_0.33          
+ [28] crayon_1.5.1        jsonlite_1.8.2      lme4_1.1-30        
+ [31] iterators_1.0.14    glue_1.6.2          gtable_0.3.1       
+ [34] gargle_1.2.1        webshot_0.5.4       car_3.1-0          
+ [37] abind_1.4-5         scales_1.2.1        DBI_1.1.3          
+ [40] rstatix_0.7.0       Rcpp_1.0.9          viridisLite_0.4.1  
+ [43] xtable_1.8-4        bit_4.0.4           datawizard_0.6.2   
+ [46] httr_1.4.4          ellipsis_0.3.2      pkgconfig_2.0.3    
+ [49] farver_2.1.1        qgam_1.3.4          sass_0.4.2         
+ [52] dbplyr_2.2.1        utf8_1.2.2          tidyselect_1.1.2   
+ [55] labeling_0.4.2      rlang_1.0.6         later_1.3.0        
+ [58] munsell_0.5.0       cellranger_1.1.0    tools_4.2.1        
+ [61] cachem_1.0.6        cli_3.4.1           generics_0.1.3     
+ [64] broom_1.0.1         evaluate_0.16       fastmap_1.1.0      
+ [67] yaml_2.3.5          bit64_4.0.5         fs_1.5.2           
+ [70] dendextend_1.16.0   mime_0.12           xml2_1.3.3         
+ [73] gap_1.2.3-6         compiler_4.2.1      rstudioapi_0.14    
+ [76] ggsignif_0.6.3      reprex_2.0.2        bslib_0.4.0        
+ [79] stringi_1.7.8       highr_0.9           Matrix_1.5-1       
+ [82] visreg_2.7.0        nloptr_2.0.3        vctrs_0.4.2        
+ [85] pillar_1.8.1        lifecycle_1.0.2     jquerylib_0.1.4    
+ [88] insight_0.18.4      httpuv_1.6.6        R6_2.5.1           
+ [91] bookdown_0.29       promises_1.2.0.1    gridExtra_2.3      
+ [94] codetools_0.2-18    boot_1.3-28         MASS_7.3-57        
+ [97] assertthat_0.2.1    rprojroot_2.0.3     withr_2.5.0        
+[100] mgcv_1.8-40         bayestestR_0.13.0   parallel_4.2.1     
+[103] hms_1.1.2           terra_1.6-17        grid_4.2.1         
+[106] minqa_1.2.4         rmarkdown_2.16      snakecase_0.11.0   
+[109] carData_3.0-5       googledrive_2.0.0   git2r_0.30.1       
+[112] ggpubr_0.4.0        shiny_1.7.2         lubridate_1.8.0    </code></pre>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>For more info see <a href="https://book.stat420.org/variable-selection-and-model-building.html#selection-procedures">Dalpiaz (2022)</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+>>>>>>> ff5a0ad (update repo)
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+---
+title: "Home"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+    number_sections: false
+editor_options:
+  chunk_output_type: console
+---
+
+
+## Data preparation
+- [Prepare data](prepare_data.html)
+
+## Data Exploration 
+- [Exploratory plots](exploratory_plots.html)
+
+## Analysis
+- [Compare commons](compare_commons.html)
+- [NMDS](nmds.html)
+

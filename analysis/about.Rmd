@@ -1,0 +1,19 @@
+---
+title: "About"
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+
+[CRediT]() <a href="https://credit.niso.org/">
+<img alt="CRediT logo" src="https://credit.niso.org/wp-content/uploads/2020/04/credit-icon-499x500-1.png" width="24" height="24" /></a>
+
+... to be completed... 
+
+- Initial analysis: A. B. González-Robles
+- Field sampling: M.E. Ramos-Font, Ana B. Robles Cruz, Mauro Tognetti Barbieri
+- Analysis performed by [Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+
