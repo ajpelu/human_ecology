@@ -9,17 +9,6 @@ bibliography: references.bib
 csl: ecology-letters.csl
 ---
 
-<<<<<<< HEAD
-## Research Questions: 
-
-- RQ1: Commons and/or transhumance differences
-
-> Aim: Explore differences between commons (higher to lower governance, *i.e.* PON, SAN and CAS) and/or transhumance treatment (short- and long-distance) for vegetation and soil parameters (*i.e.* richness, pH, ...) taking into account other potentially influential variables such us elevation and seasonal stocking rates
-
-
-- RQ2: Which variables do explain the variance of the interest-variable (*i.e.* vegetation parameters) independently of the commons? 
-
-=======
 ## Research Questions:
 
 -   RQ1: Commons and/or transhumance differences
@@ -27,22 +16,12 @@ csl: ecology-letters.csl
 > Aim: Explore differences between commons (higher to lower governance, *i.e.* PON, SAN and CAS) and/or transhumance treatment (short- and long-distance) for vegetation and soil parameters (*i.e.* richness, pH, ...) taking into account other potentially influential variables such us elevation and seasonal stocking rates
 
 -   RQ2: Which variables do explain the variance of the interest-variable (*i.e.* vegetation parameters) independently of the commons?
->>>>>>> ff5a0ad (update repo)
 
 ```{r setup, include=FALSE}
 library(knitr)
 library(rmdformats)
 
 ## Global options
-<<<<<<< HEAD
-opts_chunk$set(echo=TRUE,
-	             cache=FALSE,
-               prompt=FALSE,
-               tidy=TRUE,
-               comment=NA,
-               message=FALSE,
-               warning=FALSE,
-=======
 opts_chunk$set(echo = TRUE,
 	             cache = FALSE,
                prompt = FALSE,
@@ -50,7 +29,6 @@ opts_chunk$set(echo = TRUE,
                comment = NA,
                message = FALSE,
                warning = FALSE,
->>>>>>> ff5a0ad (update repo)
                autodep = TRUE)
 ```
 
@@ -67,28 +45,6 @@ library(kableExtra)
 library(performance)
 library(DHARMa)
 library(nlme)
-<<<<<<< HEAD
-source(here::here("code/aux_functions.R"))
-```
-
-# Explore data 
-
-- Import data from `cleaned_data.csv`. See [`prepare_data.Rmd`](/prepare_data.Rmd) for more details. 
-
-```{r}
-d <- read_csv(here::here("data/cleaned_data.csv"))
-```
-
-
-
-We have the following structure of the data: 
-
-```{r data-design}
-xtabs(~commons+transh, data=d)
-```
-
-# Exploration 
-=======
 library(factoextra)
 library(leaps)
 source(here::here("code/aux_functions.R"))
@@ -109,7 +65,6 @@ xtabs(~commons+transh, data = d)
 ```
 
 # Exploration
->>>>>>> ff5a0ad (update repo)
 
 First, let's explore how the different dependent variables vary with the covariates independently of the `commons` and `transhumance` [see @Zuuretal2010ProtocolData].
 
@@ -120,11 +75,7 @@ var_interes <- d %>%
   names()
 
 # Loop for each dependent variable 
-<<<<<<< HEAD
-for (v in var_interes){
-=======
 for (v in var_interes) {
->>>>>>> ff5a0ad (update repo)
 
 # Vector of covariables names
 covariables  <- d %>%
@@ -141,15 +92,9 @@ f <- as.formula(glue::glue('{yvar} ~ {glue::glue_collapse(covariables, sep = " +
 fit <- d %>% lm(formula = f)
 
 # Loop to generate plots
-<<<<<<< HEAD
-for (i in covariables){
-  p <- visreg::visreg(fit, data = d, i, gg = TRUE) + theme_bw() + theme(panel.grid = element_blank())
-  name_indivual_plot <- paste(yvar, i, sep="_")
-=======
 for (i in covariables) {
   p <- visreg::visreg(fit, data = d, i, gg = TRUE) + theme_bw() + theme(panel.grid = element_blank())
   name_indivual_plot <- paste(yvar, i, sep = "_")
->>>>>>> ff5a0ad (update repo)
   assign(name_indivual_plot, p)
 }
 
@@ -179,11 +124,7 @@ all_plots_code <- purrr::map_chr(var_interes, ~paste0("plot_", .)) %>%
 eval(rlang::parse_expr(all_plots_code))
 ```
 
-<<<<<<< HEAD
-A first concern is about the potential correlation of the seasonal stocking rates. So we evaluate the Variance Inflation factors (VIF) [see @Zuuretal2009MixedEffects]. 
-=======
 A first concern is about the potential correlation of the seasonal stocking rates. So we evaluate the Variance Inflation factors (VIF) [see @Zuuretal2009MixedEffects].
->>>>>>> ff5a0ad (update repo)
 
 ```{r evaluate-vif, results='hide'}
 myvars <- d %>% dplyr::select(starts_with("sr."), altitud_m, commons, transh) %>% names() 
@@ -198,11 +139,7 @@ vif_table %>% kbl(
   kable_paper("hover", full_width = FALSE)
 ```
 
-<<<<<<< HEAD
-Higher VIF values indicate higher collinearity among variables. Several cut-off values have been proposed in the literature: 3, 5 or 10 [see @Zuuretal2013BeginnerGuide for a revision]. Our results shown (Table \@ref(tab:viftable)) several variables with high VIF values. So, previously to decide what variable discard to avoid collinearity, let's explore about the correlation between seasonal stocking rates.  
-=======
 Higher VIF values indicate higher collinearity among variables. Several cut-off values have been proposed in the literature: 3, 5 or 10 [see @Zuuretal2013BeginnerGuide for a revision]. Our results shown (Table \@ref(tab:viftable)) several variables with high VIF values. So, previously to decide what variable discard to avoid collinearity, let's explore about the correlation between seasonal stocking rates.
->>>>>>> ff5a0ad (update repo)
 
 ```{r evaluate-correlation}
 co <- correlation((d %>% dplyr::select(starts_with("sr."), altitud_m))) %>% as.data.frame()
@@ -222,42 +159,13 @@ corrplot(corr = cor((d %>% dplyr::select(starts_with("sr."), altitud_m))),
 text(p1$x, p1$y, round(p1$corr, 2))
 ```
 
-<<<<<<< HEAD
-`sr.sum` (*i.e.* summer stocking rate) is strongly and significantly correlated with `sr.aut` and more weekly correlated with `altitud_m`. In addition, `sr.sum` shown a high VIF-value (`r vif_table[which(rownames(vif_table) == 'sr.sum'),1]`, see Table \@ref(tab:viftable)). 
-
-=======
 `sr.sum` (*i.e.* summer stocking rate) is strongly and significantly correlated with `sr.aut` and more weekly correlated with `altitud_m`. In addition, `sr.sum` shown a high VIF-value (`r vif_table[which(rownames(vif_table) == 'sr.sum'),1]`, see Table \@ref(tab:viftable)).
->>>>>>> ff5a0ad (update repo)
 
 ```{r evaluate-vif2}
 myvars2 <- myvars[-match("sr.sum", myvars)]
 vif_table2 <- corvif(d[,myvars2]) 
 ```
 
-<<<<<<< HEAD
-Now, all VIF values are below 5. 
-
-# Modelize 
-
-- We want to evaluate differences between commons and/or transhumance for the variables of interest ($y$, *i.e.* richness) considering also others variables (seasonal stocking rates, elevation. The general form of the model will be $$Y_{ij} = \alpha + \beta_1 \cdot elevation_{i} + \beta_2 \cdot sr.win_i + \beta_3 \cdot sr.spr_i + \\ \beta_4 \cdot sr.aut_i + \beta_5 \cdot transh_i + \beta_5\cdot commons + \epsilon_i$$
-
-- Our first approach will be a GLM/LM depend on the error structure. 
-
-- Mixed model? 
-
-  * Do we want to find for differences between level of the factor? 
-  * Are the levels under study the only levels of interest (*i.e.* short-distance *vs* long-distance) or  could be considered a random sample of a population of levels? 
-
-Considering the answers to that questions, we should decided to include a factor as fixed or random. `transh` variable is considered as fixed factor. Several authors [*e.g.* @Zuuretal2007AnalysingEcological] stated that factor with small numbers of levels (there is a 'rule' of < 5 levels) must be considered as fixed to avoid problems [@Zuuretal2007AnalysingEcological] but see @Oberprilleretal2022FixedRandom. 
-
-- The plot (`quadrat`) and the area (`cod_parcela`) should be considered as random part since we have a nested design: `+ (1|area/plot)`
-
-
-## Richness 
-### Model 
-
-- 1. Generate a linear model with all covariables as fixed part (*nota bene*: we don't include here the interaction among covariables to simplify the model. Let's do it later) 
-=======
 Now, all VIF values are below 5.
 
 # Modelize
@@ -280,7 +188,6 @@ Considering the answers to that questions, we should decided to include a factor
 ### Model
 
 1.  Generate a linear model with all covariables as fixed part (*nota bene*: we don't include here the interaction among covariables to simplify the model. Let's do it later)
->>>>>>> ff5a0ad (update repo)
 
 ```{r model}
 full_covariates <- glue::glue_collapse(myvars2, sep = "+")
@@ -296,26 +203,13 @@ f_lmer <- reformulate(covariates_lmer, response = yvar)
 m <- lm(f, data = d)
 ```
 
-<<<<<<< HEAD
-Explore the model 
-=======
 Explore the model
->>>>>>> ff5a0ad (update repo)
 
 ```{r checkmodel}
 check_model(m)
 ```
 
 ```{r checkmodel-dharma}
-<<<<<<< HEAD
-simulated_resid <- DHARMa::simulateResiduals(m, n=1000)
-plot(simulated_resid)
-```
-
-There are no problems at first glance, but the richness data would fit better with Poisson distribution 
-
-- 2. Fit the model with GLS 
-=======
 simulated_resid <- DHARMa::simulateResiduals(m, n = 1000)
 plot(simulated_resid)
 ```
@@ -323,42 +217,27 @@ plot(simulated_resid)
 There are no problems at first glance, but the richness data would fit better with Poisson distribution
 
 2.  Fit the model with GLS
->>>>>>> ff5a0ad (update repo)
 
 ```{r compare-commons-9}
 m_gls <- gls(f, data = d, method = 'REML')
 ```
 
-<<<<<<< HEAD
-- 3. Fit the mixed model 
-=======
 3.  Fit the mixed model
->>>>>>> ff5a0ad (update repo)
 
 ```{r compare-commons-10}
 m_lme <- lme(f, random = ~ 1 | parcela/quadrat, method = 'REML', data = d)
 ```
 
-<<<<<<< HEAD
-- 4. Compare the model 
-=======
 4.  Compare the model
->>>>>>> ff5a0ad (update repo)
 
 ```{r compare-commons-11}
 anova(m_gls, m_lme)
 ```
 
-<<<<<<< HEAD
-The likelihood ratio test indicates that the mixed model is not considerably better. Anyway for design we include `parcela / quadrat` as random part. 
-
-- 5. Check residuals 
-=======
 The likelihood ratio test indicates that the mixed model is not considerably better. Anyway for design we include `parcela / quadrat` as random part.
 
 5.  Check residuals
 
->>>>>>> ff5a0ad (update repo)
 ```{r compare-commons-12}
 # E <- resid(m_lme, type="normalized")
 # FI <- fitted(m_lme)
@@ -373,38 +252,21 @@ The likelihood ratio test indicates that the mixed model is not considerably bet
 
 ### Some notes (before continue)
 
-<<<<<<< HEAD
-1. I'm not sure that the RQ1 (Research question 1) and RQ2 should be separated, because I think they are the same model. The only difference would be how we interpreted the effects of several variables. Let have the following model:
-$$Richness \sim elevation + sr.spr + \ldots + pH + \ldots + transh + commons$$
-
-If we want to explore how the different covariates (*i.e.* `sr.spr`, `estiercol`, `pH`, etc) affect to plant richness independently of the commons, we would explore how is the average response of richness to the covariate of interest (*e.g.* `pH`), and then see how that relationship varies for each of the commons. In addition, if we don't consider the commons in the model (as proposed in RQ2) we could omit potential interaction between the commons and the covariate. 
-
-
-For instance, look at the following plot: 
-=======
 1.  I'm not sure that the RQ1 (Research question 1) and RQ2 should be separated, because I think they are the same model. The only difference would be how we interpreted the effects of several variables. Let have the following model: $$Richness \sim elevation + sr.spr + \ldots + pH + \ldots + transh + commons$$
 
 If we want to explore how the different covariates (*i.e.* `sr.spr`, `estiercol`, `pH`, etc) affect to plant richness independently of the commons, we would explore how is the average response of richness to the covariate of interest (*e.g.* `pH`), and then see how that relationship varies for each of the commons. In addition, if we don't consider the commons in the model (as proposed in RQ2) we could omit potential interaction between the commons and the covariate.
 
 For instance, look at the following plot:
->>>>>>> ff5a0ad (update repo)
 
 ```{r compare-commons-13, fig.height=9}
 covs <- c("sr.win", "sr.spr", "sr.sum","sr.aut","altitud_m","cic","fosforo","mo","ph", "potasio","nitrogeno","carbono")      
 
 d %>% dplyr::select(one_of(covs), riqueza, commons) %>% 
   pivot_longer(-c(riqueza, commons)) %>% 
-<<<<<<< HEAD
-  ggplot(aes(x=value, y=riqueza)) +
-  geom_point(colour="gray") + 
-  geom_smooth(method = "lm", se = FALSE, colour = "black") + 
-  geom_smooth(aes(group = commons, colour=commons), method = "lm", se = FALSE) +
-=======
   ggplot(aes(x = value, y = riqueza)) +
   geom_point(colour = "gray") + 
   geom_smooth(method = "lm", se = FALSE, colour = "black") + 
   geom_smooth(aes(group = commons, colour = commons), method = "lm", se = FALSE) +
->>>>>>> ff5a0ad (update repo)
   theme_bw() +
   theme(panel.grid = element_blank(), 
         legend.position = "bottom") + 
@@ -412,20 +274,6 @@ d %>% dplyr::select(one_of(covs), riqueza, commons) %>%
   
 ```
 
-<<<<<<< HEAD
- 
-2. Another question to consider is the number of covariates. The ratio observations/covariates should be as higher as we can. Several authors stated a minimum of 15 to 25 observations per variable. So in our RQ2, there are a lot of covariates. 
-
-
-So, I would propose to the following approach: 
-
-1. To perform a potential covariates selection based on: *a)* our scientific interest, but *b)* also consider to applied any reduction techniques (clustering, PCA, etc.). for instance, the covariates *commons* and *transh* must be included (they are part of the research questions that we want to know). 
-
-2. Then, to init the modelization process with those potential variables, and then to perform the model's selection with the better covariates (most parsimonious model). 
-
-
-VAS por aquí 
-=======
 2.  Another question to consider is the number of covariates. The ratio observations/covariates should be as higher as we can. Several authors stated a minimum of 15 to 25 observations per variable. So in our RQ2, there are a lot of covariates.
 
 So, I would propose to the following approach:
@@ -437,7 +285,6 @@ So, I would propose to the following approach:
 ## Variables Selection
 
 -   In a first way, we would explore the correlation between all the potential covariables
->>>>>>> ff5a0ad (update repo)
 
 ```{r}
 co_all <- correlation((d %>% dplyr::select(one_of(covs)))) %>% as.data.frame()
@@ -457,8 +304,6 @@ corrplot(corr = cor((d %>% dplyr::select(one_of(covs)))),
 text(p1$x, p1$y, round(p1$corr, 2))
 ```
 
-<<<<<<< HEAD
-=======
 -   Then we applied and hierarchical clustering
 
 ```{r}
@@ -533,6 +378,6 @@ Using this information and expert knowledge, we will select the followings varia
 ```{r}
 d |> dplyr::select(one_of(selected_vars)) |> names()
 ```
->>>>>>> ff5a0ad (update repo)
 
 # References
+
