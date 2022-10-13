@@ -55,3 +55,48 @@ myvif <- function(mod) {
   }
   invisible(result)
 }
+
+
+#####################################################################
+# functions to create posthocs tables
+posthoc.commons <-
+  function(modelo){emmeans(modelo, list(pairwise ~ commons), adjust = "tukey")}
+posthoc.transh<- function(modelo){
+  emmeans(modelo, list(pairwise ~ transh), adjust = "tukey")}
+posthoc.int <- function(modelo){
+  emmeans(modelo, list(pairwise ~ commons | transh), adjust = "tukey")}
+
+
+tabla_postHoc_commons <- function(modelo){
+  posthoc <- emmeans(modelo, list(pairwise ~ commons), adjust = "tukey")
+  as.data.frame(posthoc$`pairwise differences of commons`) %>%
+    rename(commons = 1) %>%
+    kbl(digits = 4) %>%
+    kable_paper("hover", full_width = F)
+}
+
+tabla_postHoc_transh <- function(modelo){
+  posthoc <- emmeans(modelo, list(pairwise ~ transh), adjust = "tukey")
+  as.data.frame(posthoc$`pairwise differences of transh`) %>%
+    rename(transh = 1) %>%
+    kbl(digits = 4) %>%
+    kable_paper("hover", full_width = F)
+}
+
+tabla_postHoc_int <- function(modelo){
+  posthoc <- emmeans(modelo, list(pairwise ~ commons | transh), adjust = "tukey")
+  as.data.frame(posthoc$`pairwise differences of commons | transh`) %>%
+    rename(commons = 1) %>%
+    kbl(digits = 4) %>%
+    kable_paper("hover", full_width = F)
+}
+
+#####################################################################
+# functions to formatAnova
+formatAnova <- function(df, yvar){
+  df$variable <- yvar
+  df$factor <- rownames(df)
+  df %>%
+    dplyr::select(fvalue = `F value`, p=`Pr(>F)`, variable, factor) %>%
+    assign(paste0("anova_", yvar), ., inherits = TRUE)
+}

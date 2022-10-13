@@ -11,14 +11,6 @@ editor_options:
 
 - Queremos hacer un NMDS de los quadrats muestreados ... 
 
-```{r}
-library(tidyverse)
-library(here)
-library(janitor)
-library(fuzzySim) # Para renombrar nombres de especies 
-library(vegan)
-
-```
 
 ### Preparación de los datos 
 
@@ -33,7 +25,7 @@ library(vegan)
 veg_raw <- readxl::read_excel(path = here::here("data/Datos_para_Antonio.xlsx"), 
                               sheet = "Especies_quadrat") %>% 
   janitor::clean_names() %>% 
-  unite(col= "id", cod_parcela:quadrat, sep = "_", remove = FALSE)
+  unite(col = "id", cod_parcela:quadrat, sep = "_", remove = FALSE)
 
 
 veg_metadatos <- veg_raw %>% dplyr::select(localidad:carga_otono)
@@ -45,7 +37,7 @@ veg <- veg_raw %>% dplyr::select(-c(localidad:tratamiento_humedad,
 veg_raw <- readxl::read_excel(path = here::here("data/Datos_para_Antonio.xlsx"), 
                               sheet = "Especies_quadrat") %>% 
   janitor::clean_names() %>% 
-  unite(col= "id", cod_parcela:quadrat, sep = "_", remove = FALSE)
+  unite(col = "id", cod_parcela:quadrat, sep = "_", remove = FALSE)
 
 ```
 

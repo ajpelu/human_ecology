@@ -13,13 +13,13 @@ library(knitr)
 library(rmdformats)
 
 ## Global options
-opts_chunk$set(echo=TRUE,
-	             cache=FALSE,
-               prompt=FALSE,
-               tidy=TRUE,
-               comment=NA,
-               message=FALSE,
-               warning=FALSE,
+opts_chunk$set(echo = TRUE,
+	             cache = FALSE,
+               prompt = FALSE,
+               tidy = TRUE,
+               comment = NA,
+               message = FALSE,
+               warning = FALSE,
                autodep = TRUE)
 ```
 

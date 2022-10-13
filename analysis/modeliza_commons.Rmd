@@ -1,0 +1,245 @@
+---
+title: "modeliza_commons"
+author: "ajpelu"
+date: "2022-10-10"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+```{r, message=FALSE}
+source("code/load_pkgs.R")
+```
+
+```{r setup, include=FALSE}
+## Global options
+opts_chunk$set(echo = TRUE,
+	             cache = FALSE,
+               prompt = FALSE,
+               tidy = TRUE,
+               comment = NA,
+               message = FALSE,
+               warning = FALSE,
+               autodep = TRUE)
+```
+
+```{r}
+d_raw <- read_csv(here::here("data/cleaned_data.csv"), show_col_types = FALSE)
+```
+
+```{r}
+selected_vars <- c("sr.spr",
+                   "sr.aut",
+                   "cic",
+                   "fosforo",
+                   "ph", 
+                   "potasio",
+                   "nitrogeno")
+```
+
+The potential selected variables are (see [`compare_commons`](compare_commons.Rmd)): 
+
+```{r}
+d_raw |> dplyr::select(one_of(selected_vars)) |> names()
+```
+
+```{r}
+d <- d_raw |> 
+  dplyr::select(one_of(selected_vars),
+                commons, 
+                transh,
+                parcela,
+                quadrat,
+                shannon,
+                fitovol_dm3,
+                rec_total_porc,
+                rec_vegetal_porc,
+                riqueza) %>% 
+  mutate(parcela = as.factor(parcela))
+```
+
+```{r}
+covariates <- c(selected_vars, 
+                "commons",
+                "transh")    
+
+full_covariates <- glue::glue_collapse(covariates, sep = "+")
+```
+
+
+
+## Richness
+
+```{r}
+yvar <- "riqueza"
+
+random_part <- "(1 | parcela)"
+
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+
+```
+
+- GLMM or LMM? 
+
+```{r checkmodel-dharma}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+
+maux <- lm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+check_model(maux)
+```
+
+- It seems that there are no problems of normality or homocedasticity, so we use an LMM for richness. 
+
+
+```{r}
+yvar <- "riqueza"
+covariates <- glue::glue_collapse(selected_vars, sep = " + ")
+always <- "+ commons + transh" 
+f <- "riqueza ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+
+lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
+    newf <- formula
+    newf[[3]] <- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    lmer(newf, data = data,
+         REML = FALSE, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm <- glmulti(
+  f, 
+  always = c("commons","transh"), 
+  random =  random_part,
+  data = d,
+  method = "ga",
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmulti,
+  marginality = FALSE, 
+  level = 1) # 1 without interaction 
+
+# Best models (delta AIC <= 2)
+top <- weightable(mm) 
+top <- top[top$aic <= (min(top$aic) + 2),]
+top
+```
+
+```{r}
+# Get the ten best models 
+maxmodels <- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod <- mm@objects[[i]]
+  name_model <- paste0("best_mod_", i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos <- paste0("best_mod_", 1:maxmodels)
+lista_model <- mget(modelos, envir = globalenv())
+
+lista_modelos <- model.sel(lista_model, rank = AIC) %>% 
+  rownames_to_column("model")
+  
+var_formulas <- data.frame(
+  model = paste0("best_mod_", 1:maxmodels),
+  formula = 'NA'
+)
+
+for(i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, "formula"] <- deparse(eval(parse(text=paste0("formula(best_mod_",i, ")[[3]]")))[[2]])[[1]]
+}
+
+lista_modelos <- lista_modelos %>% 
+  inner_join(var_formulas) %>% 
+  as.data.frame() %>% 
+  relocate(formula, .after = model) %>% 
+  dplyr::select(-model)
+
+
+lista_modelos_aic <- lista_modelos %>% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight)
+```
+
+```{r}
+# Variable Importance 
+plot(mm, type = "s")
+# variable importance, Sum of the weights/probabilities for the models in which the variable appears.  
+# So, a variable that shows up in lots of models with large weights will receive a high importance value
+#Some authors refers as 0.8 cutoff and others 0.5 cutoff
+```
+
+
+```{r, eval = FALSE, echo = FALSE}
+# see https://www.metafor-project.org/doku.php/tips:model_selection_with_glmulti_and_mumin 
+m_std <- standardize(m, standardize.y = FALSE)
+options(na.action = "na.fail") # Required for dredge to run
+max_variables <- floor(nrow(d)/10)
+model_set <- dredge(m_std, m.lim = c(0, max_variables), 
+                    trace = 2)
+options(na.action = "na.omit") # set back to default
+
+top_models <- get.models(model_set, subset = delta < 2)
+summary(model.avg(model_set, subset = delta <= 2))
+
+ss <- subset(model_set, delta <= 2, recalc.weights=FALSE)
+```
+
+
+
+```{r}
+bm <- lmer(
+  riqueza ~ sr.aut + cic + ph + commons + transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+```
+
+
+`
+
+```{r}
+
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+anova(as_lmer)
+```
+
+
+
+
+
+car::Anova(bm_manual_1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
