@@ -35,7 +35,7 @@ colores <- c("dodgerblue4", "goldenrod1")
 
 ## Explore differences among commons and transhumance for vegetation parameters and other interest variables 
 
-```{r plot-mean}
+```{r plot-mean-inter}
 vi <- c("shannon", "riqueza", "fitovol_dm3", 
         "rec_total_porc", "rec_vegetal_porc",
         "tasa_cons", "estiercol_kg_ha")
@@ -84,7 +84,7 @@ data_mean %>%
 
 
 ## Explore the variation of the covariates among the commons and transhumance 
-```{r plot-covariates}
+```{r plot-covariates-inter}
 covs <- c("sr.win", "sr.spr", "sr.sum","sr.aut","altitud_m","cic","fosforo","mo","ph", "potasio","nitrogeno","carbono")      
 
 covariates_mean <- d %>% 
