@@ -27,7 +27,8 @@ library(car)
 library(lmerTest)
 library(kableExtra)
 library(performance)
-
+library(broom)
+library(broom.mixed)
 # annotate packages by pkg annotater
 
 

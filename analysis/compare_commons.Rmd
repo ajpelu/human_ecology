@@ -33,20 +33,7 @@ opts_chunk$set(echo = TRUE,
 ```
 
 ```{r pkg}
-library(tidyverse)
-library(here)
-library(janitor)
-library(fuzzySim) # Para renombrar nombres de especies 
-library(vegan)
-library(patchwork)
-library(correlation)
-library(corrplot)
-library(kableExtra)
-library(performance)
-library(DHARMa)
-library(nlme)
-library(factoextra)
-library(leaps)
+source(here::here("code/load_pkgs.R"))
 source(here::here("code/aux_functions.R"))
 ```
 
