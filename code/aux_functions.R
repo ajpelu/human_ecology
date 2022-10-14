@@ -31,8 +31,8 @@ myvif <- function(mod) {
   n.terms <- length(terms)
   if (n.terms < 2) stop("The model contains fewer than 2 terms")
   if (length(assign) > dim(v)[1] ) {
-    diag(tmp_cor)<-0
-    if (any(tmp_cor==1.0)){
+    diag(tmp_cor) < -0
+    if (any(tmp_cor == 1.0)) {
       return("Sample size is too small, 100% collinearity is present")
     } else {
       return("Sample size is too small")
@@ -49,7 +49,7 @@ myvif <- function(mod) {
     result[term, 2] <- length(subs)
   }
   if (all(result[, 2] == 1)) {
-    result <- data.frame(GVIF=result[, 1])
+    result <- data.frame(GVIF = result[, 1])
   } else {
     result[, 3] <- result[, 1]^(1/(2 * result[, 2]))
   }
@@ -61,7 +61,7 @@ myvif <- function(mod) {
 # functions to create posthocs tables
 posthoc.commons <-
   function(modelo){emmeans(modelo, list(pairwise ~ commons), adjust = "tukey")}
-posthoc.transh<- function(modelo){
+posthoc.transh <- function(modelo){
   emmeans(modelo, list(pairwise ~ transh), adjust = "tukey")}
 posthoc.int <- function(modelo){
   emmeans(modelo, list(pairwise ~ commons | transh), adjust = "tukey")}
@@ -97,6 +97,52 @@ formatAnova <- function(df, yvar){
   df$variable <- yvar
   df$factor <- rownames(df)
   df %>%
-    dplyr::select(fvalue = `F value`, p=`Pr(>F)`, variable, factor) %>%
+    dplyr::select(fvalue = `F value`, p = `Pr(>F)`, variable, factor) %>%
     assign(paste0("anova_", yvar), ., inherits = TRUE)
 }
+
+
+#####################################################################
+# functions to plot individually
+colores <- c("dodgerblue4", "goldenrod1")
+plot_inter <- function(df, response){
+  df |>
+    filter(nameF == response) |>
+    ggplot(aes(y = mean, x = commonsF, group = transh, colour = transh)) +
+    geom_point(size = 2) +
+    geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = .15) +
+    geom_line() +
+    theme_bw() +
+    theme(
+      strip.background = element_blank(),
+      panel.grid = element_blank(),
+      legend.position = "top"
+    ) +
+    labs(x = "", y = parse(text = response)) +
+    scale_colour_manual("Transhumance", values = colores) +
+    guides(color = guide_legend(direction = "horizontal"))
+
+}
+
+
+
+# Best models (delta AIC <= 2)
+# top <- weightable(mm)
+# top <- top[top$aic <= (min(top$aic) + 2),]
+# top
+
+
+
+# Otra opcion
+# see https://www.metafor-project.org/doku.php/tips:model_selection_with_glmulti_and_mumin
+# m_std <- standardize(m, standardize.y = FALSE)
+# options(na.action = "na.fail") # Required for dredge to run
+# max_variables <- floor(nrow(d)/10)
+# model_set <- dredge(m_std, m.lim = c(0, max_variables),
+#                     trace = 2)
+# options(na.action = "na.omit") # set back to default
+#
+# top_models <- get.models(model_set, subset = delta < 2)
+# summary(model.avg(model_set, subset = delta <= 2))
+#
+# ss <- subset(model_set, delta <= 2, recalc.weights=FALSE)

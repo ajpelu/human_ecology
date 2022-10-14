@@ -25,7 +25,8 @@ library(glmulti)
 library(emmeans)
 library(car)
 library(lmerTest)
-
+library(kableExtra)
+library(performance)
 
 # annotate packages by pkg annotater
 
