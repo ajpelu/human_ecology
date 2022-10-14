@@ -29,7 +29,8 @@ opts_chunk$set(echo = TRUE,
 d_raw <- read_csv(here::here("data/cleaned_data.csv"), show_col_types = FALSE)
 
 selected_vars <- c("sr.spr",
-                   "sr.aut",
+                   "sr.sum",
+                   "sr.win",
                    "cic",
                    "fosforo",
                    "ph", 
@@ -115,7 +116,7 @@ rm(maux, faux, simulated_resid) # remove
 yvar <- "riqueza"
 covariates <- glue::glue_collapse(selected_vars, sep = " + ")
 always <- "+ commons + transh" 
-f <- "riqueza ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+f <- "riqueza ~ sr.spr + sr.sum + cic + fosforo + ph + potasio + nitrogeno"
 
 lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
     newf <- formula
@@ -218,7 +219,7 @@ abline(v = 0.5, col = "blue")
 
 ```{r model-richenss}
 bm <- lmer(
-  riqueza ~ sr.aut + cic + ph + commons + transh + commons:transh + (1 | parcela), 
+  riqueza ~ sr.sum + cic + ph + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
@@ -280,7 +281,7 @@ plot(simulated_resid)
 plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) 
 ```
 
-```{r checkmodel-shannon}
+```{r checkmodel-shannon, fig.height=8}
 check_model(maux)
 rm(maux, faux, simulated_resid) # remove 
 ```
@@ -295,7 +296,7 @@ rm(maux, faux, simulated_resid) # remove
 yvar <- "shannon"
 covariates <- glue::glue_collapse(selected_vars, sep = " + ")
 always <- "+ commons + transh" 
-f <- "shannon ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+f <- "shannon ~ sr.spr + sr.sum + cic + fosforo + ph + potasio + nitrogeno"
 
 lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
     newf <- formula
@@ -399,7 +400,7 @@ abline(v = 0.5, col = "blue")
 
 ```{r model-shannon}
 bm <- lmer(
-  shannon ~ sr.aut + cic + commons + transh + commons:transh + (1 | parcela), 
+  shannon ~ cic + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
@@ -461,7 +462,7 @@ plot(simulated_resid)
 plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
 ```
 
-```{r checkmodel-rec_total}
+```{r checkmodel-rec_total, fig.height=8}
 check_model(maux)
 rm(maux, faux, simulated_resid) # remove 
 ```
@@ -476,7 +477,7 @@ rm(maux, faux, simulated_resid) # remove
 yvar <- "rec_total_porc"
 covariates <- glue::glue_collapse(selected_vars, sep = " + ")
 always <- "+ commons + transh" 
-f <- "rec_total_porc ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+f <- "rec_total_porc ~ sr.spr + sr.sum + cic + fosforo + ph + potasio + nitrogeno"
 
 lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
     newf <- formula
@@ -579,7 +580,7 @@ abline(v = 0.5, col = "blue")
 
 ```{r model-rec_total}
 bm <- lmer(
-  fitovol_dm3 ~ sr.aut + potasio + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
+  fitovol_dm3 ~ sr.spr + sr.sum + ph + potasio + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
@@ -642,7 +643,7 @@ plot(simulated_resid)
 plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
 ```
 
-```{r checkmodel-fitvol}
+```{r checkmodel-fitvol, fig.height=8}
 check_model(maux)
 rm(maux, faux, simulated_resid) # remove 
 ```
@@ -657,7 +658,7 @@ rm(maux, faux, simulated_resid) # remove
 yvar <- "fitovol_dm3"
 covariates <- glue::glue_collapse(selected_vars, sep = " + ")
 always <- "+ commons + transh" 
-f <- "fitovol_dm3 ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+f <- "fitovol_dm3 ~ sr.spr + sr.sum + cic + fosforo + ph + potasio + nitrogeno"
 
 lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
     newf <- formula
@@ -760,7 +761,7 @@ abline(v = 0.5, col = "blue")
 
 ```{r model-fitovol}
 bm <- lmer(
-  fitovol_dm3 ~ sr.aut + cic + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
+  fitovol_dm3 ~ sr.sum + sr.spr + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
@@ -823,7 +824,7 @@ plot(simulated_resid)
 plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
 ```
 
-```{r checkmodel-tasacons}
+```{r checkmodel-tasacons, fig.height=8}
 check_model(maux)
 rm(maux, faux, simulated_resid) # remove 
 ```
@@ -837,7 +838,7 @@ rm(maux, faux, simulated_resid) # remove
 yvar <- "tasa_cons"
 covariates <- glue::glue_collapse(selected_vars, sep = " + ")
 always <- "+ commons + transh" 
-f <- "tasa_cons ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+f <- "tasa_cons ~ sr.spr + sr.sum + cic + fosforo + ph + potasio + nitrogeno"
 
 lmer.glmultiGamma <- function(formula, data, random = "", always = "", ...) {
     newf <- formula
@@ -940,8 +941,7 @@ abline(v = 0.5, col = "blue")
 
 ```{r model-tasacons}
 bm <- lmer(
-  tasa_cons ~ cic + potasio + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
-  data = d
+  tasa_cons ~ 1 + sr.sum + cic + commons + transh + commons:transh + (1 | parcela), data = d
 )
 
 performance(bm) %>% 
