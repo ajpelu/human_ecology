@@ -153,6 +153,7 @@ lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm <- glmulti(
   f, 
   always = c("commons","transh"), 
@@ -326,6 +327,7 @@ lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm <- glmulti(
   f, 
   always = c("commons","transh"), 
@@ -501,6 +503,7 @@ lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm <- glmulti(
   f, 
   always = c("commons","transh"), 
@@ -675,6 +678,7 @@ lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm <- glmulti(
   f, 
   always = c("commons","transh"), 
@@ -847,6 +851,7 @@ lmer.glmultiGamma <- function(formula, data, random = "", always = "", ...) {
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm <- glmulti(
   f, 
   always = c("commons","transh"), 
