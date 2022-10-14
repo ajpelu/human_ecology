@@ -492,20 +492,20 @@ makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree54c6f7aa16269efec2a23fa06dda7042c176cc4atargetblank54c6f7aa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreeebd4508a6cb4c6b9666a411371bfddb52035b338targetblankebd4508a">
 <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/54c6f7aa16269efec2a23fa06dda7042c176cc4a" target="_blank">54c6f7a</a>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/ebd4508a6cb4c6b9666a411371bfddb52035b338" target="_blank">ebd4508</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree54c6f7aa16269efec2a23fa06dda7042c176cc4atargetblank54c6f7aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreeebd4508a6cb4c6b9666a411371bfddb52035b338targetblankebd4508a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and
 connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/54c6f7aa16269efec2a23fa06dda7042c176cc4a" target="_blank">54c6f7a</a>.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/ebd4508a6cb4c6b9666a411371bfddb52035b338" target="_blank">ebd4508</a>.
 See the <em>Past versions</em> tab to see a history of the changes made to the
 R Markdown and HTML files.
 </p>
@@ -522,19 +522,8 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
-Untracked files:
-    Untracked:  output/best_models_aic_fitovol_dm3.csv
-    Untracked:  output/best_models_aic_rec_total_porc.csv
-    Untracked:  output/best_models_aic_riqueza.csv
-    Untracked:  output/best_models_aic_shannon.csv
-    Untracked:  output/best_models_aic_tasa_cons.csv
-    Untracked:  output/best_models_fitovol_dm3.csv
-    Untracked:  output/best_models_rec_total_porc.csv
-    Untracked:  output/best_models_riqueza.csv
-    Untracked:  output/best_models_shannon.csv
-    Untracked:  output/best_models_tasa_cons.csv
-
 Unstaged changes:
+    Modified:   analysis/index.Rmd
     Modified:   glmulti.analysis.modgen.back
     Modified:   glmulti.analysis.mods.back
 
@@ -581,6 +570,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/ebd4508a6cb4c6b9666a411371bfddb52035b338/analysis/modeliza_commons.Rmd" target="_blank">ebd4508</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+<td>
+update set.seed
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/human_ecology/3ba7841cd1fab5049719710c34328d07d8260e69/docs/modeliza_commons.html" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -744,6 +767,43 @@ ajpelu
 </div>
 <pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) </code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-richness-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-richness-2">
+Past versions of checkGLM-richness-2.png
+</button>
+</p>
+<div id="fig-checkGLM-richness-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-richness-2.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>check_model(maux)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkmodel-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -809,6 +869,7 @@ lmer.glmulti &lt;- function(formula, data, random = &quot;&quot;, always = &quot
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm &lt;- glmulti(
   f, 
   always = c(&quot;commons&quot;,&quot;transh&quot;), 
@@ -1179,6 +1240,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/varImp-richness-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bd999cb55a213ddf767e25f7edce13126a601b61/docs/figure/modeliza_commons.Rmd/varImp-richness-1.png" target="_blank">bd999cb</a>
@@ -1638,10 +1710,121 @@ maux &lt;- lm(faux, data = d)
 simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
 plot(simulated_resid)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-shannon-1">
+Past versions of checkGLM-shannon-1.png
+</button>
+</p>
+<div id="fig-checkGLM-shannon-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-shannon-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) </code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-shannon-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-shannon-2">
+Past versions of checkGLM-shannon-2.png
+</button>
+</p>
+<div id="fig-checkGLM-shannon-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-shannon-2.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>check_model(maux)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkmodel-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkmodel-shannon-1">
+Past versions of checkmodel-shannon-1.png
+</button>
+</p>
+<div id="fig-checkmodel-shannon-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkmodel-shannon-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
 <ul>
 <li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for diversity (Shannon index)</li>
@@ -1668,6 +1851,7 @@ lmer.glmulti &lt;- function(formula, data, random = &quot;&quot;, always = &quot
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm &lt;- glmulti(
   f, 
   always = c(&quot;commons&quot;,&quot;transh&quot;), 
@@ -1916,6 +2100,43 @@ weight
 plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
 abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/varImp-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-varImp-shannon-1">
+Past versions of varImp-shannon-1.png
+</button>
+</p>
+<div id="fig-varImp-shannon-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/varImp-shannon-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
 <li>Select the best and most parsimonious model</li>
 </ul>
@@ -2300,6 +2521,43 @@ short
 </table>
 <pre class="r"><code>plot_inter(df = data_mean, response = &quot;Shannon~index&quot;)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-shannon-1">
+Past versions of plot-shannon-1.png
+</button>
+</p>
+<div id="fig-plot-shannon-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/plot-shannon-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="total-coverage-rec_total_porc" class="section level2">
@@ -2322,10 +2580,121 @@ maux &lt;- glm(faux, data = d)
 simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
 plot(simulated_resid)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-rec_total-1">
+Past versions of checkGLM-rec_total-1.png
+</button>
+</p>
+<div id="fig-checkGLM-rec_total-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-rec_total-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-rec_total-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-rec_total-2">
+Past versions of checkGLM-rec_total-2.png
+</button>
+</p>
+<div id="fig-checkGLM-rec_total-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-rec_total-2.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>check_model(maux)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkmodel-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkmodel-rec_total-1">
+Past versions of checkmodel-rec_total-1.png
+</button>
+</p>
+<div id="fig-checkmodel-rec_total-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkmodel-rec_total-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
 <ul>
 <li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for Total coverage</li>
@@ -2352,6 +2721,7 @@ lmer.glmulti &lt;- function(formula, data, random = &quot;&quot;, always = &quot
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm &lt;- glmulti(
   f, 
   always = c(&quot;commons&quot;,&quot;transh&quot;), 
@@ -2740,6 +3110,43 @@ weight
 plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
 abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/varImp-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-varImp-rec_total-1">
+Past versions of varImp-rec_total-1.png
+</button>
+</p>
+<div id="fig-varImp-rec_total-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/varImp-rec_total-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
 <li>Select the best and most parsimonious model</li>
 </ul>
@@ -3123,6 +3530,43 @@ short
 </table>
 <pre class="r"><code>plot_inter(df = data_mean, response = &quot;Total~Coverage~(&#39;%&#39;)&quot;)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-rec_total-1">
+Past versions of plot-rec_total-1.png
+</button>
+</p>
+<div id="fig-plot-rec_total-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/plot-rec_total-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="phytovolumen-fitovol_dm3" class="section level2">
@@ -3145,10 +3589,121 @@ maux &lt;- glm(faux, data = d)
 simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
 plot(simulated_resid)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-fitvol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-fitvol-1">
+Past versions of checkGLM-fitvol-1.png
+</button>
+</p>
+<div id="fig-checkGLM-fitvol-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-fitvol-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-fitvol-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-fitvol-2">
+Past versions of checkGLM-fitvol-2.png
+</button>
+</p>
+<div id="fig-checkGLM-fitvol-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-fitvol-2.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>check_model(maux)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkmodel-fitvol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkmodel-fitvol-1">
+Past versions of checkmodel-fitvol-1.png
+</button>
+</p>
+<div id="fig-checkmodel-fitvol-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkmodel-fitvol-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
 <ul>
 <li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for Phytovolumen</li>
@@ -3175,6 +3730,7 @@ lmer.glmulti &lt;- function(formula, data, random = &quot;&quot;, always = &quot
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm &lt;- glmulti(
   f, 
   always = c(&quot;commons&quot;,&quot;transh&quot;), 
@@ -3443,6 +3999,43 @@ weight
 plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
 abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/varImp-fitovol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-varImp-fitovol-1">
+Past versions of varImp-fitovol-1.png
+</button>
+</p>
+<div id="fig-varImp-fitovol-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/varImp-fitovol-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
 <li>Select the best and most parsimonious model</li>
 </ul>
@@ -3828,6 +4421,43 @@ short
 </table>
 <pre class="r"><code>plot_inter(df = data_mean, response = &quot;Fitovolumen~(m^3)&quot;)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-fitovol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-fitovol-1">
+Past versions of plot-fitovol-1.png
+</button>
+</p>
+<div id="fig-plot-fitovol-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/plot-fitovol-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="consumption-ratetasa_cons" class="section level2">
@@ -3850,10 +4480,121 @@ maux &lt;- glm(faux, data = d)
 simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
 plot(simulated_resid)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-tasacons-1">
+Past versions of checkGLM-tasacons-1.png
+</button>
+</p>
+<div id="fig-checkGLM-tasacons-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-tasacons-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkGLM-tasacons-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-tasacons-2">
+Past versions of checkGLM-tasacons-2.png
+</button>
+</p>
+<div id="fig-checkGLM-tasacons-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-tasacons-2.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>check_model(maux)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/checkmodel-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkmodel-tasacons-1">
+Past versions of checkmodel-tasacons-1.png
+</button>
+</p>
+<div id="fig-checkmodel-tasacons-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkmodel-tasacons-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
 <div id="model-selection-4" class="section level3">
 <h3>Model selection</h3>
@@ -3876,6 +4617,7 @@ lmer.glmultiGamma &lt;- function(formula, data, random = &quot;&quot;, always = 
 
 #https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
 
+set.seed(1234)
 mm &lt;- glmulti(
   f, 
   always = c(&quot;commons&quot;,&quot;transh&quot;), 
@@ -4285,6 +5027,43 @@ weight
 plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
 abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/varImp-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-varImp-tasacons-1">
+Past versions of varImp-tasacons-1.png
+</button>
+</p>
+<div id="fig-varImp-tasacons-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/varImp-tasacons-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
 <li>Select the best and most parsimonious model</li>
 </ul>
@@ -4675,6 +5454,43 @@ short
 </table>
 <pre class="r"><code>plot_inter(df = data_mean, response = &quot;Consumption~rate&quot;)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-tasacons-1">
+Past versions of plot-tasacons-1.png
+</button>
+</p>
+<div id="fig-plot-tasacons-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/plot-tasacons-1.png" target="_blank">3ba7841</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>anovas &lt;- mget(apropos(&quot;anova_&quot;), envir = globalenv()) |&gt; 
   bind_rows() |&gt; 
   remove_rownames() |&gt; 
