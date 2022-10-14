@@ -1,0 +1,5277 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Antonio J. Pérez-Luque" />
+
+<meta name="date" content="2022-10-10" />
+
+<title>Models</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">human_ecology</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/ajpelu/human_ecology">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Models</h1>
+<h4 class="author">Antonio J. Pérez-Luque</h4>
+<h4 class="date">2022-10-10</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#richness" id="toc-richness">Richness</a>
+<ul>
+<li><a href="#model-selection" id="toc-model-selection">Model selection</a></li>
+<li><a href="#posthoc" id="toc-posthoc">Posthoc</a></li>
+</ul></li>
+<li><a href="#diversity-shannon" id="toc-diversity-shannon">Diversity (shannon)</a>
+<ul>
+<li><a href="#model-selection-1" id="toc-model-selection-1">Model selection</a></li>
+<li><a href="#posthoc-1" id="toc-posthoc-1">Posthoc</a></li>
+</ul></li>
+<li><a href="#total-coverage-rec_total_porc" id="toc-total-coverage-rec_total_porc">Total coverage (rec_total_porc)</a>
+<ul>
+<li><a href="#model-selection-2" id="toc-model-selection-2">Model selection</a></li>
+<li><a href="#posthoc-2" id="toc-posthoc-2">Posthoc</a></li>
+</ul></li>
+<li><a href="#phytovolumen-fitovol_dm3" id="toc-phytovolumen-fitovol_dm3">Phytovolumen (fitovol_dm3)</a>
+<ul>
+<li><a href="#model-selection-3" id="toc-model-selection-3">Model selection</a></li>
+<li><a href="#posthoc-3" id="toc-posthoc-3">Posthoc</a></li>
+</ul></li>
+<li><a href="#consumption-ratetasa_cons" id="toc-consumption-ratetasa_cons">Consumption rate(tasa_cons)</a>
+<ul>
+<li><a href="#model-selection-4" id="toc-model-selection-4">Model selection</a></li>
+<li><a href="#posthoc-4" id="toc-posthoc-4">Posthoc</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks">
+Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-10-14
+</p>
+<p>
+<strong>Checks:</strong>
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+7
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+0
+</p>
+<p>
+<strong>Knit directory:</strong>
+<code>human_ecology/</code>
+<span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the
+reproducibility checks that were applied when the results were created.
+The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you
+know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Environment:</strong> empty
+</a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global
+environment can affect the analysis in your R Markdown file in unknown ways.
+For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220620code">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Seed:</strong> <code>set.seed(20220620)</code>
+</a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220620code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220620)</code> was run prior to running the code in the R Markdown file.
+Setting a seed ensures that any results that rely on randomness, e.g.
+subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Session information:</strong> recorded
+</a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is
+critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Cache:</strong> none
+</a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident
+that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>File paths:</strong> relative
+</a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project
+makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree54c6f7aa16269efec2a23fa06dda7042c176cc4atargetblank54c6f7aa">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/54c6f7aa16269efec2a23fa06dda7042c176cc4a" target="_blank">54c6f7a</a>
+</a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree54c6f7aa16269efec2a23fa06dda7042c176cc4atargetblank54c6f7aa" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and
+connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/54c6f7aa16269efec2a23fa06dda7042c176cc4a" target="_blank">54c6f7a</a>.
+See the <em>Past versions</em> tab to see a history of the changes made to the
+R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the
+analysis have been committed to Git prior to generating the results (you can
+use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only
+checks the R Markdown file, but you know if there are other scripts or data
+files that it depends on. Below is the status of the Git repository when the
+results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  output/best_models_aic_fitovol_dm3.csv
+    Untracked:  output/best_models_aic_rec_total_porc.csv
+    Untracked:  output/best_models_aic_riqueza.csv
+    Untracked:  output/best_models_aic_shannon.csv
+    Untracked:  output/best_models_aic_tasa_cons.csv
+    Untracked:  output/best_models_fitovol_dm3.csv
+    Untracked:  output/best_models_rec_total_porc.csv
+    Untracked:  output/best_models_riqueza.csv
+    Untracked:  output/best_models_shannon.csv
+    Untracked:  output/best_models_tasa_cons.csv
+
+Unstaged changes:
+    Modified:   glmulti.analysis.modgen.back
+    Modified:   glmulti.analysis.mods.back
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in
+this status report because it is ok for generated content to have uncommitted
+changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made
+to the R Markdown (<code>analysis/modeliza_commons.Rmd</code>) and HTML (<code>docs/modeliza_commons.html</code>)
+files. If you’ve configured a remote Git repository (see
+<code>?wflow_git_remote</code>), click on the hyperlinks in the table below to
+view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/54c6f7aa16269efec2a23fa06dda7042c176cc4a/analysis/modeliza_commons.Rmd" target="_blank">54c6f7a</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+<td>
+add models
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/041ce3438ce62514d081a9a29613ddeeb1ea4415/analysis/modeliza_commons.Rmd" target="_blank">041ce34</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-13
+</td>
+<td>
+update models
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<pre class="r"><code>source(&quot;code/load_pkgs.R&quot;)
+source(&quot;code/aux_functions.R&quot;)</code></pre>
+<pre class="r"><code>d_raw &lt;- read_csv(here::here(&quot;data/cleaned_data.csv&quot;), show_col_types = FALSE)
+
+selected_vars &lt;- c(&quot;sr.spr&quot;,
+                   &quot;sr.aut&quot;,
+                   &quot;cic&quot;,
+                   &quot;fosforo&quot;,
+                   &quot;ph&quot;, 
+                   &quot;potasio&quot;,
+                   &quot;nitrogeno&quot;)</code></pre>
+<p>The potential selected variables are (see <a href="compare_commons.Rmd"><code>compare_commons</code></a>):</p>
+<pre class="r"><code>d_raw |&gt; dplyr::select(one_of(selected_vars)) |&gt; names()</code></pre>
+<pre><code>[1] &quot;sr.spr&quot;    &quot;sr.aut&quot;    &quot;cic&quot;       &quot;fosforo&quot;   &quot;ph&quot;        &quot;potasio&quot;  
+[7] &quot;nitrogeno&quot;</code></pre>
+<pre class="r"><code>d &lt;- d_raw |&gt; 
+  dplyr::select(one_of(selected_vars),
+                commons, 
+                transh,
+                parcela,
+                quadrat,
+                shannon,
+                fitovol_dm3,
+                rec_total_porc,
+                rec_vegetal_porc,
+                riqueza,
+                tasa_cons) %&gt;% 
+  mutate(parcela = as.factor(parcela))</code></pre>
+<pre class="r"><code>covariates &lt;- c(selected_vars, 
+                &quot;commons&quot;,
+                &quot;transh&quot;)    
+
+full_covariates &lt;- glue::glue_collapse(covariates, sep = &quot;+&quot;)
+
+random_part &lt;- &quot;(1 | parcela)&quot;</code></pre>
+<pre class="r"><code>vi &lt;- c(&quot;shannon&quot;, &quot;riqueza&quot;, &quot;fitovol_dm3&quot;, 
+        &quot;rec_total_porc&quot;, &quot;rec_vegetal_porc&quot;,
+        &quot;tasa_cons&quot;, &quot;estiercol_kg_ha&quot;)
+
+data_mean &lt;- d |&gt; 
+  dplyr::select(one_of(vi), commons, transh) |&gt;
+  pivot_longer(-c(commons, transh)) |&gt; 
+  group_by(name, commons, transh) |&gt; 
+  summarise(
+    mean = mean(value, na.rm=TRUE),
+    sd = sd(value, na.rm = TRUE), 
+    se = plotrix::std.error(value, na.rm = TRUE)
+  ) |&gt;
+  mutate(commonsF = recode_factor(commons, 
+                           &quot;0_Castril&quot; = &quot;Castril&quot;,
+                           &quot;1_Santiago&quot; = &quot;Santiago&quot;,
+                           &quot;2_Pontones&quot; = &quot;Pontones&quot;)) |&gt;
+  mutate(nameF = recode_factor(name, 
+                        estiercol_kg_ha = &quot;Estiercol~(kg~ha^{-1})&quot;,
+                        fitovol_dm3 = &quot;Fitovolumen~(m^3)&quot;,
+                        rec_total_porc = &quot;Total~Coverage~(&#39;%&#39;)&quot;, 
+                        rec_vegetal_porc = &quot;Plant~Coverage~(&#39;%&#39;)&quot;,
+                        riqueza = &quot;Richness~(species~number)&quot;,
+                        shannon = &quot;Shannon~index&quot;,
+                        tasa_cons = &quot;Consumption~rate&quot;))</code></pre>
+</div>
+<div id="richness" class="section level2">
+<h2>Richness</h2>
+<pre class="r"><code>yvar &lt;- &quot;riqueza&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- lm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGLM-richness-1">
+Past versions of checkGLM-richness-1.png
+</button>
+</p>
+<div id="fig-checkGLM-richness-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/bd999cb55a213ddf767e25f7edce13126a601b61/docs/figure/modeliza_commons.Rmd/checkGLM-richness-1.png" target="_blank">bd999cb</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) </code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-richness-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkmodel-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkmodel-richness-1">
+Past versions of checkmodel-richness-1.png
+</button>
+</p>
+<div id="fig-checkmodel-richness-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/bd999cb55a213ddf767e25f7edce13126a601b61/docs/figure/modeliza_commons.Rmd/checkmodel-richness-1.png" target="_blank">bd999cb</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<ul>
+<li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for richness.</li>
+</ul>
+<div id="model-selection" class="section level3">
+<h3>Model selection</h3>
+<ul>
+<li>Perform a multimodel selection</li>
+</ul>
+<pre class="r"><code>yvar &lt;- &quot;riqueza&quot;
+covariates &lt;- glue::glue_collapse(selected_vars, sep = &quot; + &quot;)
+always &lt;- &quot;+ commons + transh&quot; 
+f &lt;- &quot;riqueza ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno&quot;
+
+lmer.glmulti &lt;- function(formula, data, random = &quot;&quot;, always = &quot;&quot;, ...) {
+    newf &lt;- formula
+    newf[[3]] &lt;- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    lmer(newf, data = data,
+         REML = FALSE, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm &lt;- glmulti(
+  f, 
+  always = c(&quot;commons&quot;,&quot;transh&quot;), 
+  random =  random_part,
+  data = d,
+  method = &quot;ga&quot;,
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmulti,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction</code></pre>
+<pre><code>TASK: Genetic algorithm in the candidate set.
+Initialization...
+Algorithm started...
+Improvements in best and average IC have bebingo en below the specified goals.
+Algorithm is declared to have converged.
+Completed.</code></pre>
+<pre class="r"><code># Best models (delta AIC &lt;= 2)
+top &lt;- weightable(mm)
+top &lt;- top[top$aic &lt;= (min(top$aic) + 2),]</code></pre>
+<ul>
+<li>Get the best models (maximum 12 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
+</ul>
+<pre class="r"><code># Get the ten best models 
+maxmodels &lt;- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod &lt;- mm@objects[[i]]
+  name_model &lt;- paste0(&quot;best_mod_&quot;, i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos &lt;- paste0(&quot;best_mod_&quot;, 1:maxmodels)
+lista_model &lt;- mget(modelos, envir = globalenv())
+
+lista_modelos &lt;- model.sel(lista_model, rank = AIC) %&gt;% 
+  rownames_to_column(&quot;model&quot;)
+  
+var_formulas &lt;- data.frame(
+  model = paste0(&quot;best_mod_&quot;, 1:maxmodels),
+  formula = &#39;NA&#39;
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, &quot;formula&quot;] &lt;- deparse(eval(parse(text = paste0(&quot;formula(best_mod_&quot;,i, &quot;)[[3]]&quot;)))[[2]])[[1]]
+}
+
+lista_modelos &lt;- lista_modelos %&gt;% 
+  inner_join(var_formulas) %&gt;% 
+  as.data.frame() %&gt;% 
+  relocate(formula, .after = model) %&gt;% 
+  dplyr::select(-model)
+
+lista_modelos %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;) 
+
+lista_modelos_aic &lt;- lista_modelos %&gt;% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %&gt;% 
+  mutate_at(3:4, ~round(.,2)) %&gt;% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_aic_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;)</code></pre>
+<pre class="r"><code>lista_modelos_aic %&gt;% 
+  kbl(caption = paste0(&quot;Model selection of &quot;, yvar)) %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:bestmodelsAIC-richness">Table 1: </span>Model selection of riqueza
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+formula
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-143.46
+</td>
+<td style="text-align:right;">
+304.92
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.139
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-144.54
+</td>
+<td style="text-align:right;">
+305.09
+</td>
+<td style="text-align:right;">
+0.167
+</td>
+<td style="text-align:right;">
+0.128
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + fosforo + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-142.69
+</td>
+<td style="text-align:right;">
+305.38
+</td>
+<td style="text-align:right;">
+0.458
+</td>
+<td style="text-align:right;">
+0.111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-144.83
+</td>
+<td style="text-align:right;">
+305.66
+</td>
+<td style="text-align:right;">
+0.740
+</td>
+<td style="text-align:right;">
+0.096
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + fosforo + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-143.95
+</td>
+<td style="text-align:right;">
+305.90
+</td>
+<td style="text-align:right;">
+0.979
+</td>
+<td style="text-align:right;">
+0.085
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + ph + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-144.09
+</td>
+<td style="text-align:right;">
+306.17
+</td>
+<td style="text-align:right;">
+1.254
+</td>
+<td style="text-align:right;">
+0.074
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + ph + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-143.12
+</td>
+<td style="text-align:right;">
+306.23
+</td>
+<td style="text-align:right;">
+1.310
+</td>
+<td style="text-align:right;">
+0.072
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + cic + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-144.23
+</td>
+<td style="text-align:right;">
+306.47
+</td>
+<td style="text-align:right;">
+1.546
+</td>
+<td style="text-align:right;">
+0.064
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + ph + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-143.24
+</td>
+<td style="text-align:right;">
+306.48
+</td>
+<td style="text-align:right;">
+1.562
+</td>
+<td style="text-align:right;">
+0.064
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + ph + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-144.33
+</td>
+<td style="text-align:right;">
+306.67
+</td>
+<td style="text-align:right;">
+1.748
+</td>
+<td style="text-align:right;">
+0.058
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + cic + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-145.40
+</td>
+<td style="text-align:right;">
+306.79
+</td>
+<td style="text-align:right;">
+1.872
+</td>
+<td style="text-align:right;">
+0.055
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + sr.aut + cic + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-143.46
+</td>
+<td style="text-align:right;">
+306.91
+</td>
+<td style="text-align:right;">
+1.995
+</td>
+<td style="text-align:right;">
+0.051
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Explore the variable importance.</li>
+</ul>
+<pre class="r"><code># Variable Importance 
+plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/varImp-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-varImp-richness-1">
+Past versions of varImp-richness-1.png
+</button>
+</p>
+<div id="fig-varImp-richness-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/bd999cb55a213ddf767e25f7edce13126a601b61/docs/figure/modeliza_commons.Rmd/varImp-richness-1.png" target="_blank">bd999cb</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>Select the best and most parsimonious model</li>
+</ul>
+<pre class="r"><code>bm &lt;- lmer(
+  riqueza ~ sr.aut + cic + ph + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:left;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+292.1149
+</td>
+<td style="text-align:right;">
+298.4006
+</td>
+<td style="text-align:right;">
+313.9937
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+0.3789212
+</td>
+<td style="text-align:right;">
+3.426367
+</td>
+<td style="text-align:right;">
+3.753397
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+                Sum Sq Mean Sq NumDF DenDF F value   Pr(&gt;F)   
+sr.aut           1.209   1.209     1    45  0.0858 0.770897   
+cic            146.886 146.886     1    45 10.4263 0.002322 **
+ph              40.932  40.932     1    45  2.9055 0.095177 . 
+commons        176.498  88.249     2    45  6.2641 0.003981 **
+transh          86.557  86.557     1    45  6.1440 0.017001 * 
+commons:transh   7.950   3.975     2    45  0.2822 0.755483   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
+rm(lista_model)</code></pre>
+</div>
+<div id="posthoc" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+3.5206
+</td>
+<td style="text-align:right;">
+1.6913
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+2.0816
+</td>
+<td style="text-align:right;">
+0.1488
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+-1.2248
+</td>
+<td style="text-align:right;">
+2.6268
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-0.4663
+</td>
+<td style="text-align:right;">
+0.8885
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+-4.7454
+</td>
+<td style="text-align:right;">
+1.8235
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-2.6023
+</td>
+<td style="text-align:right;">
+0.0672
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+3.1829
+</td>
+<td style="text-align:right;">
+1.2841
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+2.4787
+</td>
+<td style="text-align:right;">
+0.0351
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+2.2104
+</td>
+<td style="text-align:right;">
+3.0886
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.7157
+</td>
+<td style="text-align:right;">
+0.7607
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-2.5461
+</td>
+<td style="text-align:right;">
+4.0304
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-0.6317
+</td>
+<td style="text-align:right;">
+0.8069
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-4.7566
+</td>
+<td style="text-align:right;">
+2.2952
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-2.0724
+</td>
+<td style="text-align:right;">
+0.1508
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+4.8307
+</td>
+<td style="text-align:right;">
+1.7915
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+2.6965
+</td>
+<td style="text-align:right;">
+0.0580
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.0966
+</td>
+<td style="text-align:right;">
+2.1748
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.0444
+</td>
+<td style="text-align:right;">
+0.9989
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+-4.7341
+</td>
+<td style="text-align:right;">
+2.2901
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-2.0673
+</td>
+<td style="text-align:right;">
+0.1520
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Richness~(species~number)&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/plot-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-richness-1">
+Past versions of plot-richness-1.png
+</button>
+</p>
+<div id="fig-plot-richness-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/bd999cb55a213ddf767e25f7edce13126a601b61/docs/figure/modeliza_commons.Rmd/plot-richness-1.png" target="_blank">bd999cb</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="diversity-shannon" class="section level2">
+<h2>Diversity (shannon)</h2>
+<pre class="r"><code>yvar &lt;- &quot;shannon&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- lm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) </code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-shannon-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkmodel-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<ul>
+<li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for diversity (Shannon index)</li>
+</ul>
+<div id="model-selection-1" class="section level3">
+<h3>Model selection</h3>
+<ul>
+<li>Perform a multimodel selection</li>
+</ul>
+<pre class="r"><code>yvar &lt;- &quot;shannon&quot;
+covariates &lt;- glue::glue_collapse(selected_vars, sep = &quot; + &quot;)
+always &lt;- &quot;+ commons + transh&quot; 
+f &lt;- &quot;shannon ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno&quot;
+
+lmer.glmulti &lt;- function(formula, data, random = &quot;&quot;, always = &quot;&quot;, ...) {
+    newf &lt;- formula
+    newf[[3]] &lt;- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    lmer(newf, data = data,
+         REML = FALSE, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm &lt;- glmulti(
+  f, 
+  always = c(&quot;commons&quot;,&quot;transh&quot;), 
+  random =  random_part,
+  data = d,
+  method = &quot;ga&quot;,
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmulti,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction</code></pre>
+<pre><code>TASK: Genetic algorithm in the candidate set.
+Initialization...
+Algorithm started...
+Improvements in best and average IC have bebingo en below the specified goals.
+Algorithm is declared to have converged.
+Completed.</code></pre>
+<pre class="r"><code># Best models (delta AIC &lt;= 2)
+top &lt;- weightable(mm)
+top &lt;- top[top$aic &lt;= (min(top$aic) + 2),]</code></pre>
+<ul>
+<li>Get the best models (maximum 7 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
+</ul>
+<pre class="r"><code># Get the ten best models 
+maxmodels &lt;- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod &lt;- mm@objects[[i]]
+  name_model &lt;- paste0(&quot;best_mod_&quot;, i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos &lt;- paste0(&quot;best_mod_&quot;, 1:maxmodels)
+lista_model &lt;- mget(modelos, envir = globalenv())
+
+lista_modelos &lt;- model.sel(lista_model, rank = AIC) %&gt;% 
+  rownames_to_column(&quot;model&quot;)
+  
+var_formulas &lt;- data.frame(
+  model = paste0(&quot;best_mod_&quot;, 1:maxmodels),
+  formula = &#39;NA&#39;
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, &quot;formula&quot;] &lt;- deparse(eval(parse(text = paste0(&quot;formula(best_mod_&quot;,i, &quot;)[[3]]&quot;)))[[2]])[[1]]
+}
+
+lista_modelos &lt;- lista_modelos %&gt;% 
+  inner_join(var_formulas) %&gt;% 
+  as.data.frame() %&gt;% 
+  relocate(formula, .after = model) %&gt;% 
+  dplyr::select(-model)
+
+lista_modelos %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;) 
+
+lista_modelos_aic &lt;- lista_modelos %&gt;% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %&gt;% 
+  mutate_at(3:4, ~round(.,2)) %&gt;% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_aic_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;)</code></pre>
+<pre class="r"><code>lista_modelos_aic %&gt;% 
+  kbl(caption = paste0(&quot;Model selection of &quot;, yvar)) %&gt;% 
+  kable_styling() </code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:bestmodelsAIC-shannon">Table 2: </span>Model selection of shannon
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+formula
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1 + cic + (commons + transh)
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-21.62
+</td>
+<td style="text-align:right;">
+57.24
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.269
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-21.28
+</td>
+<td style="text-align:right;">
+58.57
+</td>
+<td style="text-align:right;">
+1.332
+</td>
+<td style="text-align:right;">
+0.138
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-21.32
+</td>
+<td style="text-align:right;">
+58.63
+</td>
+<td style="text-align:right;">
+1.396
+</td>
+<td style="text-align:right;">
+0.134
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-21.33
+</td>
+<td style="text-align:right;">
+58.66
+</td>
+<td style="text-align:right;">
+1.422
+</td>
+<td style="text-align:right;">
+0.132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + fosforo + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-21.49
+</td>
+<td style="text-align:right;">
+58.98
+</td>
+<td style="text-align:right;">
+1.747
+</td>
+<td style="text-align:right;">
+0.112
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + cic + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-21.50
+</td>
+<td style="text-align:right;">
+58.99
+</td>
+<td style="text-align:right;">
+1.759
+</td>
+<td style="text-align:right;">
+0.112
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-21.59
+</td>
+<td style="text-align:right;">
+59.18
+</td>
+<td style="text-align:right;">
+1.950
+</td>
+<td style="text-align:right;">
+0.102
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Explore the variable importance.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
+</ul>
+<pre class="r"><code># Variable Importance 
+plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/varImp-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Select the best and most parsimonious model</li>
+</ul>
+<pre class="r"><code>bm &lt;- lmer(
+  shannon ~ sr.aut + cic + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:left;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+85.39774
+</td>
+<td style="text-align:right;">
+90.51402
+</td>
+<td style="text-align:right;">
+105.2876
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+0.1156895
+</td>
+<td style="text-align:right;">
+0.3572211
+</td>
+<td style="text-align:right;">
+0.3870393
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+                Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
+sr.aut         0.06844 0.06844     1    46  0.4569 0.50248  
+cic            0.60943 0.60943     1    46  4.0683 0.04955 *
+commons        0.07516 0.03758     2    46  0.2509 0.77919  
+transh         0.42129 0.42129     1    46  2.8123 0.10033  
+commons:transh 0.07530 0.03765     2    46  0.2513 0.77881  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
+rm(lista_model)</code></pre>
+</div>
+<div id="posthoc-1" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+0.1096
+</td>
+<td style="text-align:right;">
+0.1552
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7060
+</td>
+<td style="text-align:right;">
+0.7655
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+0.0712
+</td>
+<td style="text-align:right;">
+0.1662
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.4284
+</td>
+<td style="text-align:right;">
+0.9047
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+-0.0383
+</td>
+<td style="text-align:right;">
+0.1316
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-0.2914
+</td>
+<td style="text-align:right;">
+0.9545
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+0.2089
+</td>
+<td style="text-align:right;">
+0.1246
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+1.677
+</td>
+<td style="text-align:right;">
+0.1245
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.1868
+</td>
+<td style="text-align:right;">
+0.2660
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7024
+</td>
+<td style="text-align:right;">
+0.7675
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.0522
+</td>
+<td style="text-align:right;">
+0.2869
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.1820
+</td>
+<td style="text-align:right;">
+0.9819
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-0.1346
+</td>
+<td style="text-align:right;">
+0.2007
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-0.6708
+</td>
+<td style="text-align:right;">
+0.7852
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.0323
+</td>
+<td style="text-align:right;">
+0.1840
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.1757
+</td>
+<td style="text-align:right;">
+0.9832
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.0902
+</td>
+<td style="text-align:right;">
+0.1848
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.4882
+</td>
+<td style="text-align:right;">
+0.8784
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.0579
+</td>
+<td style="text-align:right;">
+0.1879
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.3082
+</td>
+<td style="text-align:right;">
+0.9492
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Shannon~index&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/plot-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="total-coverage-rec_total_porc" class="section level2">
+<h2>Total coverage (rec_total_porc)</h2>
+<pre class="r"><code>yvar &lt;- &quot;rec_total_porc&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- glm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-rec_total-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkmodel-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<ul>
+<li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for Total coverage</li>
+</ul>
+<div id="model-selection-2" class="section level3">
+<h3>Model selection</h3>
+<ul>
+<li>Perform a multimodel selection</li>
+</ul>
+<pre class="r"><code>yvar &lt;- &quot;rec_total_porc&quot;
+covariates &lt;- glue::glue_collapse(selected_vars, sep = &quot; + &quot;)
+always &lt;- &quot;+ commons + transh&quot; 
+f &lt;- &quot;rec_total_porc ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno&quot;
+
+lmer.glmulti &lt;- function(formula, data, random = &quot;&quot;, always = &quot;&quot;, ...) {
+    newf &lt;- formula
+    newf[[3]] &lt;- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    lmer(newf, data = data,
+         REML = FALSE, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm &lt;- glmulti(
+  f, 
+  always = c(&quot;commons&quot;,&quot;transh&quot;), 
+  random =  random_part,
+  data = d,
+  method = &quot;ga&quot;,
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmulti,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction</code></pre>
+<pre><code>TASK: Genetic algorithm in the candidate set.
+Initialization...
+Algorithm started...
+Improvements in best and average IC have bebingo en below the specified goals.
+Algorithm is declared to have converged.
+Completed.</code></pre>
+<pre class="r"><code># Best models (delta AIC &lt;= 2)
+top &lt;- weightable(mm)
+top &lt;- top[top$aic &lt;= (min(top$aic) + 2),]</code></pre>
+<ul>
+<li>Get the best models (maximum 14 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
+</ul>
+<pre class="r"><code># Get the ten best models 
+maxmodels &lt;- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod &lt;- mm@objects[[i]]
+  name_model &lt;- paste0(&quot;best_mod_&quot;, i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos &lt;- paste0(&quot;best_mod_&quot;, 1:maxmodels)
+lista_model &lt;- mget(modelos, envir = globalenv())
+
+lista_modelos &lt;- model.sel(lista_model, rank = AIC) %&gt;% 
+  rownames_to_column(&quot;model&quot;)
+  
+var_formulas &lt;- data.frame(
+  model = paste0(&quot;best_mod_&quot;, 1:maxmodels),
+  formula = &#39;NA&#39;
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, &quot;formula&quot;] &lt;- deparse(eval(parse(text = paste0(&quot;formula(best_mod_&quot;,i, &quot;)[[3]]&quot;)))[[2]])[[1]]
+}
+
+lista_modelos &lt;- lista_modelos %&gt;% 
+  inner_join(var_formulas) %&gt;% 
+  as.data.frame() %&gt;% 
+  relocate(formula, .after = model) %&gt;% 
+  dplyr::select(-model)
+
+lista_modelos %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;) 
+
+lista_modelos_aic &lt;- lista_modelos %&gt;% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %&gt;% 
+  mutate_at(3:4, ~round(.,2)) %&gt;% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_aic_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;)</code></pre>
+<pre class="r"><code>lista_modelos_aic %&gt;% 
+  kbl(caption = paste0(&quot;Model selection of &quot;, yvar)) %&gt;% 
+  kable_styling() </code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+(#tab:bestmodelsAIC-rec_total)Model selection of rec_total_porc
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+formula
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + fosforo + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-207.89
+</td>
+<td style="text-align:right;">
+435.79
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + ph + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-209.08
+</td>
+<td style="text-align:right;">
+436.17
+</td>
+<td style="text-align:right;">
+0.383
+</td>
+<td style="text-align:right;">
+0.102
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-210.24
+</td>
+<td style="text-align:right;">
+436.48
+</td>
+<td style="text-align:right;">
+0.692
+</td>
+<td style="text-align:right;">
+0.087
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + ph + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-208.25
+</td>
+<td style="text-align:right;">
+436.50
+</td>
+<td style="text-align:right;">
+0.712
+</td>
+<td style="text-align:right;">
+0.086
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + fosforo + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-209.29
+</td>
+<td style="text-align:right;">
+436.58
+</td>
+<td style="text-align:right;">
+0.793
+</td>
+<td style="text-align:right;">
+0.083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + sr.aut + fosforo + potasio + nitrogeno + (commons +
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+-207.37
+</td>
+<td style="text-align:right;">
+436.74
+</td>
+<td style="text-align:right;">
+0.953
+</td>
+<td style="text-align:right;">
+0.077
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-209.39
+</td>
+<td style="text-align:right;">
+436.78
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+0.075
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + fosforo + ph + potasio + nitrogeno + (commons +
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+-207.57
+</td>
+<td style="text-align:right;">
+437.14
+</td>
+<td style="text-align:right;">
+1.357
+</td>
+<td style="text-align:right;">
+0.063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + sr.aut + cic + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-208.66
+</td>
+<td style="text-align:right;">
+437.32
+</td>
+<td style="text-align:right;">
+1.531
+</td>
+<td style="text-align:right;">
+0.057
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + sr.aut + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-208.71
+</td>
+<td style="text-align:right;">
+437.42
+</td>
+<td style="text-align:right;">
+1.637
+</td>
+<td style="text-align:right;">
+0.054
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + fosforo + ph + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-208.78
+</td>
+<td style="text-align:right;">
+437.56
+</td>
+<td style="text-align:right;">
+1.773
+</td>
+<td style="text-align:right;">
+0.051
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + ph + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+-207.85
+</td>
+<td style="text-align:right;">
+437.70
+</td>
+<td style="text-align:right;">
+1.913
+</td>
+<td style="text-align:right;">
+0.047
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + fosforo + potasio + nitrogeno + (commons +
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+-207.85
+</td>
+<td style="text-align:right;">
+437.70
+</td>
+<td style="text-align:right;">
+1.915
+</td>
+<td style="text-align:right;">
+0.047
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + fosforo + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-208.89
+</td>
+<td style="text-align:right;">
+437.77
+</td>
+<td style="text-align:right;">
+1.989
+</td>
+<td style="text-align:right;">
+0.046
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Explore the variable importance.</li>
+</ul>
+<pre class="r"><code># Variable Importance 
+plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/varImp-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Select the best and most parsimonious model</li>
+</ul>
+<pre class="r"><code>bm &lt;- lmer(
+  fitovol_dm3 ~ sr.aut + potasio + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:left;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+340.069
+</td>
+<td style="text-align:right;">
+346.8382
+</td>
+<td style="text-align:right;">
+361.3191
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+0.1071119
+</td>
+<td style="text-align:right;">
+6.96625
+</td>
+<td style="text-align:right;">
+7.676433
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+                Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)
+sr.aut          81.833  81.833     1    42  1.3887 0.2453
+potasio          2.554   2.554     1    42  0.0433 0.8361
+nitrogeno       15.122  15.122     1    42  0.2566 0.6151
+commons         98.384  49.192     2    42  0.8348 0.4410
+transh         140.805 140.805     1    42  2.3895 0.1297
+commons:transh  46.559  23.280     2    42  0.3951 0.6761</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
+rm(lista_model)</code></pre>
+</div>
+<div id="posthoc-2" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+4.3271
+</td>
+<td style="text-align:right;">
+3.4818
+</td>
+<td style="text-align:right;">
+9.3879
+</td>
+<td style="text-align:right;">
+1.2428
+</td>
+<td style="text-align:right;">
+0.4583
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+4.1399
+</td>
+<td style="text-align:right;">
+3.7566
+</td>
+<td style="text-align:right;">
+9.3336
+</td>
+<td style="text-align:right;">
+1.1020
+</td>
+<td style="text-align:right;">
+0.5357
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+-0.1873
+</td>
+<td style="text-align:right;">
+2.8546
+</td>
+<td style="text-align:right;">
+8.2306
+</td>
+<td style="text-align:right;">
+-0.0656
+</td>
+<td style="text-align:right;">
+0.9976
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+4.1042
+</td>
+<td style="text-align:right;">
+2.6613
+</td>
+<td style="text-align:right;">
+8.7738
+</td>
+<td style="text-align:right;">
+1.5422
+</td>
+<td style="text-align:right;">
+0.1583
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+5.0252
+</td>
+<td style="text-align:right;">
+5.9959
+</td>
+<td style="text-align:right;">
+8.4034
+</td>
+<td style="text-align:right;">
+0.8381
+</td>
+<td style="text-align:right;">
+0.6908
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+2.2710
+</td>
+<td style="text-align:right;">
+7.0280
+</td>
+<td style="text-align:right;">
+8.5082
+</td>
+<td style="text-align:right;">
+0.3231
+</td>
+<td style="text-align:right;">
+0.9444
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-2.7543
+</td>
+<td style="text-align:right;">
+4.3064
+</td>
+<td style="text-align:right;">
+8.3377
+</td>
+<td style="text-align:right;">
+-0.6396
+</td>
+<td style="text-align:right;">
+0.8030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+3.6290
+</td>
+<td style="text-align:right;">
+4.0824
+</td>
+<td style="text-align:right;">
+10.2029
+</td>
+<td style="text-align:right;">
+0.8889
+</td>
+<td style="text-align:right;">
+0.6588
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+6.0088
+</td>
+<td style="text-align:right;">
+4.0082
+</td>
+<td style="text-align:right;">
+9.3541
+</td>
+<td style="text-align:right;">
+1.4991
+</td>
+<td style="text-align:right;">
+0.3346
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+2.3797
+</td>
+<td style="text-align:right;">
+3.8048
+</td>
+<td style="text-align:right;">
+8.0825
+</td>
+<td style="text-align:right;">
+0.6254
+</td>
+<td style="text-align:right;">
+0.8107
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Total~Coverage~(&#39;%&#39;)&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/plot-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="phytovolumen-fitovol_dm3" class="section level2">
+<h2>Phytovolumen (fitovol_dm3)</h2>
+<pre class="r"><code>yvar &lt;- &quot;fitovol_dm3&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- glm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-fitvol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-fitvol-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkmodel-fitvol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<ul>
+<li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for Phytovolumen</li>
+</ul>
+<div id="model-selection-3" class="section level3">
+<h3>Model selection</h3>
+<ul>
+<li>Perform a multimodel selection</li>
+</ul>
+<pre class="r"><code>yvar &lt;- &quot;fitovol_dm3&quot;
+covariates &lt;- glue::glue_collapse(selected_vars, sep = &quot; + &quot;)
+always &lt;- &quot;+ commons + transh&quot; 
+f &lt;- &quot;fitovol_dm3 ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno&quot;
+
+lmer.glmulti &lt;- function(formula, data, random = &quot;&quot;, always = &quot;&quot;, ...) {
+    newf &lt;- formula
+    newf[[3]] &lt;- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    lmer(newf, data = data,
+         REML = FALSE, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm &lt;- glmulti(
+  f, 
+  always = c(&quot;commons&quot;,&quot;transh&quot;), 
+  random =  random_part,
+  data = d,
+  method = &quot;ga&quot;,
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmulti,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction</code></pre>
+<pre><code>TASK: Genetic algorithm in the candidate set.
+Initialization...
+Algorithm started...
+Improvements in best and average IC have bebingo en below the specified goals.
+Algorithm is declared to have converged.
+Completed.</code></pre>
+<pre class="r"><code># Best models (delta AIC &lt;= 2)
+top &lt;- weightable(mm)
+top &lt;- top[top$aic &lt;= (min(top$aic) + 2),]</code></pre>
+<ul>
+<li>Get the best models (maximum 8 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
+</ul>
+<pre class="r"><code># Get the ten best models 
+maxmodels &lt;- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod &lt;- mm@objects[[i]]
+  name_model &lt;- paste0(&quot;best_mod_&quot;, i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos &lt;- paste0(&quot;best_mod_&quot;, 1:maxmodels)
+lista_model &lt;- mget(modelos, envir = globalenv())
+
+lista_modelos &lt;- model.sel(lista_model, rank = AIC) %&gt;% 
+  rownames_to_column(&quot;model&quot;)
+  
+var_formulas &lt;- data.frame(
+  model = paste0(&quot;best_mod_&quot;, 1:maxmodels),
+  formula = &#39;NA&#39;
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, &quot;formula&quot;] &lt;- deparse(eval(parse(text = paste0(&quot;formula(best_mod_&quot;,i, &quot;)[[3]]&quot;)))[[2]])[[1]]
+}
+
+lista_modelos &lt;- lista_modelos %&gt;% 
+  inner_join(var_formulas) %&gt;% 
+  as.data.frame() %&gt;% 
+  relocate(formula, .after = model) %&gt;% 
+  dplyr::select(-model)
+
+lista_modelos %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;) 
+
+lista_modelos_aic &lt;- lista_modelos %&gt;% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %&gt;% 
+  mutate_at(3:4, ~round(.,2)) %&gt;% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_aic_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;)</code></pre>
+<pre class="r"><code>lista_modelos_aic %&gt;% 
+  kbl(caption = paste0(&quot;Model selection of &quot;, yvar)) %&gt;% 
+  kable_styling() </code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:bestmodelsAIC-fitovol">Table 3: </span>Model selection of fitovol_dm3
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+formula
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + (commons + transh)
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-171.92
+</td>
+<td style="text-align:right;">
+357.84
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.243
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-171.38
+</td>
+<td style="text-align:right;">
+358.75
+</td>
+<td style="text-align:right;">
+0.913
+</td>
+<td style="text-align:right;">
+0.154
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-170.58
+</td>
+<td style="text-align:right;">
+359.17
+</td>
+<td style="text-align:right;">
+1.328
+</td>
+<td style="text-align:right;">
+0.125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-171.80
+</td>
+<td style="text-align:right;">
+359.60
+</td>
+<td style="text-align:right;">
+1.763
+</td>
+<td style="text-align:right;">
+0.101
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + fosforo + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-171.81
+</td>
+<td style="text-align:right;">
+359.63
+</td>
+<td style="text-align:right;">
+1.788
+</td>
+<td style="text-align:right;">
+0.099
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-171.86
+</td>
+<td style="text-align:right;">
+359.71
+</td>
+<td style="text-align:right;">
+1.871
+</td>
+<td style="text-align:right;">
+0.095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-171.88
+</td>
+<td style="text-align:right;">
+359.77
+</td>
+<td style="text-align:right;">
+1.930
+</td>
+<td style="text-align:right;">
+0.093
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + sr.aut + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-171.91
+</td>
+<td style="text-align:right;">
+359.83
+</td>
+<td style="text-align:right;">
+1.988
+</td>
+<td style="text-align:right;">
+0.090
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Explore the variable importance.</li>
+</ul>
+<pre class="r"><code># Variable Importance 
+plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/varImp-fitovol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Select the best and most parsimonious model</li>
+</ul>
+<pre class="r"><code>bm &lt;- lmer(
+  fitovol_dm3 ~ sr.aut + cic + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:left;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+333.0342
+</td>
+<td style="text-align:right;">
+339.8035
+</td>
+<td style="text-align:right;">
+354.2843
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+0.1319891
+</td>
+<td style="text-align:right;">
+6.852627
+</td>
+<td style="text-align:right;">
+7.551227
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+                Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
+sr.aut         128.184 128.184     1    42  2.2480 0.14127  
+cic             82.631  82.631     1    42  1.4491 0.23541  
+nitrogeno       67.570  67.570     1    42  1.1850 0.28255  
+commons        178.698  89.349     2    42  1.5669 0.22064  
+transh         166.945 166.945     1    42  2.9278 0.09444 .
+commons:transh   5.837   2.918     2    42  0.0512 0.95017  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
+rm(lista_model)</code></pre>
+</div>
+<div id="posthoc-3" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+5.4698
+</td>
+<td style="text-align:right;">
+3.2718
+</td>
+<td style="text-align:right;">
+8.5425
+</td>
+<td style="text-align:right;">
+1.6718
+</td>
+<td style="text-align:right;">
+0.2698
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+5.1049
+</td>
+<td style="text-align:right;">
+3.3687
+</td>
+<td style="text-align:right;">
+8.9150
+</td>
+<td style="text-align:right;">
+1.5154
+</td>
+<td style="text-align:right;">
+0.3296
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+-0.3649
+</td>
+<td style="text-align:right;">
+2.7932
+</td>
+<td style="text-align:right;">
+8.3077
+</td>
+<td style="text-align:right;">
+-0.1306
+</td>
+<td style="text-align:right;">
+0.9906
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+4.5013
+</td>
+<td style="text-align:right;">
+2.6367
+</td>
+<td style="text-align:right;">
+8.7298
+</td>
+<td style="text-align:right;">
+1.7072
+</td>
+<td style="text-align:right;">
+0.123
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+6.3448
+</td>
+<td style="text-align:right;">
+5.3492
+</td>
+<td style="text-align:right;">
+8.4556
+</td>
+<td style="text-align:right;">
+1.1861
+</td>
+<td style="text-align:right;">
+0.4916
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+5.1924
+</td>
+<td style="text-align:right;">
+5.8324
+</td>
+<td style="text-align:right;">
+8.9691
+</td>
+<td style="text-align:right;">
+0.8903
+</td>
+<td style="text-align:right;">
+0.6595
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-1.1525
+</td>
+<td style="text-align:right;">
+4.0962
+</td>
+<td style="text-align:right;">
+8.7403
+</td>
+<td style="text-align:right;">
+-0.2813
+</td>
+<td style="text-align:right;">
+0.9575
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+4.5948
+</td>
+<td style="text-align:right;">
+4.1042
+</td>
+<td style="text-align:right;">
+9.9725
+</td>
+<td style="text-align:right;">
+1.1195
+</td>
+<td style="text-align:right;">
+0.5244
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+5.0174
+</td>
+<td style="text-align:right;">
+3.9070
+</td>
+<td style="text-align:right;">
+10.3660
+</td>
+<td style="text-align:right;">
+1.2842
+</td>
+<td style="text-align:right;">
+0.4338
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.4227
+</td>
+<td style="text-align:right;">
+3.9481
+</td>
+<td style="text-align:right;">
+8.1599
+</td>
+<td style="text-align:right;">
+0.1071
+</td>
+<td style="text-align:right;">
+0.9937
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Fitovolumen~(m^3)&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/plot-fitovol-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="consumption-ratetasa_cons" class="section level2">
+<h2>Consumption rate(tasa_cons)</h2>
+<pre class="r"><code>yvar &lt;- &quot;tasa_cons&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- glm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkGLM-tasacons-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/checkmodel-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<div id="model-selection-4" class="section level3">
+<h3>Model selection</h3>
+<ul>
+<li>Perform a multimodel selection</li>
+</ul>
+<pre class="r"><code>yvar &lt;- &quot;tasa_cons&quot;
+covariates &lt;- glue::glue_collapse(selected_vars, sep = &quot; + &quot;)
+always &lt;- &quot;+ commons + transh&quot; 
+f &lt;- &quot;tasa_cons ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno&quot;
+
+lmer.glmultiGamma &lt;- function(formula, data, random = &quot;&quot;, always = &quot;&quot;, ...) {
+    newf &lt;- formula
+    newf[[3]] &lt;- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    glmer(newf, data = data, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm &lt;- glmulti(
+  f, 
+  always = c(&quot;commons&quot;,&quot;transh&quot;), 
+  random =  random_part,
+  family = Gamma(link = &quot;log&quot;),
+  data = d,
+  method = &quot;ga&quot;,
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmultiGamma,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction</code></pre>
+<pre><code>TASK: Genetic algorithm in the candidate set.
+Initialization...
+Algorithm started...
+Improvements in best and average IC have bebingo en below the specified goals.
+Algorithm is declared to have converged.
+Completed.</code></pre>
+<pre class="r"><code># Best models (delta AIC &lt;= 2)
+top &lt;- weightable(mm)
+top &lt;- top[top$aic &lt;= (min(top$aic) + 2),]</code></pre>
+<ul>
+<li>Get the best models (maximum 15 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
+</ul>
+<pre class="r"><code># Get the ten best models 
+maxmodels &lt;- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod &lt;- mm@objects[[i]]
+  name_model &lt;- paste0(&quot;best_mod_&quot;, i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos &lt;- paste0(&quot;best_mod_&quot;, 1:maxmodels)
+lista_model &lt;- mget(modelos, envir = globalenv())
+
+lista_modelos &lt;- model.sel(lista_model, rank = AIC) %&gt;% 
+  rownames_to_column(&quot;model&quot;)
+  
+var_formulas &lt;- data.frame(
+  model = paste0(&quot;best_mod_&quot;, 1:maxmodels),
+  formula = &#39;NA&#39;
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, &quot;formula&quot;] &lt;- deparse(eval(parse(text = paste0(&quot;formula(best_mod_&quot;,i, &quot;)[[3]]&quot;)))[[2]])[[1]]
+}
+
+lista_modelos &lt;- lista_modelos %&gt;% 
+  inner_join(var_formulas) %&gt;% 
+  as.data.frame() %&gt;% 
+  relocate(formula, .after = model) %&gt;% 
+  dplyr::select(-model)
+
+lista_modelos %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;) 
+
+lista_modelos_aic &lt;- lista_modelos %&gt;% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %&gt;% 
+  mutate_at(3:4, ~round(.,2)) %&gt;% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %&gt;% 
+  write.csv(here::here(paste0(&quot;output/best_models_aic_&quot;, yvar, &quot;.csv&quot;)), 
+            na = &quot;&quot;)</code></pre>
+<pre class="r"><code>lista_modelos_aic %&gt;% 
+  kbl(caption = paste0(&quot;Model selection of &quot;, yvar)) %&gt;% 
+  kable_styling() </code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:bestmodelsAIC-tasacons">Table 4: </span>Model selection of tasa_cons
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+formula
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1 + cic + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-40.87
+</td>
+<td style="text-align:right;">
+99.73
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + (commons + transh)
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-44.04
+</td>
+<td style="text-align:right;">
+100.08
+</td>
+<td style="text-align:right;">
+0.346
+</td>
+<td style="text-align:right;">
+0.106
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + cic + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-40.37
+</td>
+<td style="text-align:right;">
+100.74
+</td>
+<td style="text-align:right;">
+1.009
+</td>
+<td style="text-align:right;">
+0.076
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + (commons + transh)
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-43.39
+</td>
+<td style="text-align:right;">
+100.78
+</td>
+<td style="text-align:right;">
+1.048
+</td>
+<td style="text-align:right;">
+0.074
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + (commons + transh)
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-43.47
+</td>
+<td style="text-align:right;">
+100.94
+</td>
+<td style="text-align:right;">
+1.211
+</td>
+<td style="text-align:right;">
+0.068
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-42.51
+</td>
+<td style="text-align:right;">
+101.01
+</td>
+<td style="text-align:right;">
+1.284
+</td>
+<td style="text-align:right;">
+0.066
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + cic + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-42.59
+</td>
+<td style="text-align:right;">
+101.17
+</td>
+<td style="text-align:right;">
+1.443
+</td>
+<td style="text-align:right;">
+0.061
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + potasio + (commons + transh)
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-43.61
+</td>
+<td style="text-align:right;">
+101.22
+</td>
+<td style="text-align:right;">
+1.486
+</td>
+<td style="text-align:right;">
+0.060
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + ph + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-40.64
+</td>
+<td style="text-align:right;">
+101.28
+</td>
+<td style="text-align:right;">
+1.549
+</td>
+<td style="text-align:right;">
+0.058
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.aut + (commons + transh)
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-43.65
+</td>
+<td style="text-align:right;">
+101.30
+</td>
+<td style="text-align:right;">
+1.570
+</td>
+<td style="text-align:right;">
+0.057
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + fosforo + (commons + transh)
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-43.70
+</td>
+<td style="text-align:right;">
+101.41
+</td>
+<td style="text-align:right;">
+1.678
+</td>
+<td style="text-align:right;">
+0.054
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + cic + fosforo + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-40.78
+</td>
+<td style="text-align:right;">
+101.56
+</td>
+<td style="text-align:right;">
+1.832
+</td>
+<td style="text-align:right;">
+0.050
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + ph + (commons + transh)
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-43.82
+</td>
+<td style="text-align:right;">
+101.64
+</td>
+<td style="text-align:right;">
+1.909
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + fosforo + (commons + transh)
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-42.82
+</td>
+<td style="text-align:right;">
+101.65
+</td>
+<td style="text-align:right;">
+1.919
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + cic + potasio + nitrogeno + (commons + transh)
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-40.83
+</td>
+<td style="text-align:right;">
+101.67
+</td>
+<td style="text-align:right;">
+1.936
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Explore the variable importance.</li>
+</ul>
+<pre class="r"><code># Variable Importance 
+plot(mm, type = &quot;s&quot;, sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = &quot;blue&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/varImp-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Select the best and most parsimonious model</li>
+</ul>
+<pre class="r"><code>bm &lt;- lmer(
+  tasa_cons ~ cic + potasio + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+ICC
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+131.4949
+</td>
+<td style="text-align:right;">
+137.7807
+</td>
+<td style="text-align:right;">
+153.3738
+</td>
+<td style="text-align:right;">
+0.3804779
+</td>
+<td style="text-align:right;">
+0.3687351
+</td>
+<td style="text-align:right;">
+0.018602
+</td>
+<td style="text-align:right;">
+0.521101
+</td>
+<td style="text-align:right;">
+0.5739339
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+               Sum Sq Mean Sq NumDF  DenDF F value  Pr(&gt;F)   
+cic            3.4594  3.4594     1 9.0016 10.5023 0.01014 * 
+potasio        4.2681  4.2681     1 9.0016 12.9573 0.00575 **
+nitrogeno      1.8196  1.8196     1 9.0016  5.5240 0.04328 * 
+commons        2.9240  1.4620     2 9.0016  4.4384 0.04557 * 
+transh         0.0019  0.0019     1 9.0016  0.0056 0.94188   
+commons:transh 1.7923  0.8961     2 9.0016  2.7205 0.11909   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
+rm(lista_model)</code></pre>
+</div>
+<div id="posthoc-4" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+0.4432
+</td>
+<td style="text-align:right;">
+0.2155
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+2.0571
+</td>
+<td style="text-align:right;">
+0.1543
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+0.5786
+</td>
+<td style="text-align:right;">
+0.2015
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+2.8714
+</td>
+<td style="text-align:right;">
+0.0442
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+0.1354
+</td>
+<td style="text-align:right;">
+0.2145
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.6311
+</td>
+<td style="text-align:right;">
+0.8072
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+0.0136
+</td>
+<td style="text-align:right;">
+0.1809
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.075
+</td>
+<td style="text-align:right;">
+0.9419
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-0.0124
+</td>
+<td style="text-align:right;">
+0.2897
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-0.0426
+</td>
+<td style="text-align:right;">
+0.9990
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.2266
+</td>
+<td style="text-align:right;">
+0.3250
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.6971
+</td>
+<td style="text-align:right;">
+0.7711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.2389
+</td>
+<td style="text-align:right;">
+0.3200
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.7467
+</td>
+<td style="text-align:right;">
+0.7430
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.8988
+</td>
+<td style="text-align:right;">
+0.2990
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3.0065
+</td>
+<td style="text-align:right;">
+0.0358
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.9306
+</td>
+<td style="text-align:right;">
+0.2912
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3.1960
+</td>
+<td style="text-align:right;">
+0.0267
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.0318
+</td>
+<td style="text-align:right;">
+0.3067
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.1036
+</td>
+<td style="text-align:right;">
+0.9941
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Consumption~rate&quot;)</code></pre>
+<p><img src="figure/modeliza_commons.Rmd/plot-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>anovas &lt;- mget(apropos(&quot;anova_&quot;), envir = globalenv()) |&gt; 
+  bind_rows() |&gt; 
+  remove_rownames() |&gt; 
+  relocate(variable, factor) |&gt; 
+  mutate_at(3, ~round(.,2)) |&gt; 
+  mutate_at(4, ~round(.,3))</code></pre>
+<pre class="r"><code>anovas |&gt; 
+  kbl(col.names = 
+        c(&quot;Response&quot;, &quot;variables&quot;, &quot;F&quot;, &quot;p.value&quot;)) %&gt;% 
+  kable_styling() </code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Response
+</th>
+<th style="text-align:left;">
+variables
+</th>
+<th style="text-align:right;">
+F
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+sr.aut
+</td>
+<td style="text-align:right;">
+2.25
+</td>
+<td style="text-align:right;">
+0.141
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+cic
+</td>
+<td style="text-align:right;">
+1.45
+</td>
+<td style="text-align:right;">
+0.235
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+nitrogeno
+</td>
+<td style="text-align:right;">
+1.19
+</td>
+<td style="text-align:right;">
+0.283
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+1.57
+</td>
+<td style="text-align:right;">
+0.221
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+2.93
+</td>
+<td style="text-align:right;">
+0.094
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.950
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+sr.aut
+</td>
+<td style="text-align:right;">
+1.39
+</td>
+<td style="text-align:right;">
+0.245
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+potasio
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+0.836
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+nitrogeno
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+0.615
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+0.83
+</td>
+<td style="text-align:right;">
+0.441
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+2.39
+</td>
+<td style="text-align:right;">
+0.130
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+<td style="text-align:right;">
+0.676
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+sr.aut
+</td>
+<td style="text-align:right;">
+0.09
+</td>
+<td style="text-align:right;">
+0.771
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+cic
+</td>
+<td style="text-align:right;">
+10.43
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+ph
+</td>
+<td style="text-align:right;">
+2.91
+</td>
+<td style="text-align:right;">
+0.095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+6.26
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+6.14
+</td>
+<td style="text-align:right;">
+0.017
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+<td style="text-align:right;">
+0.755
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shannon
+</td>
+<td style="text-align:left;">
+sr.aut
+</td>
+<td style="text-align:right;">
+0.46
+</td>
+<td style="text-align:right;">
+0.502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shannon
+</td>
+<td style="text-align:left;">
+cic
+</td>
+<td style="text-align:right;">
+4.07
+</td>
+<td style="text-align:right;">
+0.050
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shannon
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+0.779
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shannon
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+2.81
+</td>
+<td style="text-align:right;">
+0.100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shannon
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+0.779
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+cic
+</td>
+<td style="text-align:right;">
+10.50
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+potasio
+</td>
+<td style="text-align:right;">
+12.96
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+nitrogeno
+</td>
+<td style="text-align:right;">
+5.52
+</td>
+<td style="text-align:right;">
+0.043
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+4.44
+</td>
+<td style="text-align:right;">
+0.046
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+0.942
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+2.72
+</td>
+<td style="text-align:right;">
+0.119
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.1 (2022-06-23)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Monterey 12.3.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] lmerTest_3.1-3      car_3.1-0           carData_3.0-5      
+ [4] emmeans_1.8.1-1     glmulti_1.0.8       rJava_1.0-6        
+ [7] arm_1.13-1          MASS_7.3-57         multilevelmod_1.0.0
+[10] yardstick_1.1.0     workflowsets_1.0.0  workflows_1.1.0    
+[13] tune_1.0.1          rsample_1.1.0       recipes_1.0.1      
+[16] parsnip_1.0.2       modeldata_1.0.1     infer_1.0.3        
+[19] dials_1.0.0         scales_1.2.1        broom_1.0.1        
+[22] tidymodels_1.0.0    MuMIn_1.47.1        lme4_1.1-30        
+[25] Matrix_1.5-1        glue_1.6.2          rmdformats_1.0.4   
+[28] knitr_1.40          leaps_3.1           factoextra_1.0.7   
+[31] nlme_3.1-157        DHARMa_0.4.6        performance_0.10.0 
+[34] kableExtra_1.3.4    corrplot_0.92       correlation_0.8.2  
+[37] patchwork_1.1.2     vegan_2.6-2         lattice_0.20-45    
+[40] permute_0.9-7       fuzzySim_4.3        janitor_2.1.0      
+[43] here_1.0.1          forcats_0.5.2       stringr_1.4.1      
+[46] dplyr_1.0.10        purrr_0.3.4         readr_2.1.2        
+[49] tidyr_1.2.1         tibble_3.1.8        ggplot2_3.3.6      
+[52] tidyverse_1.3.2     workflowr_1.7.0    
+
+loaded via a namespace (and not attached):
+  [1] utf8_1.2.2           tidyselect_1.1.2     grid_4.2.1          
+  [4] munsell_0.5.0        codetools_0.2-18     future_1.28.0       
+  [7] withr_2.5.0          colorspace_2.0-3     qgam_1.3.4          
+ [10] highr_0.9            rstudioapi_0.14      stats4_4.2.1        
+ [13] listenv_0.8.0        labeling_0.4.2       git2r_0.30.1        
+ [16] farver_2.1.1         bit64_4.0.5          DiceDesign_1.9      
+ [19] datawizard_0.6.2     gap.datasets_0.0.5   rprojroot_2.0.3     
+ [22] coda_0.19-4          parallelly_1.32.1    vctrs_0.4.2         
+ [25] generics_0.1.3       ipred_0.9-13         xfun_0.33           
+ [28] randomForest_4.7-1.1 doParallel_1.0.17    R6_2.5.1            
+ [31] lhs_1.1.5            cachem_1.0.6         assertthat_0.2.1    
+ [34] promises_1.2.0.1     vroom_1.5.7          nnet_7.3-17         
+ [37] googlesheets4_1.0.1  gtable_0.3.1         globals_0.16.1      
+ [40] processx_3.7.0       timeDate_4021.106    rlang_1.0.6         
+ [43] systemfonts_1.0.4    splines_4.2.1        gargle_1.2.1        
+ [46] yaml_2.3.5           abind_1.4-5          modelr_0.1.9        
+ [49] backports_1.4.1      httpuv_1.6.6         tools_4.2.1         
+ [52] lava_1.6.10          bookdown_0.29        ellipsis_0.3.2      
+ [55] jquerylib_0.1.4      plyr_1.8.7           Rcpp_1.0.9          
+ [58] ps_1.7.1             rpart_4.1.16         haven_2.5.1         
+ [61] ggrepel_0.9.1        cluster_2.1.3        fs_1.5.2            
+ [64] furrr_0.3.1          magrittr_2.0.3       reprex_2.0.2        
+ [67] GPfit_1.0-8          googledrive_2.0.0    mvtnorm_1.1-3       
+ [70] whisker_0.4          mime_0.12            hms_1.1.2           
+ [73] evaluate_0.16        xtable_1.8-4         pbkrtest_0.5.1      
+ [76] readxl_1.4.1         compiler_4.2.1       crayon_1.5.1        
+ [79] minqa_1.2.4          htmltools_0.5.3      mgcv_1.8-40         
+ [82] later_1.3.0          tzdb_0.3.0           lubridate_1.8.0     
+ [85] DBI_1.1.3            dbplyr_2.2.1         see_0.7.3           
+ [88] boot_1.3-28          modEvA_3.5           cli_3.4.1           
+ [91] parallel_4.2.1       insight_0.18.4       gower_1.0.0         
+ [94] pkgconfig_2.0.3      getPass_0.2-2        numDeriv_2016.8-1.1 
+ [97] terra_1.6-17         xml2_1.3.3           foreach_1.5.2       
+[100] svglite_2.1.0        bslib_0.4.0          hardhat_1.2.0       
+[103] webshot_0.5.4        estimability_1.4.1   prodlim_2019.11.13  
+[106] rvest_1.0.3          snakecase_0.11.0     callr_3.7.2         
+[109] digest_0.6.29        rmarkdown_2.16       cellranger_1.1.0    
+[112] gap_1.2.3-6          shiny_1.7.2          nloptr_2.0.3        
+[115] lifecycle_1.0.2      jsonlite_1.8.2       viridisLite_0.4.1   
+[118] fansi_1.0.3          pillar_1.8.1         plotrix_3.8-2       
+[121] fastmap_1.1.0        httr_1.4.4           survival_3.3-1      
+[124] bayestestR_0.13.0    iterators_1.0.14     bit_4.0.4           
+[127] class_7.3-20         stringi_1.7.8        sass_0.4.2          
+[130] future.apply_1.9.1  </code></pre>
+</div>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>Sum of the weights/probabilities for the models in which the variable appears. So, a variable that shows up in lots of models with large weights will receive a high importance value. Some authors refers as 0.8 cutoff and others 0.5 cutoff<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
