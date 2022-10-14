@@ -13,8 +13,7 @@
 
 <title>Home</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
-<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -154,11 +153,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -305,6 +308,7 @@ $(document).ready(function () {
 <li><a href="#data-preparation" id="toc-data-preparation">Data preparation</a></li>
 <li><a href="#data-exploration" id="toc-data-exploration">Data Exploration</a></li>
 <li><a href="#analysis" id="toc-analysis">Analysis</a></li>
+<li><a href="#others" id="toc-others">Others</a></li>
 </ul>
 </div>
 
@@ -332,7 +336,7 @@ Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></sp
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-30
+<strong>Last updated:</strong> 2022-10-14
 </p>
 <p>
 <strong>Checks:</strong>
@@ -378,20 +382,20 @@ know the exact version of the code that produced these results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreec9aa5eeac07cbc4b3b41c0b613bde8e6b7017a08targetblankc9aa5eea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreea2adbf00d6332a574a3c2157c034e5b4e43876ebtargetblanka2adbf0a">
 <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/c9aa5eeac07cbc4b3b41c0b613bde8e6b7017a08" target="_blank">c9aa5ee</a>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/a2adbf00d6332a574a3c2157c034e5b4e43876eb" target="_blank">a2adbf0</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreec9aa5eeac07cbc4b3b41c0b613bde8e6b7017a08targetblankc9aa5eea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreea2adbf00d6332a574a3c2157c034e5b4e43876ebtargetblanka2adbf0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and
 connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/c9aa5eeac07cbc4b3b41c0b613bde8e6b7017a08" target="_blank">c9aa5ee</a>.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/a2adbf00d6332a574a3c2157c034e5b4e43876eb" target="_blank">a2adbf0</a>.
 See the <em>Past versions</em> tab to see a history of the changes made to the
 R Markdown and HTML files.
 </p>
@@ -409,9 +413,8 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   analysis/compare_commons.Rmd
-    Modified:   analysis/exploratory_plots.Rmd
+    Modified:   glmulti.analysis.modgen.back
+    Modified:   glmulti.analysis.mods.back
 
 </code></pre>
 <p>
@@ -461,33 +464,16 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/ajpelu/human_ecology/blob/c9aa5eeac07cbc4b3b41c0b613bde8e6b7017a08/analysis/index.Rmd" target="_blank">c9aa5ee</a>
+<a href="https://github.com/ajpelu/human_ecology/blob/a2adbf00d6332a574a3c2157c034e5b4e43876eb/analysis/index.Rmd" target="_blank">a2adbf0</a>
 </td>
 <td>
 ajpelu
 </td>
 <td>
-2022-08-30
+2022-10-14
 </td>
 <td>
-wflow_publish(c("analysis/index.Rmd"))
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/human_ecology/292ffde33e49d64325b2dc0828e530aa77781d1e/docs/index.html" target="_blank">292ffde</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2022-08-30
-</td>
-<td>
-Build site.
+update index
 </td>
 </tr>
 <tr>
@@ -495,13 +481,13 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/ajpelu/human_ecology/blob/47a5ee2ffedd723906ae2a7a1cf341ac892c0ec6/analysis/index.Rmd" target="_blank">47a5ee2</a>
+<a href="https://github.com/ajpelu/human_ecology/blob/a5e77002e575daf861de7b0680013324a05e3637/analysis/index.Rmd" target="_blank">a5e7700</a>
 </td>
 <td>
-ajpelu
+SERPAM-antonio
 </td>
 <td>
-2022-08-30
+2022-10-07
 </td>
 <td>
 update
@@ -509,36 +495,19 @@ update
 </tr>
 <tr>
 <td>
-Rmd
+html
 </td>
 <td>
-<a href="https://github.com/ajpelu/human_ecology/blob/159b0b96e5ef682505c9ae3e156a1be3372b5afc/analysis/index.Rmd" target="_blank">159b0b9</a>
+<a href="https://rawcdn.githack.com/ajpelu/human_ecology/a5e77002e575daf861de7b0680013324a05e3637/docs/index.html" target="_blank">a5e7700</a>
 </td>
 <td>
-ajpelu
+SERPAM-antonio
 </td>
 <td>
-2022-08-30
+2022-10-07
 </td>
 <td>
-update repo
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/human_ecology/blob/642452871468878c1e300f2d6e0a8f8c7983765c/analysis/index.Rmd" target="_blank">6424528</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2022-06-20
-</td>
-<td>
-Start workflowr project.
+update
 </td>
 </tr>
 </tbody>
@@ -564,7 +533,14 @@ Start workflowr project.
 <h2>Analysis</h2>
 <ul>
 <li><a href="compare_commons.html">Compare commons</a></li>
+<li><a href="modeliza_commons.html">Models</a></li>
 <li><a href="nmds.html">NMDS</a></li>
+</ul>
+</div>
+<div id="others" class="section level2">
+<h2>Others</h2>
+<ul>
+<li>See <a href="https://github.com/ajpelu/human_ecology/tree/main/output">output folder</a> to get the tables of the models.</li>
 </ul>
 </div>
 
