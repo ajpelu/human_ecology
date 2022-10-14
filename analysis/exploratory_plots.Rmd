@@ -45,7 +45,7 @@ data_mean <- d |>
   pivot_longer(-c(commonsSort, transh)) |> 
   group_by(name, commonsSort, transh) |> 
   summarise(
-    mean = mean(value, na.rm=TRUE),
+    mean = mean(value, na.rm = TRUE),
     sd = sd(value, na.rm = TRUE), 
     se = plotrix::std.error(value, na.rm = TRUE)
   ) |>
