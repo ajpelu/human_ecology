@@ -70,31 +70,7 @@ random_part <- "(1 | parcela)"
 ```
 
 ```{r data-plot}
-vi <- c("shannon", "riqueza", "fitovol_dm3", 
-        "rec_total_porc", "rec_vegetal_porc",
-        "tasa_cons", "estiercol_kg_ha")
-
-data_mean <- d |> 
-  dplyr::select(one_of(vi), commons, transh) |>
-  pivot_longer(-c(commons, transh)) |> 
-  group_by(name, commons, transh) |> 
-  summarise(
-    mean = mean(value, na.rm=TRUE),
-    sd = sd(value, na.rm = TRUE), 
-    se = plotrix::std.error(value, na.rm = TRUE)
-  ) |>
-  mutate(commonsF = recode_factor(commons, 
-                           "0_Castril" = "Castril",
-                           "1_Santiago" = "Santiago",
-                           "2_Pontones" = "Pontones")) |>
-  mutate(nameF = recode_factor(name, 
-                        estiercol_kg_ha = "Estiercol~(kg~ha^{-1})",
-                        fitovol_dm3 = "Fitovolumen~(m^3)",
-                        rec_total_porc = "Total~Coverage~('%')", 
-                        rec_vegetal_porc = "Plant~Coverage~('%')",
-                        riqueza = "Richness~(species~number)",
-                        shannon = "Shannon~index",
-                        tasa_cons = "Consumption~rate"))
+data_mean <- read_csv(here::here("data/data_mean.csv"), show_col_types = FALSE)
 ```
 
 
@@ -124,7 +100,7 @@ plot(simulated_resid)
 plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) 
 ```
 
-```{r checkmodel-richness}
+```{r checkmodel-richness, fig.height=8}
 check_model(maux)
 rm(maux, faux, simulated_resid) # remove 
 ```
@@ -251,10 +227,15 @@ performance(bm) %>%
   kable_styling()
 ```
 
-```{r}
+```{r anova-richness}
 anova(as_lmerModLmerTest(bm))
 formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```
+
+```{r coef-richness}
+tabla_coef(bm)
+```
+
 
 ```{r clean-richness}
 rm(list = apropos("best_mod"))
@@ -266,6 +247,7 @@ rm(lista_model)
 tabla_postHoc_commons(bm)
 tabla_postHoc_transh(bm)
 tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-richness}
@@ -431,6 +413,10 @@ anova(as_lmerModLmerTest(bm))
 formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```
 
+```{r coef-shannon}
+tabla_coef(bm)
+```
+
 ```{r clean-shannon}
 rm(list = apropos("best_mod"))
 rm(lista_model)
@@ -441,6 +427,7 @@ rm(lista_model)
 tabla_postHoc_commons(bm)
 tabla_postHoc_transh(bm)
 tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-shannon}
@@ -607,6 +594,11 @@ anova(as_lmerModLmerTest(bm))
 formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```
 
+```{r coef-rec_total}
+tabla_coef(bm)
+```
+
+
 ```{r clean-rec_total}
 rm(list = apropos("best_mod"))
 rm(lista_model)
@@ -617,6 +609,7 @@ rm(lista_model)
 tabla_postHoc_commons(bm)
 tabla_postHoc_transh(bm)
 tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-rec_total}
@@ -782,6 +775,11 @@ anova(as_lmerModLmerTest(bm))
 formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```
 
+```{r coef-fitvol}
+tabla_coef(bm)
+```
+
+
 ```{r clean-fitvol}
 rm(list = apropos("best_mod"))
 rm(lista_model)
@@ -792,6 +790,7 @@ rm(lista_model)
 tabla_postHoc_commons(bm)
 tabla_postHoc_transh(bm)
 tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-fitovol}
@@ -956,6 +955,12 @@ anova(as_lmerModLmerTest(bm))
 formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```
 
+
+```{r coef-tasacons}
+tabla_coef(bm)
+```
+
+
 ```{r clean-tasacons}
 rm(list = apropos("best_mod"))
 rm(lista_model)
@@ -966,6 +971,7 @@ rm(lista_model)
 tabla_postHoc_commons(bm)
 tabla_postHoc_transh(bm)
 tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-tasacons}

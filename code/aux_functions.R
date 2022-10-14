@@ -91,6 +91,14 @@ tabla_postHoc_int <- function(modelo){
     kable_paper("hover", full_width = F)
 }
 
+tabla_postHoc_transhcommons <- function(modelo){
+  posthoc <- emmeans(modelo, list(pairwise ~ transh | commons), adjust = "tukey")
+  as.data.frame(posthoc$`pairwise differences of transh | commons`) %>%
+    rename(transh = 1) %>%
+    kbl(digits = 4) %>%
+    kable_paper("hover", full_width = F)
+}
+
 #####################################################################
 # functions to formatAnova
 formatAnova <- function(df, yvar){
@@ -123,6 +131,19 @@ plot_inter <- function(df, response){
     guides(color = guide_legend(direction = "horizontal"))
 
 }
+
+
+
+
+##### Tabla coeficientes
+tabla_coef <- function(modelo) {
+  broom::tidy(modelo, effects = "fixed") |>
+    mutate_at(3:5, ~round(., 2)) |>
+    mutate_at(7, ~round(., 3)) |>
+    kbl() |>
+    kable_paper("hover", full_width = F)
+  }
+
 
 
 

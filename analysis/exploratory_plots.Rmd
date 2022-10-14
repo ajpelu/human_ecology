@@ -57,13 +57,12 @@ data_mean <- d |>
                         riqueza = "Richness~(species~number)",
                         shannon = "Shannon~index",
                         tasa_cons = "Consumption~rate")) |> 
-
-
   mutate(commonsF = recode_factor(commonsSort, 
                            '0_Castril' = "Castril",
                            '1_Santiago' = "Santiago",
                            '2_Pontones' = "Pontones"))
 
+data_mean |> write.csv(here::here(paste0("data/data_mean.csv")), row.names = FALSE)
 
 data_mean %>% 
   ggplot(aes(y = mean, x = commonsF, group = transh, colour = transh)) + 
