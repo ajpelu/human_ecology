@@ -1,6 +1,6 @@
 ---
-title: "modeliza_commons"
-author: "ajpelu"
+title: "Models"
+author: "Antonio J. Pérez-Luque"
 date: "2022-10-10"
 output: workflowr::wflow_html
 editor_options:
@@ -10,6 +10,7 @@ editor_options:
 ## Introduction
 ```{r, message=FALSE}
 source("code/load_pkgs.R")
+source("code/aux_functions.R")
 ```
 
 ```{r setup, include=FALSE}
@@ -24,11 +25,9 @@ opts_chunk$set(echo = TRUE,
                autodep = TRUE)
 ```
 
-```{r}
+```{r data-raw} 
 d_raw <- read_csv(here::here("data/cleaned_data.csv"), show_col_types = FALSE)
-```
 
-```{r}
 selected_vars <- c("sr.spr",
                    "sr.aut",
                    "cic",
@@ -40,11 +39,11 @@ selected_vars <- c("sr.spr",
 
 The potential selected variables are (see [`compare_commons`](compare_commons.Rmd)): 
 
-```{r}
+```{r variables}
 d_raw |> dplyr::select(one_of(selected_vars)) |> names()
 ```
 
-```{r}
+```{r data}
 d <- d_raw |> 
   dplyr::select(one_of(selected_vars),
                 commons, 
@@ -55,27 +54,54 @@ d <- d_raw |>
                 fitovol_dm3,
                 rec_total_porc,
                 rec_vegetal_porc,
-                riqueza) %>% 
+                riqueza,
+                tasa_cons) %>% 
   mutate(parcela = as.factor(parcela))
 ```
 
-```{r}
+```{r prepare-covariates}
 covariates <- c(selected_vars, 
                 "commons",
                 "transh")    
 
 full_covariates <- glue::glue_collapse(covariates, sep = "+")
+
+random_part <- "(1 | parcela)"
 ```
 
+```{r data-plot}
+vi <- c("shannon", "riqueza", "fitovol_dm3", 
+        "rec_total_porc", "rec_vegetal_porc",
+        "tasa_cons", "estiercol_kg_ha")
+
+data_mean <- d |> 
+  dplyr::select(one_of(vi), commons, transh) |>
+  pivot_longer(-c(commons, transh)) |> 
+  group_by(name, commons, transh) |> 
+  summarise(
+    mean = mean(value, na.rm=TRUE),
+    sd = sd(value, na.rm = TRUE), 
+    se = plotrix::std.error(value, na.rm = TRUE)
+  ) |>
+  mutate(commonsF = recode_factor(commons, 
+                           "0_Castril" = "Castril",
+                           "1_Santiago" = "Santiago",
+                           "2_Pontones" = "Pontones")) |>
+  mutate(nameF = recode_factor(name, 
+                        estiercol_kg_ha = "Estiercol~(kg~ha^{-1})",
+                        fitovol_dm3 = "Fitovolumen~(m^3)",
+                        rec_total_porc = "Total~Coverage~('%')", 
+                        rec_vegetal_porc = "Plant~Coverage~('%')",
+                        riqueza = "Richness~(species~number)",
+                        shannon = "Shannon~index",
+                        tasa_cons = "Consumption~rate"))
+```
 
 
 ## Richness
 
-```{r}
+```{r modeliza-richness}
 yvar <- "riqueza"
-
-random_part <- "(1 | parcela)"
-
 covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
                                        sep = " + ")
 
@@ -83,27 +109,33 @@ f <- reformulate(covariates_lmer, response = yvar)
 
 m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
           data = d)
-
 ```
 
 - GLMM or LMM? 
 
-```{r checkmodel-dharma}
+```{r checkGLM-richness}
 faux <- reformulate(
   glue::glue_collapse(covariates, sep = " + "), response = yvar)
-
 
 maux <- lm(faux, data = d) 
 simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
 plot(simulated_resid)
 
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) 
+```
+
+```{r checkmodel-richness}
 check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
 ```
 
 - It seems that there are no problems of normality or homocedasticity, so we use an LMM for richness. 
 
+### Model selection 
 
-```{r}
+- Perform a multimodel selection
+
+```{r multimodel-richness, message=FALSE}
 yvar <- "riqueza"
 covariates <- glue::glue_collapse(selected_vars, sep = " + ")
 always <- "+ commons + transh" 
@@ -131,15 +163,19 @@ mm <- glmulti(
   maxsize = 5, 
   fitfunction = lmer.glmulti,
   marginality = FALSE, 
-  level = 1) # 1 without interaction 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction
+
 
 # Best models (delta AIC <= 2)
-top <- weightable(mm) 
+top <- weightable(mm)
 top <- top[top$aic <= (min(top$aic) + 2),]
-top
 ```
 
-```{r}
+- Get the best models (maximum `r nrow(top)` models ($\Delta_{AIC}<2$))
+
+```{r bestmodels-richness}
 # Get the ten best models 
 maxmodels <- nrow(top)
 
@@ -161,9 +197,9 @@ var_formulas <- data.frame(
   formula = 'NA'
 )
 
-for(i in 1:maxmodels) {
+for (i in 1:maxmodels) {
   # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
-  var_formulas[i, "formula"] <- deparse(eval(parse(text=paste0("formula(best_mod_",i, ")[[3]]")))[[2]])[[1]]
+  var_formulas[i, "formula"] <- deparse(eval(parse(text = paste0("formula(best_mod_",i, ")[[3]]")))[[2]])[[1]]
 }
 
 lista_modelos <- lista_modelos %>% 
@@ -172,40 +208,40 @@ lista_modelos <- lista_modelos %>%
   relocate(formula, .after = model) %>% 
   dplyr::select(-model)
 
+lista_modelos %>% 
+  write.csv(here::here(paste0("output/best_models_", yvar, ".csv")), 
+            na = "") 
 
 lista_modelos_aic <- lista_modelos %>% 
-  dplyr::select(formula, df, logLik, AIC, delta, weight)
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %>% 
+  mutate_at(3:4, ~round(.,2)) %>% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %>% 
+  write.csv(here::here(paste0("output/best_models_aic_", yvar, ".csv")), 
+            na = "")
 ```
 
-```{r}
+```{r bestmodelsAIC-richness}
+lista_modelos_aic %>% 
+  kbl(caption = paste0("Model selection of ", yvar)) %>% 
+  kable_styling()
+```
+
+- Explore the variable importance.
+
+
+```{r varImp-richness}
 # Variable Importance 
-plot(mm, type = "s")
-# variable importance, Sum of the weights/probabilities for the models in which the variable appears.  
-# So, a variable that shows up in lots of models with large weights will receive a high importance value
-#Some authors refers as 0.8 cutoff and others 0.5 cutoff
+plot(mm, type = "s", sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = "blue")
 ```
 
+- Select the best and most parsimonious model 
 
-```{r, eval = FALSE, echo = FALSE}
-# see https://www.metafor-project.org/doku.php/tips:model_selection_with_glmulti_and_mumin 
-m_std <- standardize(m, standardize.y = FALSE)
-options(na.action = "na.fail") # Required for dredge to run
-max_variables <- floor(nrow(d)/10)
-model_set <- dredge(m_std, m.lim = c(0, max_variables), 
-                    trace = 2)
-options(na.action = "na.omit") # set back to default
-
-top_models <- get.models(model_set, subset = delta < 2)
-summary(model.avg(model_set, subset = delta <= 2))
-
-ss <- subset(model_set, delta <= 2, recalc.weights=FALSE)
-```
-
-
-
-```{r}
+```{r model-richenss}
 bm <- lmer(
-  riqueza ~ sr.aut + cic + ph + commons + transh + (1 | parcela), 
+  riqueza ~ sr.aut + cic + ph + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
@@ -214,21 +250,751 @@ performance(bm) %>%
   kable_styling()
 ```
 
-
-`
-
 ```{r}
-
 anova(as_lmerModLmerTest(bm))
 formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
-anova(as_lmer)
+```
+
+```{r clean-richness}
+rm(list = apropos("best_mod"))
+rm(lista_model)
+```
+
+### Posthoc 
+```{r posthoc-richness}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+```
+
+```{r plot-richness}
+plot_inter(df = data_mean, response = "Richness~(species~number)")
+```
+
+## Diversity (shannon)
+
+```{r modeliza-shannon}
+yvar <- "shannon"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-shannon}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- lm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) 
+```
+
+```{r checkmodel-shannon}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+- It seems that there are no problems of normality or homocedasticity, so we use an LMM for diversity (Shannon index) 
+
+### Model selection 
+
+- Perform a multimodel selection
+
+```{r multimodel-shannon, message=FALSE}
+yvar <- "shannon"
+covariates <- glue::glue_collapse(selected_vars, sep = " + ")
+always <- "+ commons + transh" 
+f <- "shannon ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+
+lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
+    newf <- formula
+    newf[[3]] <- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    lmer(newf, data = data,
+         REML = FALSE, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm <- glmulti(
+  f, 
+  always = c("commons","transh"), 
+  random =  random_part,
+  data = d,
+  method = "ga",
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmulti,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction
+
+
+# Best models (delta AIC <= 2)
+top <- weightable(mm)
+top <- top[top$aic <= (min(top$aic) + 2),]
+```
+
+- Get the best models (maximum `r nrow(top)` models ($\Delta_{AIC}<2$))
+
+```{r bestmodels-shannon}
+# Get the ten best models 
+maxmodels <- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod <- mm@objects[[i]]
+  name_model <- paste0("best_mod_", i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos <- paste0("best_mod_", 1:maxmodels)
+lista_model <- mget(modelos, envir = globalenv())
+
+lista_modelos <- model.sel(lista_model, rank = AIC) %>% 
+  rownames_to_column("model")
+  
+var_formulas <- data.frame(
+  model = paste0("best_mod_", 1:maxmodels),
+  formula = 'NA'
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, "formula"] <- deparse(eval(parse(text = paste0("formula(best_mod_",i, ")[[3]]")))[[2]])[[1]]
+}
+
+lista_modelos <- lista_modelos %>% 
+  inner_join(var_formulas) %>% 
+  as.data.frame() %>% 
+  relocate(formula, .after = model) %>% 
+  dplyr::select(-model)
+
+lista_modelos %>% 
+  write.csv(here::here(paste0("output/best_models_", yvar, ".csv")), 
+            na = "") 
+
+lista_modelos_aic <- lista_modelos %>% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %>% 
+  mutate_at(3:4, ~round(.,2)) %>% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %>% 
+  write.csv(here::here(paste0("output/best_models_aic_", yvar, ".csv")), 
+            na = "")
+```
+
+```{r bestmodelsAIC-shannon}
+lista_modelos_aic %>% 
+  kbl(caption = paste0("Model selection of ", yvar)) %>% 
+  kable_styling() 
+```
+
+- Explore the variable importance.[^1]
+
+[^1]: Sum of the weights/probabilities for the models in which the variable appears. So, a variable that shows up in lots of models with large weights will receive a high importance value. Some authors refers as 0.8 cutoff and others 0.5 cutoff
+
+```{r varImp-shannon}
+# Variable Importance 
+plot(mm, type = "s", sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = "blue")
+```
+
+- Select the best and most parsimonious model 
+
+```{r model-shannon}
+bm <- lmer(
+  shannon ~ sr.aut + cic + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+```
+
+```{r anova-shannon}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+```{r clean-shannon}
+rm(list = apropos("best_mod"))
+rm(lista_model)
+```
+
+### Posthoc 
+```{r posthoc-shannon}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+```
+
+```{r plot-shannon}
+plot_inter(df = data_mean, response = "Shannon~index")
+```
+
+
+## Total coverage (rec_total_porc) 
+
+```{r modeliza-rec_total}
+yvar <- "rec_total_porc"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-rec_total}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- glm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
+```
+
+```{r checkmodel-rec_total}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+- It seems that there are no problems of normality or homocedasticity, so we use an LMM for Total coverage 
+
+### Model selection 
+
+- Perform a multimodel selection
+
+```{r multimodel-rec_total, message=FALSE}
+yvar <- "rec_total_porc"
+covariates <- glue::glue_collapse(selected_vars, sep = " + ")
+always <- "+ commons + transh" 
+f <- "rec_total_porc ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+
+lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
+    newf <- formula
+    newf[[3]] <- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    lmer(newf, data = data,
+         REML = FALSE, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm <- glmulti(
+  f, 
+  always = c("commons","transh"), 
+  random =  random_part,
+  data = d,
+  method = "ga",
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmulti,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction
+
+
+# Best models (delta AIC <= 2)
+top <- weightable(mm)
+top <- top[top$aic <= (min(top$aic) + 2),]
+```
+
+- Get the best models (maximum `r nrow(top)` models ($\Delta_{AIC}<2$))
+
+```{r bestmodels-rec_total}
+# Get the ten best models 
+maxmodels <- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod <- mm@objects[[i]]
+  name_model <- paste0("best_mod_", i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos <- paste0("best_mod_", 1:maxmodels)
+lista_model <- mget(modelos, envir = globalenv())
+
+lista_modelos <- model.sel(lista_model, rank = AIC) %>% 
+  rownames_to_column("model")
+  
+var_formulas <- data.frame(
+  model = paste0("best_mod_", 1:maxmodels),
+  formula = 'NA'
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, "formula"] <- deparse(eval(parse(text = paste0("formula(best_mod_",i, ")[[3]]")))[[2]])[[1]]
+}
+
+lista_modelos <- lista_modelos %>% 
+  inner_join(var_formulas) %>% 
+  as.data.frame() %>% 
+  relocate(formula, .after = model) %>% 
+  dplyr::select(-model)
+
+lista_modelos %>% 
+  write.csv(here::here(paste0("output/best_models_", yvar, ".csv")), 
+            na = "") 
+
+lista_modelos_aic <- lista_modelos %>% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %>% 
+  mutate_at(3:4, ~round(.,2)) %>% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %>% 
+  write.csv(here::here(paste0("output/best_models_aic_", yvar, ".csv")), 
+            na = "")
+```
+
+```{r bestmodelsAIC-rec_total}
+lista_modelos_aic %>% 
+  kbl(caption = paste0("Model selection of ", yvar)) %>% 
+  kable_styling() 
+```
+
+- Explore the variable importance.
+
+
+```{r varImp-rec_total}
+# Variable Importance 
+plot(mm, type = "s", sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = "blue")
+```
+
+- Select the best and most parsimonious model 
+
+```{r model-rec_total}
+bm <- lmer(
+  fitovol_dm3 ~ sr.aut + potasio + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+
+```
+
+```{r anova-rec_total}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+```{r clean-rec_total}
+rm(list = apropos("best_mod"))
+rm(lista_model)
+```
+
+### Posthoc 
+```{r posthoc-rec_total}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+```
+
+```{r plot-rec_total}
+plot_inter(df = data_mean, response = "Total~Coverage~('%')")
+```
+
+## Phytovolumen (fitovol_dm3)
+
+```{r modeliza-fitvol}
+yvar <- "fitovol_dm3"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-fitvol}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- glm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
+```
+
+```{r checkmodel-fitvol}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+- It seems that there are no problems of normality or homocedasticity, so we use an LMM for Phytovolumen 
+
+### Model selection 
+
+- Perform a multimodel selection
+
+```{r multimodel-fitvol, message=FALSE}
+yvar <- "fitovol_dm3"
+covariates <- glue::glue_collapse(selected_vars, sep = " + ")
+always <- "+ commons + transh" 
+f <- "fitovol_dm3 ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+
+lmer.glmulti <- function(formula, data, random = "", always = "", ...) {
+    newf <- formula
+    newf[[3]] <- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    lmer(newf, data = data,
+         REML = FALSE, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm <- glmulti(
+  f, 
+  always = c("commons","transh"), 
+  random =  random_part,
+  data = d,
+  method = "ga",
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmulti,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction
+
+
+# Best models (delta AIC <= 2)
+top <- weightable(mm)
+top <- top[top$aic <= (min(top$aic) + 2),]
+```
+
+- Get the best models (maximum `r nrow(top)` models ($\Delta_{AIC}<2$))
+
+```{r bestmodels-fitovol}
+# Get the ten best models 
+maxmodels <- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod <- mm@objects[[i]]
+  name_model <- paste0("best_mod_", i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos <- paste0("best_mod_", 1:maxmodels)
+lista_model <- mget(modelos, envir = globalenv())
+
+lista_modelos <- model.sel(lista_model, rank = AIC) %>% 
+  rownames_to_column("model")
+  
+var_formulas <- data.frame(
+  model = paste0("best_mod_", 1:maxmodels),
+  formula = 'NA'
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, "formula"] <- deparse(eval(parse(text = paste0("formula(best_mod_",i, ")[[3]]")))[[2]])[[1]]
+}
+
+lista_modelos <- lista_modelos %>% 
+  inner_join(var_formulas) %>% 
+  as.data.frame() %>% 
+  relocate(formula, .after = model) %>% 
+  dplyr::select(-model)
+
+lista_modelos %>% 
+  write.csv(here::here(paste0("output/best_models_", yvar, ".csv")), 
+            na = "") 
+
+lista_modelos_aic <- lista_modelos %>% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %>% 
+  mutate_at(3:4, ~round(.,2)) %>% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %>% 
+  write.csv(here::here(paste0("output/best_models_aic_", yvar, ".csv")), 
+            na = "")
+```
+
+```{r bestmodelsAIC-fitovol}
+lista_modelos_aic %>% 
+  kbl(caption = paste0("Model selection of ", yvar)) %>% 
+  kable_styling() 
+```
+
+- Explore the variable importance.
+
+
+```{r varImp-fitovol}
+# Variable Importance 
+plot(mm, type = "s", sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = "blue")
+```
+
+- Select the best and most parsimonious model 
+
+```{r model-fitovol}
+bm <- lmer(
+  fitovol_dm3 ~ sr.aut + cic + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+
+```
+
+```{r anova-fitvol}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+```{r clean-fitvol}
+rm(list = apropos("best_mod"))
+rm(lista_model)
+```
+
+### Posthoc 
+```{r posthoc-fitovol}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+```
+
+```{r plot-fitovol}
+plot_inter(df = data_mean, response = "Fitovolumen~(m^3)")
+```
+
+## Consumption rate(tasa_cons)
+
+```{r modeliza-tasacons}
+yvar <- "tasa_cons"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-tasacons}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- glm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
+```
+
+```{r checkmodel-tasacons}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+ 
+### Model selection 
+
+- Perform a multimodel selection
+
+```{r multimodel-tasacons, message=FALSE}
+yvar <- "tasa_cons"
+covariates <- glue::glue_collapse(selected_vars, sep = " + ")
+always <- "+ commons + transh" 
+f <- "tasa_cons ~ sr.spr + sr.aut + cic + fosforo + ph + potasio + nitrogeno"
+
+lmer.glmultiGamma <- function(formula, data, random = "", always = "", ...) {
+    newf <- formula
+    newf[[3]] <- substitute(f + a + r,
+                            list(f = newf[[3]], 
+                                 r = reformulate(random)[[2]],
+                                 a = reformulate(always)[[2]]))
+    glmer(newf, data = data, ...)
+}
+
+#https://yuzar-blog.netlify.app/posts/2022-05-31-glmulti/
+
+mm <- glmulti(
+  f, 
+  always = c("commons","transh"), 
+  random =  random_part,
+  family = Gamma(link = "log"),
+  data = d,
+  method = "ga",
+  deltaM = 0.5,
+  maxsize = 5, 
+  fitfunction = lmer.glmultiGamma,
+  marginality = FALSE, 
+  plotty = FALSE,
+  report = FALSE,
+  level = 1) # 1 without interaction
+
+
+# Best models (delta AIC <= 2)
+top <- weightable(mm)
+top <- top[top$aic <= (min(top$aic) + 2),]
+```
+
+- Get the best models (maximum `r nrow(top)` models ($\Delta_{AIC}<2$))
+
+```{r bestmodels-tasacons}
+# Get the ten best models 
+maxmodels <- nrow(top)
+
+for (i in 1:maxmodels) { 
+  mod <- mm@objects[[i]]
+  name_model <- paste0("best_mod_", i)
+  assign(name_model, mod)}
+
+
+# Get the table 
+modelos <- paste0("best_mod_", 1:maxmodels)
+lista_model <- mget(modelos, envir = globalenv())
+
+lista_modelos <- model.sel(lista_model, rank = AIC) %>% 
+  rownames_to_column("model")
+  
+var_formulas <- data.frame(
+  model = paste0("best_mod_", 1:maxmodels),
+  formula = 'NA'
+)
+
+for (i in 1:maxmodels) {
+  # Ojo no incluyo la parte aleatoria que esta en todos. Por eso indico el [[2]] 
+  var_formulas[i, "formula"] <- deparse(eval(parse(text = paste0("formula(best_mod_",i, ")[[3]]")))[[2]])[[1]]
+}
+
+lista_modelos <- lista_modelos %>% 
+  inner_join(var_formulas) %>% 
+  as.data.frame() %>% 
+  relocate(formula, .after = model) %>% 
+  dplyr::select(-model)
+
+lista_modelos %>% 
+  write.csv(here::here(paste0("output/best_models_", yvar, ".csv")), 
+            na = "") 
+
+lista_modelos_aic <- lista_modelos %>% 
+  dplyr::select(formula, df, logLik, AIC, delta, weight) %>% 
+  mutate_at(3:4, ~round(.,2)) %>% 
+  mutate_at(5:6, ~round(.,3)) 
+
+lista_modelos_aic %>% 
+  write.csv(here::here(paste0("output/best_models_aic_", yvar, ".csv")), 
+            na = "")
+```
+
+```{r bestmodelsAIC-tasacons}
+lista_modelos_aic %>% 
+  kbl(caption = paste0("Model selection of ", yvar)) %>% 
+  kable_styling() 
+```
+
+- Explore the variable importance.
+
+
+```{r varImp-tasacons}
+# Variable Importance 
+plot(mm, type = "s", sub = yvar, font.sub = 2, cex.sub = 1.5)
+abline(v = 0.5, col = "blue")
+```
+
+- Select the best and most parsimonious model 
+
+```{r model-tasacons}
+bm <- lmer(
+  tasa_cons ~ cic + potasio + nitrogeno + commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+
+```
+
+```{r anova-tasacons}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+```{r clean-tasacons}
+rm(list = apropos("best_mod"))
+rm(lista_model)
+```
+
+### Posthoc 
+```{r posthoc-tasacons}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+```
+
+```{r plot-tasacons}
+plot_inter(df = data_mean, response = "Consumption~rate")
+```
+
+
+```{r}
+anovas <- mget(apropos("anova_"), envir = globalenv()) |> 
+  bind_rows() |> 
+  remove_rownames() |> 
+  relocate(variable, factor) |> 
+  mutate_at(3, ~round(.,2)) |> 
+  mutate_at(4, ~round(.,3))
+```
+
+```{r}
+anovas |> 
+  kbl(col.names = 
+        c("Response", "variables", "F", "p.value")) %>% 
+  kable_styling() 
 ```
 
 
 
 
 
-car::Anova(bm_manual_1)
+
+
+
+
+
+
+
 
 
 
