@@ -1,0 +1,9 @@
+"","formula","df","logLik","AIC","delta","weight"
+"1","1 + sr.aut + (commons + transh)",7,-171.92,357.84,0,0.243
+"2","1 + sr.aut + cic + (commons + transh)",8,-171.38,358.75,0.913,0.154
+"3","1 + sr.aut + cic + nitrogeno + (commons + transh)",9,-170.58,359.17,1.328,0.125
+"4","1 + sr.aut + ph + (commons + transh)",8,-171.8,359.6,1.763,0.101
+"5","1 + sr.aut + fosforo + (commons + transh)",8,-171.81,359.63,1.788,0.099
+"6","1 + sr.aut + nitrogeno + (commons + transh)",8,-171.86,359.71,1.871,0.095
+"7","1 + sr.aut + potasio + (commons + transh)",8,-171.88,359.77,1.93,0.093
+"8","1 + sr.spr + sr.aut + (commons + transh)",8,-171.91,359.83,1.988,0.09

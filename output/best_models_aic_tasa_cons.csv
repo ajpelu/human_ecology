@@ -1,0 +1,16 @@
+"","formula","df","logLik","AIC","delta","weight"
+"1","1 + cic + potasio + nitrogeno + (commons + transh)",9,-40.87,99.73,0,0.125
+"2","1 + (commons + transh)",6,-44.04,100.08,0.346,0.106
+"3","1 + sr.aut + cic + potasio + nitrogeno + (commons + transh)",10,-40.37,100.74,1.009,0.076
+"4","1 + cic + (commons + transh)",7,-43.39,100.78,1.048,0.074
+"5","1 + sr.spr + (commons + transh)",7,-43.47,100.94,1.211,0.068
+"6","1 + cic + potasio + (commons + transh)",8,-42.51,101.01,1.284,0.066
+"7","1 + sr.spr + cic + (commons + transh)",8,-42.59,101.17,1.443,0.061
+"8","1 + potasio + (commons + transh)",7,-43.61,101.22,1.486,0.06
+"9","1 + cic + ph + potasio + nitrogeno + (commons + transh)",10,-40.64,101.28,1.549,0.058
+"10","1 + sr.aut + (commons + transh)",7,-43.65,101.3,1.57,0.057
+"11","1 + fosforo + (commons + transh)",7,-43.7,101.41,1.678,0.054
+"12","1 + cic + fosforo + potasio + nitrogeno + (commons + transh)",10,-40.78,101.56,1.832,0.05
+"13","1 + ph + (commons + transh)",7,-43.82,101.64,1.909,0.048
+"14","1 + sr.spr + fosforo + (commons + transh)",8,-42.82,101.65,1.919,0.048
+"15","1 + sr.spr + cic + potasio + nitrogeno + (commons + transh)",10,-40.83,101.67,1.936,0.048
