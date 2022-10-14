@@ -1,7 +1,6 @@
 ---
 title: "Exploratory plots"
-author: "ajpelu"
-date: "2022-08-30"
+author: "Antonio J. Pérez-Luque"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
