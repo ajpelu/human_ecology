@@ -1,76 +1,95 @@
 ---
 title: "nmds"
-author: "ajpelu"
+author: "Antonio J. Pérez-Luque"
 date: "2022-06-20"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
 
-## Introducción
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
 
-- Queremos hacer un NMDS de los quadrats muestreados ... 
-
-
-### Preparación de los datos 
-
-- Leemos los datos. 
-
-- Se crea un ID (id_plot) combinando cod_parcela + quadrat (e.g.: CES_1_1), siendo CES_1 el código de la parcela y 1 el quadrat (i=1,2,3). 
-
-- Creamos dos tipos de datasets: uno con la composición de especies por parcela, y otro con los metadatos de las parcelas. 
-
-
-```{r read-data, echo=TRUE}
-veg_raw <- readxl::read_excel(path = here::here("data/Datos_para_Antonio.xlsx"), 
-                              sheet = "Especies_quadrat") %>% 
-  janitor::clean_names() %>% 
-  unite(col = "id", cod_parcela:quadrat, sep = "_", remove = FALSE)
-
-
-veg_metadatos <- veg_raw %>% dplyr::select(localidad:carga_otono)
-veg <- veg_raw %>% dplyr::select(-c(localidad:tratamiento_humedad,
-                                    cod_parcela:carga_otono)) 
-
-
-
-veg_raw <- readxl::read_excel(path = here::here("data/Datos_para_Antonio.xlsx"), 
-                              sheet = "Especies_quadrat") %>% 
-  janitor::clean_names() %>% 
-  unite(col = "id", cod_parcela:quadrat, sep = "_", remove = FALSE)
-
+## Global options
+opts_chunk$set(echo = TRUE,
+	             cache = FALSE,
+               prompt = FALSE,
+               tidy = TRUE,
+               comment = NA,
+               message = FALSE,
+               warning = FALSE,
+               autodep = TRUE)
 ```
 
-- Existen algunos datos identificados a nivel de género o a nivel de especie (n = 8). Decidimos quitar esos datos en el análisis porque una misma entidad (e.g. Asteracea) puede implicar diferentes taxones en las parcelas (eg. un taxon A identificado como Asteracea y un taxón B -diferente a A- pero también Asteracea son tratados como la misma entidad, y por tanto estaríamos sesgando los datos). 
+```{r pkg}
+source(here::here("code/load_pkgs.R"))
+source(here::here("code/aux_functions.R"))
+```
 
 
-```{r}
-veg_sel <- veg %>% 
-  dplyr::select(-ends_with("_sp")) %>% # Quitamos las identificadas solo a nivel de género
-  dplyr::select(-c(asteraceae,fabaceae))
+## Introduction
 
-# Generamos nombres abreviados de las species 
-raw_colnames <- colnames(veg_sel) %>% 
-  str_remove_all(pattern = "subsp_") %>% 
-  str_replace_all(pattern = "_",replacement = " ") 
+The aim of the NMDS is to find an optimal ordination of the quadrats based on species abundance-composition to identify any similarity pattern between commons (our sites) and/or type of transhumance. 
+
+
+### Prepare data  
+
+- An auxiliar field (`id_plot`) was created to join information. We combined the fields `cod_parcela` and `quadrat`. Example: `"CES_1_1"` where `"CES_1"` refers to the `cod_parcela` and `_1` to the quadrat number ($i=1,2,3$). 
+
+- We created two datasets: 
+
+  - a metadata dataset with the metadata information of each of the quadrat 
+  - a dataset with the species-composition of each quadrat 
   
-new_colnames <- c("id", 
-                  fuzzySim::spCodes(raw_colnames[-1], 
-                                  nchar.gen = 3, nchar.sp = 3, nchar.ssp = 3))
+
+```{r read-data}
+veg_raw <- readxl::read_excel(path = here::here("data/Datos_para_Antonio.xlsx"), 
+                              sheet = "Especies_quadrat") |> 
+  janitor::clean_names() |> 
+  unite(col = "id", cod_parcela:quadrat, sep = "_", remove = FALSE)
+
+# Dataset A (metadata)
+veg_metadatos <- veg_raw |> dplyr::select(localidad:carga_otono)
+
+
+# Dataset B (species composition)
+veg <- veg_raw |> dplyr::select(-c(localidad:tratamiento_humedad,
+                                    cod_parcela:carga_otono)) 
+```
+
+After the exploration of the composition data, we observed some data identified at different taxonomical level. For instance, some are identified as "Asteracea" and others to species level. So we removed those records identified up to family or up to genus.  
+
+
+```{r taxa-names}
+veg_sel <- veg |> 
+  dplyr::select(-ends_with("_sp")) %>% # remove recordds identified up to genus
+  dplyr::select(-c(asteraceae,fabaceae)) # remove those two records (up to family identification)
+
+# Create an abbreviate name for the taxa: 3 chracters for genus, 3 for species and 3 for infrataxa. 
+# Be careful: Check duplicate names
+raw_colnames <- colnames(veg_sel) |>  
+  str_remove_all(pattern = "subsp_") |>  
+  str_replace_all(pattern = "_",replacement = " ") 
+
+  new_colnames <- c(
+    "id",
+    fuzzySim::spCodes(raw_colnames[-1],
+      nchar.gen = 3, nchar.sp = 3, nchar.ssp = 3
+    )
+  )
 
 colnames(veg_sel) <- new_colnames
-
-
 ```
 
 
-## NMDS 
+## NMDS analysis 
 
-- Para evitar problemas de convergencia y de exceso de stress, vamos a convertir los datos a abundancias relativas (ver [este enlace](https://rpubs.com/CPEL/NMDS)) 
+- To avoid convergence issues and high stress (*i.e.* data distortion, [more info](https://aslopubs.onlinelibrary.wiley.com/doi/10.1002/lom3.10257)) values, we used relative abundance (see [this](https://rpubs.com/CPEL/NMDS)). 
 
-```{r, eval=FALSE, message=FALSE, warning=FALSE}
+```{r} 
 
-# Convertir absolute abundance to relatie 
+# Convertir absolute abundance to relative 
 # veg_sel_rel <- cbind(veg_sel[,1], 
 #                      decostand(veg_sel[-1], method = "total"))
 
@@ -79,130 +98,103 @@ veg_sel_distmat <- vegdist(veg_sel_rel, method = "bray")
 
 veg_sel_distmat <- as.matrix(veg_sel_distmat, labels = TRUE)
 
-set.seed(2)
-nmds3 <- metaMDS(veg_sel[-1],
-                 distance = "bray", 
-                 maxit = 999, 
-                 try=200, k=3)
 
-
-
-nmds4 <- metaMDS(decostand(veg_sel[-1], method = "total"),
+nmds <- metaMDS(decostand(veg_sel[-1], method = "total"),
                  distance = "bray", 
                  autotransform = FALSE,
                  maxit = 999, 
                  try = 500, k = 3)
 
-
-
-# Crea df con puntuaciones NMDS 
-nmdsBIO <- data.frame(nmds4$points, id=veg_sel[,1]) %>% 
-  inner_join(veg_metadatos) %>% 
-  unite("combinado", localidad:tratamiento_pastor, sep="-", remove = FALSE)
-
-
-
-nmdsplot <-
-  
-  
-p1 <- ggplot(nmdsBIO, aes(x=MDS1, y=MDS2, color = combinado)) + 
-  geom_point(size=2.5, alpha = 0.75) + 
-  stat_ellipse(aes(group=combinado), type="norm", level = 0.9) + 
-  theme(axis.title = element_text(size = 10, face = "bold", colour = "grey30"), 
-      panel.background = element_blank(), 
-      panel.border = element_rect(fill = NA, colour = "grey30"), 
-      legend.key = element_blank(), 
-      legend.title = element_text(size = 10, face = "bold", colour = "grey30"), 
-      legend.text = element_text(size = 9, colour = "grey30")) 
-
-
-p2 <- ggplot(nmdsBIO, aes(x=MDS1, y=MDS3, color = localidad)) + 
-  geom_point(aes(shape=tratamiento_pastor), size=2.5, alpha = 0.75) +
-  # stat_ellipse(aes(group=localidad), type="norm", level = 0.9) + 
-  theme(axis.title = element_text(size = 10, face = "bold", colour = "grey30"), 
-      panel.background = element_blank(), 
-      panel.border = element_rect(fill = NA, colour = "grey30"), 
-      legend.key = element_blank(), 
-      legend.title = element_text(size = 10, face = "bold", colour = "grey30"), 
-      legend.text = element_text(size = 9, colour = "grey30")) 
-
-p3 <- ggplot(nmdsBIO, aes(x=MDS2, y=MDS3, color = localidad)) + 
-   geom_point(aes(shape=tratamiento_pastor), size=2.5, alpha = 0.75) +
-  # stat_ellipse(aes(group=localidad), type="norm", level = 0.9) + 
-  theme(axis.title = element_text(size = 10, face = "bold", colour = "grey30"), 
-      panel.background = element_blank(), 
-      panel.border = element_rect(fill = NA, colour = "grey30"), 
-      legend.key = element_blank(), 
-      legend.title = element_text(size = 10, face = "bold", colour = "grey30"), 
-      legend.text = element_text(size = 9, colour = "grey30")) 
-
-
-+
-  # vectors 
-  geom_segment(data = vec_sel, 
-               aes(x=0, y=0, xend=NMDS1, yend=NMDS2), 
-               colour = "black", size = .8, arrow = arrow(length = unit(0.3,"cm"))) +
-  geom_text(data = vec_sel, 
-            aes(label=v, x=NMDS1, y=NMDS2),
-            colour = "black", vjust = "outward", hjust = "outward",
-            nudge_x = 0.08, nudge_y = -0.05,
-            fontface = "bold"
-            ) + 
-  geom_text_repel(aes(label = pobG), size = 2, 
-                  nudge_x = 0.15, direction = "both",
-                  alpha = 0.75, segment.size = 0.3) 
-
-
-
-### PCoA 
-
-library(ape)
-
-veg_sel_rel <- decostand(veg_sel[-1], method = "total")
-veg_sel_distmat <- vegdist(veg_sel_rel, method = "bray")
-p <- pcoa(veg_sel_distmat)
-
-barplot(p$values$Relative_eig[1:10])
-biplot.pcoa(p, veg_sel_rel)
-
-,
-                      grupoN = bio$discri,
-                      pob = bio$pob,
-                      id = bio$id) 
-names(nmdsBIO)[1:3] <- c("NMDS1", "NMDS2", "NMDS3")
-
-
-
-
-set.seed(123)
-ef <- envfit(nmds4, env, choices=1:3, perm = 1000)
-
-
-plot1 <- ordiplot(nmds4, choices=c(1,2))
-
-
-
-  metaMDS(veg_sel_distmat,
-          distance = "bray",
-          k = 3,
-          maxit = 999, 
-          trymax = 500,
-          wascores = TRUE)
-
-
-set.seed(2)
-nmds3 <- veg_sel %>% 
-  column_to_rownames("id") %>% 
-  metaMDS(., distance = "bray", k=3, try = 200, maxit = 300)
-
-
-stressplot(nmds3)
-orditorp(nmds3, "sites")
-
-ordiplot(nmds3, type = "n")
-points(nmds3, display = "sites", col="gray", pch=19, cex=.5)
-text(nmds3, display = "sp", cex=.6)
-ordisurf(nmds3,dfnmds$resid.abs,main="",col="blue", add = TRUE, labcex = .8)
-legend(x='topright', legend=substitute(R^2==r2, list(r2=paste('Surface ',round(summary(or)$r.sq,3), sep=''))), box.col=NA, bty='n', cex=1)
-
+print(nmds)
 ```
+
+
+```{r stress-plot}
+stressplot(nmds)
+```
+
+### Ordination plot 
+
+- **Combined treatments** 
+```{r nmds-plot-int, fig.width=9}
+
+# Create df with scores 
+
+nmds_scores <- data.frame(nmds$points, id = veg_sel[,1]) |>  
+  inner_join(veg_metadatos) |>
+  unite("combinado", localidad:tratamiento_pastor, sep = "-", remove = FALSE) |> 
+  rename(commons = localidad, transh = tratamiento_pastor)
+
+
+theme_nmds <- list(
+  geom_point(size = 2.5, alpha = 0.75),
+  theme(
+    axis.title = element_text(size = 10, face = "bold", colour = "grey30"),
+    panel.background = element_blank(),
+    panel.border = element_rect(fill = NA, colour = "grey30"),
+    legend.key = element_blank(),
+    legend.title = element_text(size = 10, face = "bold", colour = "grey30"),
+    legend.text = element_text(size = 9, colour = "grey30")
+  )
+)
+
+theme_transh <- list(
+  stat_ellipse(aes(group=transh), type="norm", level = 0.9, alpha=.5, linetype = 2), 
+  scale_color_manual(values = c("#33a02c", "#6a3d9a"))
+)
+
+theme_commons <- list(
+  stat_ellipse(aes(group=commons), type="norm", level = 0.9, alpha=.5),
+  scale_color_manual(values = c("#8c510a","#fdae61", "#01665e"))
+)
+
+
+p12int <- ggplot(nmds_scores, aes(x = MDS1, y = MDS2, color = commons, shape = transh)) +
+  theme_nmds 
+
+p13int <- ggplot(nmds_scores, aes(x = MDS1, y = MDS3, color = commons, shape = transh)) +
+  theme_nmds
+
+p23int <- ggplot(nmds_scores, aes(x = MDS2, y = MDS3, color = commons, shape = transh)) +
+  theme_nmds
+
+
+p12int + p13int + p23int + plot_layout(guides = "collect") & theme(legend.position = 'top')
+```
+
+- **By treatments** 
+
+```{r nmds-plot-both, fig.width=9, fig.height=9}
+
+p12t <- ggplot(nmds_scores, aes(x = MDS1, y = MDS2, shape = transh, colour = transh)) +
+  theme_nmds + theme_transh
+  
+p13t <- ggplot(nmds_scores, aes(x = MDS1, y = MDS3, shape = transh, colour = transh)) +
+  theme_nmds + theme_transh
+
+p23t  <- ggplot(nmds_scores, aes(x = MDS2, y = MDS3, shape = transh, colour = transh)) +
+  theme_nmds + theme_transh
+
+p12c <- ggplot(nmds_scores, aes(x = MDS1, y = MDS2, shape = commons, colour = commons)) +
+  theme_nmds + theme_commons
+  
+p13c <- ggplot(nmds_scores, aes(x = MDS1, y = MDS3, shape = commons, colour = commons)) +
+  theme_nmds + theme_commons
+
+p23c <- ggplot(nmds_scores, aes(x = MDS2, y = MDS3, shape = commons, colour = commons)) +
+  theme_nmds + theme_commons
+
+pc <- p12c + p13c + p23c + plot_layout(guides = "collect") & theme(legend.position = 'top')
+pt <- p12t + p13t + p23t + plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+
+pc/pt
+```
+
+
+
+
+
+
+
+
+
