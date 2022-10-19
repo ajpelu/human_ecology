@@ -167,3 +167,6 @@ tabla_coef <- function(modelo) {
 # summary(model.avg(model_set, subset = delta <= 2))
 #
 # ss <- subset(model_set, delta <= 2, recalc.weights=FALSE)
+
+
+
