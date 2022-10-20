@@ -344,7 +344,7 @@ $(document).ready(function () {
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
 workflowr
-<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -354,7 +354,7 @@ workflowr
 </li>
 <li>
 <a data-toggle="tab" href="#checks">
-Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </a>
 </li>
 <li>
@@ -364,14 +364,14 @@ Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></sp
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-10-14
+<strong>Last updated:</strong> 2022-10-20
 </p>
 <p>
 <strong>Checks:</strong>
 <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-7
+6
 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
-0
+1
 </p>
 <p>
 <strong>Knit directory:</strong>
@@ -394,16 +394,21 @@ The <em>Past versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-<strong>R Markdown file:</strong> up-to-date
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<strong>R Markdown file:</strong> uncommitted changes
 </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you
-know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes.
+To know which version of the R Markdown file created these
+results, you’ll want to first commit it to the Git repo. If
+you’re still working on the analysis, you can ignore this
+warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and
+build the HTML.</p>
 </div>
 </div>
 </div>
@@ -492,20 +497,20 @@ makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree5e948118ade7c13897c219b6b87c1842d3965ab8targetblank5e94811a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree865ad63396bb8c5ad68c828f557fd1c6d05728c9targetblank865ad63a">
 <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/5e948118ade7c13897c219b6b87c1842d3965ab8" target="_blank">5e94811</a>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/865ad63396bb8c5ad68c828f557fd1c6d05728c9" target="_blank">865ad63</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree5e948118ade7c13897c219b6b87c1842d3965ab8targetblank5e94811a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree865ad63396bb8c5ad68c828f557fd1c6d05728c9targetblank865ad63a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and
 connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/5e948118ade7c13897c219b6b87c1842d3965ab8" target="_blank">5e94811</a>.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/865ad63396bb8c5ad68c828f557fd1c6d05728c9" target="_blank">865ad63</a>.
 See the <em>Past versions</em> tab to see a history of the changes made to the
 R Markdown and HTML files.
 </p>
@@ -523,19 +528,12 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Unstaged changes:
-    Modified:   analysis/compare_commons.Rmd
-    Modified:   code/load_pkgs.R
+    Modified:   analysis/modeliza_commons.Rmd
     Modified:   glmulti.analysis.modgen.back
     Modified:   glmulti.analysis.mods.back
     Modified:   output/best_models_aic_fitovol_dm3.csv
-    Modified:   output/best_models_aic_rec_total_porc.csv
-    Modified:   output/best_models_aic_riqueza.csv
-    Modified:   output/best_models_aic_shannon.csv
-    Modified:   output/best_models_aic_tasa_cons.csv
     Modified:   output/best_models_fitovol_dm3.csv
     Modified:   output/best_models_rec_total_porc.csv
-    Modified:   output/best_models_riqueza.csv
-    Modified:   output/best_models_shannon.csv
     Modified:   output/best_models_tasa_cons.csv
 
 </code></pre>
@@ -581,6 +579,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/human_ecology/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/modeliza_commons.html" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -791,6 +806,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-richness-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bd999cb55a213ddf767e25f7edce13126a601b61/docs/figure/modeliza_commons.Rmd/checkGLM-richness-1.png" target="_blank">bd999cb</a>
 </td>
 <td>
@@ -830,6 +856,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-richness-2.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-richness-2.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -867,6 +904,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-richness-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bd999cb55a213ddf767e25f7edce13126a601b61/docs/figure/modeliza_commons.Rmd/checkmodel-richness-1.png" target="_blank">bd999cb</a>
@@ -1179,6 +1227,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-richness-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/varImp-richness-1.png" target="_blank">bc1c255</a>
@@ -2020,6 +2079,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-shannon-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-shannon-1.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -2059,6 +2129,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-shannon-2.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-shannon-2.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -2096,6 +2177,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-shannon-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/checkmodel-shannon-1.png" target="_blank">bc1c255</a>
@@ -2419,6 +2511,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-shannon-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/varImp-shannon-1.png" target="_blank">bc1c255</a>
@@ -3225,6 +3328,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-rec_total-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-rec_total-1.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -3264,6 +3378,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-rec_total-2.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-rec_total-2.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -3301,6 +3426,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-rec_total-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/checkmodel-rec_total-1.png" target="_blank">bc1c255</a>
@@ -3586,6 +3722,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-rec_total-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/varImp-rec_total-1.png" target="_blank">bc1c255</a>
 </td>
 <td>
@@ -3614,14 +3761,13 @@ ajpelu
 <li>Select the best and most parsimonious model</li>
 </ul>
 <pre class="r"><code>bm &lt;- lmer(
-  fitovol_dm3 ~ sr.spr + sr.sum + ph + potasio + commons + transh + commons:transh + (1 | parcela), 
+  rec_total_porc ~ sr.spr + sr.sum + ph + potasio + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
 performance(bm) %&gt;% 
   kbl() %&gt;% 
   kable_styling()</code></pre>
-<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -3634,11 +3780,14 @@ AICc
 <th style="text-align:right;">
 BIC
 </th>
-<th style="text-align:left;">
+<th style="text-align:right;">
 R2_conditional
 </th>
 <th style="text-align:right;">
 R2_marginal
+</th>
+<th style="text-align:right;">
+ICC
 </th>
 <th style="text-align:right;">
 RMSE
@@ -3651,41 +3800,42 @@ Sigma
 <tbody>
 <tr>
 <td style="text-align:right;">
-333.4421
+400.7675
 </td>
 <td style="text-align:right;">
-341.6526
+408.3773
 </td>
 <td style="text-align:right;">
-356.624
-</td>
-<td style="text-align:left;">
-NA
+424.6353
 </td>
 <td style="text-align:right;">
-0.1683923
+0.5206087
 </td>
 <td style="text-align:right;">
-6.669044
+0.4427415
 </td>
 <td style="text-align:right;">
-7.43801
+0.1397326
+</td>
+<td style="text-align:right;">
+10.60864
+</td>
+<td style="text-align:right;">
+12.11901
 </td>
 </tr>
 </tbody>
 </table>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
-                Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
-sr.spr         162.163 162.163     1    41  2.9312 0.09444 .
-sr.sum         249.715 249.715     1    41  4.5137 0.03970 *
-ph              47.347  47.347     1    41  0.8558 0.36033  
-potasio         46.491  46.491     1    41  0.8403 0.36466  
-commons        227.352 113.676     2    41  2.0547 0.14112  
-transh         239.539 239.539     1    41  4.3298 0.04374 *
-commons:transh  63.373  31.687     2    41  0.5727 0.56842  
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+               Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)
+sr.spr          13.93   13.93     1     8  0.0948 0.7660
+sr.sum         184.98  184.98     1     8  1.2595 0.2943
+ph              70.54   70.54     1     8  0.4803 0.5079
+potasio        343.56  343.56     1     8  2.3392 0.1647
+commons        415.73  207.87     2     8  1.4153 0.2977
+transh          51.68   51.68     1     8  0.3519 0.5694
+commons:transh 813.51  406.76     2     8  2.7695 0.1219</code></pre>
 <pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
 <pre class="r"><code>tabla_coef(bm)</code></pre>
 <table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
@@ -3723,19 +3873,19 @@ fixed
 (Intercept)
 </td>
 <td style="text-align:right;">
-3.56
+44.09
 </td>
 <td style="text-align:right;">
-33.60
+66.42
 </td>
 <td style="text-align:right;">
-0.11
+0.66
 </td>
 <td style="text-align:right;">
-41
+8.000002
 </td>
 <td style="text-align:right;">
-0.916
+0.525
 </td>
 </tr>
 <tr>
@@ -3746,19 +3896,19 @@ fixed
 sr.spr
 </td>
 <td style="text-align:right;">
-13.20
+4.55
 </td>
 <td style="text-align:right;">
-7.71
+14.78
 </td>
 <td style="text-align:right;">
-1.71
+0.31
 </td>
 <td style="text-align:right;">
-41
+8.000001
 </td>
 <td style="text-align:right;">
-0.094
+0.766
 </td>
 </tr>
 <tr>
@@ -3769,19 +3919,19 @@ fixed
 sr.sum
 </td>
 <td style="text-align:right;">
--7.74
+-7.76
 </td>
 <td style="text-align:right;">
-3.64
+6.92
 </td>
 <td style="text-align:right;">
--2.12
+-1.12
 </td>
 <td style="text-align:right;">
-41
+8.000001
 </td>
 <td style="text-align:right;">
-0.040
+0.294
 </td>
 </tr>
 <tr>
@@ -3792,19 +3942,19 @@ fixed
 ph
 </td>
 <td style="text-align:right;">
-5.76
+8.54
 </td>
 <td style="text-align:right;">
-6.22
+12.33
 </td>
 <td style="text-align:right;">
-0.93
+0.69
 </td>
 <td style="text-align:right;">
-41
+8.000002
 </td>
 <td style="text-align:right;">
-0.360
+0.508
 </td>
 </tr>
 <tr>
@@ -3815,19 +3965,19 @@ fixed
 potasio
 </td>
 <td style="text-align:right;">
--0.03
+-0.11
 </td>
 <td style="text-align:right;">
-0.04
+0.07
 </td>
 <td style="text-align:right;">
--0.92
+-1.53
 </td>
 <td style="text-align:right;">
-41
+8.000001
 </td>
 <td style="text-align:right;">
-0.365
+0.165
 </td>
 </tr>
 <tr>
@@ -3838,19 +3988,19 @@ fixed
 commonsPontones
 </td>
 <td style="text-align:right;">
--13.39
+0.94
 </td>
 <td style="text-align:right;">
-8.21
+15.96
 </td>
 <td style="text-align:right;">
--1.63
+0.06
 </td>
 <td style="text-align:right;">
-41
+8.000001
 </td>
 <td style="text-align:right;">
-0.110
+0.954
 </td>
 </tr>
 <tr>
@@ -3861,19 +4011,19 @@ fixed
 commonsSantiago
 </td>
 <td style="text-align:right;">
--9.46
+-10.06
 </td>
 <td style="text-align:right;">
-9.69
+19.03
 </td>
 <td style="text-align:right;">
--0.98
+-0.53
 </td>
 <td style="text-align:right;">
-41
+8.000001
 </td>
 <td style="text-align:right;">
-0.335
+0.612
 </td>
 </tr>
 <tr>
@@ -3884,19 +4034,19 @@ fixed
 transhshort
 </td>
 <td style="text-align:right;">
--20.11
+9.14
 </td>
 <td style="text-align:right;">
-12.08
+22.83
 </td>
 <td style="text-align:right;">
--1.67
+0.40
 </td>
 <td style="text-align:right;">
-41
+8.000001
 </td>
 <td style="text-align:right;">
-0.103
+0.699
 </td>
 </tr>
 <tr>
@@ -3907,19 +4057,19 @@ fixed
 commonsPontones:transhshort
 </td>
 <td style="text-align:right;">
-4.57
+-31.91
 </td>
 <td style="text-align:right;">
-7.16
+13.68
 </td>
 <td style="text-align:right;">
-0.64
+-2.33
 </td>
 <td style="text-align:right;">
-41
+8.000001
 </td>
 <td style="text-align:right;">
-0.527
+0.048
 </td>
 </tr>
 <tr>
@@ -3930,19 +4080,19 @@ fixed
 commonsSantiago:transhshort
 </td>
 <td style="text-align:right;">
--1.21
+-26.37
 </td>
 <td style="text-align:right;">
-7.41
+14.40
 </td>
 <td style="text-align:right;">
--0.16
+-1.83
 </td>
 <td style="text-align:right;">
-41
+8.000001
 </td>
 <td style="text-align:right;">
-0.871
+0.104
 </td>
 </tr>
 </tbody>
@@ -3982,19 +4132,19 @@ p.value
 Castril - Pontones
 </td>
 <td style="text-align:right;">
-11.1080
+15.0123
 </td>
 <td style="text-align:right;">
-5.5863
+10.8411
 </td>
 <td style="text-align:right;">
-7.5767
+8
 </td>
 <td style="text-align:right;">
-1.9884
+1.3848
 </td>
 <td style="text-align:right;">
-0.1803
+0.3927
 </td>
 </tr>
 <tr>
@@ -4002,19 +4152,19 @@ Castril - Pontones
 Castril - Santiago
 </td>
 <td style="text-align:right;">
-10.0644
+23.2428
 </td>
 <td style="text-align:right;">
-7.0251
+13.8150
 </td>
 <td style="text-align:right;">
-7.3062
+8
 </td>
 <td style="text-align:right;">
-1.4326
+1.6824
 </td>
 <td style="text-align:right;">
-0.3745
+0.2693
 </td>
 </tr>
 <tr>
@@ -4022,19 +4172,19 @@ Castril - Santiago
 Pontones - Santiago
 </td>
 <td style="text-align:right;">
--1.0436
+8.2305
 </td>
 <td style="text-align:right;">
-3.9857
+7.8200
 </td>
 <td style="text-align:right;">
-7.3350
+8
 </td>
 <td style="text-align:right;">
--0.2618
+1.0525
 </td>
 <td style="text-align:right;">
-0.9631
+0.5672
 </td>
 </tr>
 </tbody>
@@ -4069,19 +4219,19 @@ p.value
 long - short
 </td>
 <td style="text-align:right;">
-18.9907
+10.2924
 </td>
 <td style="text-align:right;">
-9.1488
+17.3504
 </td>
 <td style="text-align:right;">
-8.3118
+8
 </td>
 <td style="text-align:right;">
-2.0758
+0.5932
 </td>
 <td style="text-align:right;">
-0.0703
+0.5694
 </td>
 </tr>
 </tbody>
@@ -4122,19 +4272,19 @@ Castril - Pontones
 long
 </td>
 <td style="text-align:right;">
-13.3916
+-0.9449
 </td>
 <td style="text-align:right;">
-8.2219
+15.9616
 </td>
 <td style="text-align:right;">
-7.6465
+8
 </td>
 <td style="text-align:right;">
-1.6288
+-0.0592
 </td>
 <td style="text-align:right;">
-0.2913
+0.9981
 </td>
 </tr>
 <tr>
@@ -4145,19 +4295,19 @@ Castril - Santiago
 long
 </td>
 <td style="text-align:right;">
-9.4606
+10.0557
 </td>
 <td style="text-align:right;">
-9.7042
+19.0331
 </td>
 <td style="text-align:right;">
-7.3922
+8
 </td>
 <td style="text-align:right;">
-0.9749
+0.5283
 </td>
 <td style="text-align:right;">
-0.6132
+0.8599
 </td>
 </tr>
 <tr>
@@ -4168,19 +4318,19 @@ Pontones - Santiago
 long
 </td>
 <td style="text-align:right;">
--3.9310
+11.0006
 </td>
 <td style="text-align:right;">
-5.1593
+10.0778
 </td>
 <td style="text-align:right;">
-7.4329
+8
 </td>
 <td style="text-align:right;">
--0.7619
+1.0916
 </td>
 <td style="text-align:right;">
-0.7359
+0.5451
 </td>
 </tr>
 <tr>
@@ -4191,19 +4341,19 @@ Castril - Pontones
 short
 </td>
 <td style="text-align:right;">
-8.8244
+30.9695
 </td>
 <td style="text-align:right;">
-4.5252
+8.5902
 </td>
 <td style="text-align:right;">
-8.1863
+8
 </td>
 <td style="text-align:right;">
-1.9501
+3.6052
 </td>
 <td style="text-align:right;">
-0.1856
+0.0170
 </td>
 </tr>
 <tr>
@@ -4214,19 +4364,19 @@ Castril - Santiago
 short
 </td>
 <td style="text-align:right;">
-10.6682
+36.4298
 </td>
 <td style="text-align:right;">
-5.6616
+11.0937
 </td>
 <td style="text-align:right;">
-7.4207
+8
 </td>
 <td style="text-align:right;">
-1.8843
+3.2838
 </td>
 <td style="text-align:right;">
-0.2092
+0.0268
 </td>
 </tr>
 <tr>
@@ -4237,19 +4387,19 @@ Pontones - Santiago
 short
 </td>
 <td style="text-align:right;">
-1.8438
+5.4603
 </td>
 <td style="text-align:right;">
-4.5812
+9.0498
 </td>
 <td style="text-align:right;">
-7.2156
+8
 </td>
 <td style="text-align:right;">
-0.4025
+0.6034
 </td>
 <td style="text-align:right;">
-0.9156
+0.8223
 </td>
 </tr>
 </tbody>
@@ -4290,19 +4440,19 @@ long - short
 Castril
 </td>
 <td style="text-align:right;">
-20.1105
+-9.1372
 </td>
 <td style="text-align:right;">
-12.1011
+22.8307
 </td>
 <td style="text-align:right;">
-8.5246
+8
 </td>
 <td style="text-align:right;">
-1.6619
+-0.4002
 </td>
 <td style="text-align:right;">
-0.1328
+0.6995
 </td>
 </tr>
 <tr>
@@ -4313,19 +4463,19 @@ long - short
 Pontones
 </td>
 <td style="text-align:right;">
-15.5434
+22.7773
 </td>
 <td style="text-align:right;">
-7.9618
+15.2659
 </td>
 <td style="text-align:right;">
-7.9506
+8
 </td>
 <td style="text-align:right;">
-1.9522
+1.4920
 </td>
 <td style="text-align:right;">
-0.0869
+0.1740
 </td>
 </tr>
 <tr>
@@ -4336,19 +4486,19 @@ long - short
 Santiago
 </td>
 <td style="text-align:right;">
-21.3182
+17.2370
 </td>
 <td style="text-align:right;">
-9.3427
+17.9167
 </td>
 <td style="text-align:right;">
-7.9766
+8
 </td>
 <td style="text-align:right;">
-2.2818
+0.9621
 </td>
 <td style="text-align:right;">
-0.0520
+0.3642
 </td>
 </tr>
 </tbody>
@@ -4438,6 +4588,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-fitvol-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-fitvol-1.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -4477,6 +4638,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-fitvol-2.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-fitvol-2.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -4514,6 +4686,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-fitvol-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/checkmodel-fitvol-1.png" target="_blank">bc1c255</a>
@@ -4590,7 +4773,7 @@ Completed.</code></pre>
 top &lt;- weightable(mm)
 top &lt;- top[top$aic &lt;= (min(top$aic) + 2),]</code></pre>
 <ul>
-<li>Get the best models (maximum 15 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
+<li>Get the best models (maximum 16 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
 </ul>
 <pre class="r"><code># Get the ten best models 
 maxmodels &lt;- nrow(top)
@@ -4683,7 +4866,7 @@ weight
 0.000
 </td>
 <td style="text-align:right;">
-0.119
+0.114
 </td>
 </tr>
 <tr>
@@ -4703,7 +4886,7 @@ weight
 0.116
 </td>
 <td style="text-align:right;">
-0.113
+0.108
 </td>
 </tr>
 <tr>
@@ -4723,7 +4906,7 @@ weight
 0.533
 </td>
 <td style="text-align:right;">
-0.091
+0.087
 </td>
 </tr>
 <tr>
@@ -4743,7 +4926,7 @@ weight
 0.676
 </td>
 <td style="text-align:right;">
-0.085
+0.081
 </td>
 </tr>
 <tr>
@@ -4763,7 +4946,7 @@ weight
 0.956
 </td>
 <td style="text-align:right;">
-0.074
+0.071
 </td>
 </tr>
 <tr>
@@ -4783,7 +4966,7 @@ weight
 1.113
 </td>
 <td style="text-align:right;">
-0.068
+0.065
 </td>
 </tr>
 <tr>
@@ -4803,7 +4986,7 @@ weight
 1.332
 </td>
 <td style="text-align:right;">
-0.061
+0.059
 </td>
 </tr>
 <tr>
@@ -4823,7 +5006,7 @@ weight
 1.439
 </td>
 <td style="text-align:right;">
-0.058
+0.056
 </td>
 </tr>
 <tr>
@@ -4843,7 +5026,7 @@ weight
 1.547
 </td>
 <td style="text-align:right;">
-0.055
+0.053
 </td>
 </tr>
 <tr>
@@ -4863,7 +5046,27 @@ weight
 1.808
 </td>
 <td style="text-align:right;">
-0.048
+0.046
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1 + sr.spr + sr.sum + fosforo + (commons + transh)
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+-170.82
+</td>
+<td style="text-align:right;">
+359.64
+</td>
+<td style="text-align:right;">
+1.863
+</td>
+<td style="text-align:right;">
+0.045
 </td>
 </tr>
 <tr>
@@ -4883,7 +5086,7 @@ weight
 1.865
 </td>
 <td style="text-align:right;">
-0.047
+0.045
 </td>
 </tr>
 <tr>
@@ -4903,7 +5106,7 @@ weight
 1.904
 </td>
 <td style="text-align:right;">
-0.046
+0.044
 </td>
 </tr>
 <tr>
@@ -4923,7 +5126,7 @@ weight
 1.975
 </td>
 <td style="text-align:right;">
-0.044
+0.042
 </td>
 </tr>
 <tr>
@@ -4943,7 +5146,7 @@ weight
 1.977
 </td>
 <td style="text-align:right;">
-0.044
+0.042
 </td>
 </tr>
 <tr>
@@ -4963,7 +5166,7 @@ weight
 1.981
 </td>
 <td style="text-align:right;">
-0.044
+0.042
 </td>
 </tr>
 </tbody>
@@ -4997,6 +5200,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-fitovol-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/varImp-fitovol-1.png" target="_blank">bc1c255</a>
@@ -5803,6 +6017,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-tasacons-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-tasacons-1.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -5842,6 +6067,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-tasacons-2.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/3ba7841cd1fab5049719710c34328d07d8260e69/docs/figure/modeliza_commons.Rmd/checkGLM-tasacons-2.png" target="_blank">3ba7841</a>
 </td>
 <td>
@@ -5879,6 +6115,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-tasacons-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/checkmodel-tasacons-1.png" target="_blank">bc1c255</a>
@@ -6501,6 +6748,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-tasacons-1.png" target="_blank">e0e5d9e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/bc1c25503270ae2f327ca2545e38066b1aa1739c/docs/figure/modeliza_commons.Rmd/varImp-tasacons-1.png" target="_blank">bc1c255</a>
 </td>
 <td>
@@ -6529,7 +6787,7 @@ ajpelu
 <li>Select the best and most parsimonious model</li>
 </ul>
 <pre class="r"><code>bm &lt;- lmer(
-  tasa_cons ~ 1 + sr.sum + cic + commons + transh + commons:transh + (1 | parcela), data = d
+  tasa_cons ~ 1 + sr.sum + cic + fosforo + commons + transh + commons:transh + (1 | parcela), data = d
 )
 
 performance(bm) %&gt;% 
@@ -6567,25 +6825,25 @@ Sigma
 <tbody>
 <tr>
 <td style="text-align:right;">
-126.8205
+134.2636
 </td>
 <td style="text-align:right;">
-131.9368
+140.5493
 </td>
 <td style="text-align:right;">
-146.7103
+156.1424
 </td>
 <td style="text-align:right;">
-0.3961769
+0.3967183
 </td>
 <td style="text-align:right;">
-0.2985798
+0.3318351
 </td>
 <td style="text-align:right;">
-0.1391421
+0.0971065
 </td>
 <td style="text-align:right;">
-0.5105702
+0.5109885
 </td>
 <td style="text-align:right;">
 0.5739356
@@ -6596,11 +6854,12 @@ Sigma
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
-sr.sum         2.0566 2.05655     1    10  6.2433 0.03152 *
-cic            1.3253 1.32534     1    10  4.0235 0.07267 .
-commons        4.0965 2.04827     2    10  6.2181 0.01759 *
-transh         0.0024 0.00243     1    10  0.0074 0.93323  
-commons:transh 0.5116 0.25580     2    10  0.7765 0.48586  
+sr.sum         2.9171 2.91711     1     9  8.8558 0.01555 *
+cic            0.8310 0.83097     1     9  2.5227 0.14668  
+fosforo        0.7335 0.73347     1     9  2.2267 0.16984  
+commons        4.8681 2.43404     2     9  7.3893 0.01263 *
+transh         0.0004 0.00039     1     9  0.0012 0.97343  
+commons:transh 0.2139 0.10693     2     9  0.3246 0.73093  
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
@@ -6640,16 +6899,16 @@ fixed
 (Intercept)
 </td>
 <td style="text-align:right;">
-3.42
+3.86
 </td>
 <td style="text-align:right;">
-0.78
+0.79
 </td>
 <td style="text-align:right;">
-4.37
+4.86
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
 0.001
@@ -6663,19 +6922,19 @@ fixed
 sr.sum
 </td>
 <td style="text-align:right;">
--0.23
+-0.27
 </td>
 <td style="text-align:right;">
 0.09
 </td>
 <td style="text-align:right;">
--2.50
+-2.98
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-0.032
+0.016
 </td>
 </tr>
 <tr>
@@ -6686,19 +6945,42 @@ fixed
 cic
 </td>
 <td style="text-align:right;">
--0.06
+-0.05
 </td>
 <td style="text-align:right;">
 0.03
 </td>
 <td style="text-align:right;">
--2.01
+-1.59
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-0.073
+0.147
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+fosforo
+</td>
+<td style="text-align:right;">
+-0.01
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+-1.49
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.170
 </td>
 </tr>
 <tr>
@@ -6709,19 +6991,19 @@ fixed
 commonsPontones
 </td>
 <td style="text-align:right;">
--0.38
+-0.85
 </td>
 <td style="text-align:right;">
-0.36
+0.46
 </td>
 <td style="text-align:right;">
--1.07
+-1.85
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-0.308
+0.098
 </td>
 </tr>
 <tr>
@@ -6732,19 +7014,19 @@ fixed
 commonsSantiago
 </td>
 <td style="text-align:right;">
--0.96
+-1.30
 </td>
 <td style="text-align:right;">
-0.38
+0.43
 </td>
 <td style="text-align:right;">
--2.51
+-3.04
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-0.031
+0.014
 </td>
 </tr>
 <tr>
@@ -6755,19 +7037,19 @@ fixed
 transhshort
 </td>
 <td style="text-align:right;">
-0.10
+-0.03
 </td>
 <td style="text-align:right;">
 0.35
 </td>
 <td style="text-align:right;">
-0.28
+-0.10
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-0.787
+0.925
 </td>
 </tr>
 <tr>
@@ -6778,19 +7060,19 @@ fixed
 commonsPontones:transhshort
 </td>
 <td style="text-align:right;">
--0.47
+-0.16
 </td>
 <td style="text-align:right;">
-0.47
+0.49
 </td>
 <td style="text-align:right;">
--0.99
+-0.33
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-0.344
+0.751
 </td>
 </tr>
 <tr>
@@ -6801,19 +7083,19 @@ fixed
 commonsSantiago:transhshort
 </td>
 <td style="text-align:right;">
-0.12
+0.24
 </td>
 <td style="text-align:right;">
-0.51
+0.49
 </td>
 <td style="text-align:right;">
-0.23
+0.50
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-0.821
+0.632
 </td>
 </tr>
 </tbody>
@@ -6853,19 +7135,19 @@ p.value
 Castril - Pontones
 </td>
 <td style="text-align:right;">
-0.6182
+0.9264
 </td>
 <td style="text-align:right;">
-0.2553
+0.3173
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-2.4218
+2.9193
 </td>
 <td style="text-align:right;">
-0.0840
+0.0410
 </td>
 </tr>
 <tr>
@@ -6873,19 +7155,19 @@ Castril - Pontones
 Castril - Santiago
 </td>
 <td style="text-align:right;">
-0.8972
+1.1745
 </td>
 <td style="text-align:right;">
-0.2571
+0.3056
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-3.4900
+3.8430
 </td>
 <td style="text-align:right;">
-0.0147
+0.0099
 </td>
 </tr>
 <tr>
@@ -6893,19 +7175,19 @@ Castril - Santiago
 Pontones - Santiago
 </td>
 <td style="text-align:right;">
-0.2790
+0.2481
 </td>
 <td style="text-align:right;">
-0.2361
+0.2238
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-1.1818
+1.1088
 </td>
 <td style="text-align:right;">
-0.4896
+0.5327
 </td>
 </tr>
 </tbody>
@@ -6940,19 +7222,19 @@ p.value
 long - short
 </td>
 <td style="text-align:right;">
-0.0181
+0.0068
 </td>
 <td style="text-align:right;">
-0.2111
+0.1993
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-0.0859
+0.0342
 </td>
 <td style="text-align:right;">
-0.9332
+0.9734
 </td>
 </tr>
 </tbody>
@@ -6993,19 +7275,19 @@ Castril - Pontones
 long
 </td>
 <td style="text-align:right;">
-0.3839
+0.8460
 </td>
 <td style="text-align:right;">
-0.3575
+0.4579
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-1.0739
+1.8474
 </td>
 <td style="text-align:right;">
-0.5504
+0.2093
 </td>
 </tr>
 <tr>
@@ -7016,19 +7298,19 @@ Castril - Santiago
 long
 </td>
 <td style="text-align:right;">
-0.9562
+1.2951
 </td>
 <td style="text-align:right;">
-0.3810
+0.4253
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-2.5095
+3.0450
 </td>
 <td style="text-align:right;">
-0.0729
+0.0337
 </td>
 </tr>
 <tr>
@@ -7039,19 +7321,19 @@ Pontones - Santiago
 long
 </td>
 <td style="text-align:right;">
-0.5723
+0.4492
 </td>
 <td style="text-align:right;">
-0.3617
+0.3512
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-1.5824
+1.2789
 </td>
 <td style="text-align:right;">
-0.2971
+0.4407
 </td>
 </tr>
 <tr>
@@ -7062,19 +7344,19 @@ Castril - Pontones
 short
 </td>
 <td style="text-align:right;">
-0.8525
+1.0068
 </td>
 <td style="text-align:right;">
-0.3377
+0.3351
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-2.5244
+3.0048
 </td>
 <td style="text-align:right;">
-0.0712
+0.0359
 </td>
 </tr>
 <tr>
@@ -7085,19 +7367,19 @@ Castril - Santiago
 short
 </td>
 <td style="text-align:right;">
-0.8382
+1.0539
 </td>
 <td style="text-align:right;">
-0.3407
+0.3525
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-2.4606
+2.9897
 </td>
 <td style="text-align:right;">
-0.0789
+0.0367
 </td>
 </tr>
 <tr>
@@ -7108,19 +7390,19 @@ Pontones - Santiago
 short
 </td>
 <td style="text-align:right;">
--0.0143
+0.0471
 </td>
 <td style="text-align:right;">
-0.3380
+0.3216
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
--0.0422
+0.1465
 </td>
 <td style="text-align:right;">
-0.9990
+0.9883
 </td>
 </tr>
 </tbody>
@@ -7161,19 +7443,19 @@ long - short
 Castril
 </td>
 <td style="text-align:right;">
--0.0987
+0.0336
 </td>
 <td style="text-align:right;">
-0.3549
+0.3465
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
--0.2782
+0.0970
 </td>
 <td style="text-align:right;">
-0.7865
+0.9248
 </td>
 </tr>
 <tr>
@@ -7184,19 +7466,19 @@ long - short
 Pontones
 </td>
 <td style="text-align:right;">
-0.3699
+0.1945
 </td>
 <td style="text-align:right;">
-0.3396
+0.3414
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
-1.0891
+0.5696
 </td>
 <td style="text-align:right;">
-0.3017
+0.5829
 </td>
 </tr>
 <tr>
@@ -7207,19 +7489,19 @@ long - short
 Santiago
 </td>
 <td style="text-align:right;">
--0.2167
+-0.2076
 </td>
 <td style="text-align:right;">
-0.3765
+0.3554
 </td>
 <td style="text-align:right;">
-10
+9
 </td>
 <td style="text-align:right;">
--0.5756
+-0.5841
 </td>
 <td style="text-align:right;">
-0.5776
+0.5735
 </td>
 </tr>
 </tbody>
@@ -7369,10 +7651,10 @@ rec_total_porc
 sr.spr
 </td>
 <td style="text-align:right;">
-2.93
+0.09
 </td>
 <td style="text-align:right;">
-0.094
+0.766
 </td>
 </tr>
 <tr>
@@ -7383,10 +7665,10 @@ rec_total_porc
 sr.sum
 </td>
 <td style="text-align:right;">
-4.51
+1.26
 </td>
 <td style="text-align:right;">
-0.040
+0.294
 </td>
 </tr>
 <tr>
@@ -7397,10 +7679,10 @@ rec_total_porc
 ph
 </td>
 <td style="text-align:right;">
-0.86
+0.48
 </td>
 <td style="text-align:right;">
-0.360
+0.508
 </td>
 </tr>
 <tr>
@@ -7411,10 +7693,10 @@ rec_total_porc
 potasio
 </td>
 <td style="text-align:right;">
-0.84
+2.34
 </td>
 <td style="text-align:right;">
-0.365
+0.165
 </td>
 </tr>
 <tr>
@@ -7425,10 +7707,10 @@ rec_total_porc
 commons
 </td>
 <td style="text-align:right;">
-2.05
+1.42
 </td>
 <td style="text-align:right;">
-0.141
+0.298
 </td>
 </tr>
 <tr>
@@ -7439,10 +7721,10 @@ rec_total_porc
 transh
 </td>
 <td style="text-align:right;">
-4.33
+0.35
 </td>
 <td style="text-align:right;">
-0.044
+0.569
 </td>
 </tr>
 <tr>
@@ -7453,10 +7735,10 @@ rec_total_porc
 commons:transh
 </td>
 <td style="text-align:right;">
-0.57
+2.77
 </td>
 <td style="text-align:right;">
-0.568
+0.122
 </td>
 </tr>
 <tr>
@@ -7621,10 +7903,10 @@ tasa_cons
 sr.sum
 </td>
 <td style="text-align:right;">
-6.24
+8.86
 </td>
 <td style="text-align:right;">
-0.032
+0.016
 </td>
 </tr>
 <tr>
@@ -7635,10 +7917,24 @@ tasa_cons
 cic
 </td>
 <td style="text-align:right;">
-4.02
+2.52
 </td>
 <td style="text-align:right;">
-0.073
+0.147
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+fosforo
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+<td style="text-align:right;">
+0.170
 </td>
 </tr>
 <tr>
@@ -7649,10 +7945,10 @@ tasa_cons
 commons
 </td>
 <td style="text-align:right;">
-6.22
+7.39
 </td>
 <td style="text-align:right;">
-0.018
+0.013
 </td>
 </tr>
 <tr>
@@ -7663,10 +7959,10 @@ tasa_cons
 transh
 </td>
 <td style="text-align:right;">
-0.01
+0.00
 </td>
 <td style="text-align:right;">
-0.933
+0.973
 </td>
 </tr>
 <tr>
@@ -7677,10 +7973,10 @@ tasa_cons
 commons:transh
 </td>
 <td style="text-align:right;">
-0.78
+0.32
 </td>
 <td style="text-align:right;">
-0.486
+0.731
 </td>
 </tr>
 </tbody>
@@ -7695,12 +7991,12 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.2.1 (2022-06-23)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur ... 10.16
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Monterey 12.3.1
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -7721,58 +8017,56 @@ other attached packages:
 [28] rmdformats_1.0.4    knitr_1.40          leaps_3.1          
 [31] factoextra_1.0.7    nlme_3.1-157        DHARMa_0.4.6       
 [34] performance_0.10.0  kableExtra_1.3.4    corrplot_0.92      
-[37] correlation_0.8.3   patchwork_1.1.2     vegan_2.6-2        
+[37] correlation_0.8.2   patchwork_1.1.2     vegan_2.6-4        
 [40] lattice_0.20-45     permute_0.9-7       fuzzySim_4.3       
 [43] janitor_2.1.0       here_1.0.1          forcats_0.5.2      
 [46] stringr_1.4.1       dplyr_1.0.10        purrr_0.3.4        
 [49] readr_2.1.2         tidyr_1.2.1         tibble_3.1.8       
-[52] ggplot2_3.3.6       tidyverse_1.3.2     workflowr_1.7.0    
+[52] ggplot2_3.3.6       tidyverse_1.3.2    
 
 loaded via a namespace (and not attached):
   [1] utf8_1.2.2           tidyselect_1.1.2     grid_4.2.1          
   [4] munsell_0.5.0        codetools_0.2-18     future_1.28.0       
   [7] withr_2.5.0          colorspace_2.0-3     qgam_1.3.4          
  [10] highr_0.9            rstudioapi_0.14      stats4_4.2.1        
- [13] robustbase_0.95-0    listenv_0.8.0        labeling_0.4.2      
- [16] git2r_0.30.1         farver_2.1.1         bit64_4.0.5         
- [19] DiceDesign_1.9       datawizard_0.6.2     gap.datasets_0.0.5  
- [22] rprojroot_2.0.3      coda_0.19-4          parallelly_1.32.1   
- [25] vctrs_0.4.1          generics_0.1.3       ipred_0.9-13        
- [28] xfun_0.33            randomForest_4.7-1.1 doParallel_1.0.17   
- [31] R6_2.5.1             lhs_1.1.5            cachem_1.0.6        
- [34] assertthat_0.2.1     promises_1.2.0.1     vroom_1.5.7         
- [37] nnet_7.3-17          googlesheets4_1.0.1  gtable_0.3.1        
- [40] globals_0.16.1       processx_3.7.0       qqplotr_0.0.5       
- [43] timeDate_4021.106    rlang_1.0.6          systemfonts_1.0.4   
- [46] splines_4.2.1        gargle_1.2.1         yaml_2.3.5          
- [49] abind_1.4-5          modelr_0.1.9         backports_1.4.1     
- [52] httpuv_1.6.6         tools_4.2.1          lava_1.6.10         
- [55] bookdown_0.29        ellipsis_0.3.2       jquerylib_0.1.4     
- [58] plyr_1.8.7           Rcpp_1.0.9           ps_1.7.1            
- [61] rpart_4.1.16         haven_2.5.1          ggrepel_0.9.1       
- [64] cluster_2.1.3        fs_1.5.2             furrr_0.3.1         
- [67] magrittr_2.0.3       reprex_2.0.2         GPfit_1.0-8         
- [70] googledrive_2.0.0    mvtnorm_1.1-3        whisker_0.4         
- [73] mime_0.12            hms_1.1.2            evaluate_0.16       
- [76] xtable_1.8-4         pbkrtest_0.5.1       readxl_1.4.1        
- [79] compiler_4.2.1       crayon_1.5.1         minqa_1.2.4         
- [82] htmltools_0.5.3      mgcv_1.8-40          later_1.3.0         
- [85] tzdb_0.3.0           lubridate_1.8.0      DBI_1.1.3           
- [88] dbplyr_2.2.1         see_0.7.3            boot_1.3-28         
- [91] modEvA_3.5           cli_3.4.1            parallel_4.2.1      
- [94] insight_0.18.5       gower_1.0.0          pkgconfig_2.0.3     
- [97] getPass_0.2-2        numDeriv_2016.8-1.1  terra_1.6-17        
-[100] xml2_1.3.3           foreach_1.5.2        svglite_2.1.0       
-[103] bslib_0.4.0          hardhat_1.2.0        webshot_0.5.4       
-[106] estimability_1.4.1   prodlim_2019.11.13   rvest_1.0.3         
-[109] snakecase_0.11.0     callr_3.7.2          digest_0.6.29       
-[112] rmarkdown_2.16       cellranger_1.1.0     gap_1.2.3-6         
-[115] shiny_1.7.2          nloptr_2.0.3         lifecycle_1.0.2     
-[118] jsonlite_1.8.0       viridisLite_0.4.1    fansi_1.0.3         
-[121] pillar_1.8.1         DEoptimR_1.0-11      fastmap_1.1.0       
-[124] httr_1.4.4           survival_3.3-1       bayestestR_0.13.0   
-[127] iterators_1.0.14     bit_4.0.4            class_7.3-20        
-[130] stringi_1.7.8        sass_0.4.2           future.apply_1.9.1  </code></pre>
+ [13] listenv_0.8.0        labeling_0.4.2       git2r_0.30.1        
+ [16] farver_2.1.1         bit64_4.0.5          DiceDesign_1.9      
+ [19] datawizard_0.6.2     gap.datasets_0.0.5   rprojroot_2.0.3     
+ [22] coda_0.19-4          parallelly_1.32.1    vctrs_0.4.2         
+ [25] generics_0.1.3       ipred_0.9-13         xfun_0.33           
+ [28] randomForest_4.7-1.1 doParallel_1.0.17    R6_2.5.1            
+ [31] lhs_1.1.5            cachem_1.0.6         assertthat_0.2.1    
+ [34] promises_1.2.0.1     vroom_1.5.7          nnet_7.3-17         
+ [37] googlesheets4_1.0.1  gtable_0.3.1         globals_0.16.1      
+ [40] workflowr_1.7.0      timeDate_4021.106    rlang_1.0.6         
+ [43] systemfonts_1.0.4    splines_4.2.1        gargle_1.2.1        
+ [46] yaml_2.3.5           abind_1.4-5          modelr_0.1.9        
+ [49] backports_1.4.1      httpuv_1.6.6         tools_4.2.1         
+ [52] lava_1.6.10          bookdown_0.29        ellipsis_0.3.2      
+ [55] jquerylib_0.1.4      plyr_1.8.7           Rcpp_1.0.9          
+ [58] rpart_4.1.16         haven_2.5.1          ggrepel_0.9.1       
+ [61] cluster_2.1.3        fs_1.5.2             furrr_0.3.1         
+ [64] magrittr_2.0.3       reprex_2.0.2         GPfit_1.0-8         
+ [67] googledrive_2.0.0    mvtnorm_1.1-3        whisker_0.4         
+ [70] mime_0.12            hms_1.1.2            evaluate_0.16       
+ [73] xtable_1.8-4         pbkrtest_0.5.1       readxl_1.4.1        
+ [76] compiler_4.2.1       crayon_1.5.1         minqa_1.2.4         
+ [79] htmltools_0.5.3      mgcv_1.8-40          later_1.3.0         
+ [82] tzdb_0.3.0           lubridate_1.8.0      DBI_1.1.3           
+ [85] dbplyr_2.2.1         see_0.7.3            boot_1.3-28         
+ [88] modEvA_3.5           cli_3.4.1            parallel_4.2.1      
+ [91] insight_0.18.4       gower_1.0.0          pkgconfig_2.0.3     
+ [94] numDeriv_2016.8-1.1  terra_1.6-17         xml2_1.3.3          
+ [97] foreach_1.5.2        svglite_2.1.0        bslib_0.4.0         
+[100] hardhat_1.2.0        webshot_0.5.4        estimability_1.4.1  
+[103] prodlim_2019.11.13   rvest_1.0.3          snakecase_0.11.0    
+[106] digest_0.6.30        rmarkdown_2.16       cellranger_1.1.0    
+[109] gap_1.2.3-6          shiny_1.7.2          nloptr_2.0.3        
+[112] lifecycle_1.0.3      jsonlite_1.8.2       viridisLite_0.4.1   
+[115] fansi_1.0.3          pillar_1.8.1         fastmap_1.1.0       
+[118] httr_1.4.4           survival_3.3-1       bayestestR_0.13.0   
+[121] iterators_1.0.14     bit_4.0.4            class_7.3-20        
+[124] stringi_1.7.8        sass_0.4.2           future.apply_1.9.1  </code></pre>
 </div>
 </div>
 </div>

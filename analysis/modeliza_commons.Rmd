@@ -580,7 +580,7 @@ abline(v = 0.5, col = "blue")
 
 ```{r model-rec_total}
 bm <- lmer(
-  fitovol_dm3 ~ sr.spr + sr.sum + ph + potasio + commons + transh + commons:transh + (1 | parcela), 
+  rec_total_porc ~ sr.spr + sr.sum + ph + potasio + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
@@ -941,7 +941,7 @@ abline(v = 0.5, col = "blue")
 
 ```{r model-tasacons}
 bm <- lmer(
-  tasa_cons ~ 1 + sr.sum + cic + commons + transh + commons:transh + (1 | parcela), data = d
+  tasa_cons ~ 1 + sr.sum + cic + fosforo + commons + transh + commons:transh + (1 | parcela), data = d
 )
 
 performance(bm) %>% 
