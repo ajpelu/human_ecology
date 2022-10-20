@@ -191,6 +191,145 @@ pc/pt
 ```
 
 
+## Jaccard's analysis
+
+```{r}
+d <- veg_metadatos |> 
+  dplyr::select(
+    commons = localidad, 
+    transh = tratamiento_pastor, 
+    id
+  ) |> 
+  inner_join(veg_sel)
+```
+
+- How is the similarity within plots  (*i.e.* within all quadrats of any treatment combination). So we compare for each treatment the jaccard between quadrats 
+
+- Be careful with the computation of Jaccard in several pkgs. If we used `vegan::vegdist` we are computing the Jaccard distance. So, if we want to compute the similarity Jaccard index we could use `designdist(our_data_frame, method = "a/(a+b+c)", abcd = TRUE)` 
+
+
+
+```{r}
+df_commons <- d |> dplyr::select(-transh, -id) |> 
+  group_by(commons) |> 
+  summarise_all(sum)
+
+df_transh <- d |> dplyr::select(-commons, -id) |> 
+  group_by(transh) |> 
+  summarise_all(sum)
+
+df_ct <- d |> 
+  dplyr::select(-transh, -commons) |> 
+  mutate(i = substr(id, 1, 3)) |> 
+  relocate(i, .after = id) |> 
+  dplyr::select(-id) |> 
+  group_by(i) |> 
+  summarise_all(sum)
+
+
+
+ff <- function(mydf, nombres_rows) { 
+mydf |> 
+  column_to_rownames(var = nombres_rows) |>
+  t() |>
+  as.data.frame() |>
+  rownames_to_column(var = "sp")
+
+}
+
+
+
+
+### Commons 
+# C - S 
+
+commons_transpose <- ff(df_commons, nombres_rows = "commons")
+tranhs_transpose <- ff(df_transh, nombres_rows = "transh")
+ct_transpose <- ff(df_ct, nombres_rows = "i")
+
+myjaccard <- function(df, site1, site2) {
+
+  df <- df[, c("sp", site1, site2)]
+  
+  names(df) <- c('sp', 'site1', 'site2')
+  
+s <- df |>
+  mutate(J = case_when(
+    site1 > 0 & site2 > 0 ~ "a",
+    site1 > 0 & site2 == 0 ~ "b",
+    site1 == 0 & site2 > 0 ~ "c",
+    TRUE ~ "0"
+  ))
+
+jcounts <- s %>%
+  group_by(J) %>%
+  tally()
+
+# Jaccard = J11 / (J10 + J01 + J11)
+
+a <- (jcounts |> filter(J == "a") |> pull(n))
+b <- (jcounts |> filter(J == "b") |> pull(n))
+c <- (jcounts |> filter(J == "c") |> pull(n))
+
+j <- a / (a + b + c)
+
+return(j)
+
+}
+
+
+jcp <- myjaccard(commons_transpose, site1="Castril", site2="Pontones")
+jcs <- myjaccard(commons_transpose, site1="Castril", site2="Santiago")
+jsp <- myjaccard(commons_transpose, site1="Santiago", site2="Pontones")
+
+
+jshort_long <- myjaccard(tranhs_transpose, site1="Estante", site2="Trashumante")
+
+jces_cts <- myjaccard(ct_transpose, site1="CES", site2="CTS")
+jces_pes <- myjaccard(ct_transpose, site1="CES", site2="PES")
+jces_pts <- myjaccard(ct_transpose, site1="CES", site2="PTS")
+jces_ses <- myjaccard(ct_transpose, site1="CES", site2="SES")
+jces_sts <- myjaccard(ct_transpose, site1="CES", site2="STS")
+
+jcts_pes <- myjaccard(ct_transpose, site1="CTS", site2="PES")
+jcts_pts <- myjaccard(ct_transpose, site1="CTS", site2="PTS")
+jcts_ses <- myjaccard(ct_transpose, site1="CTS", site2="SES")
+jcts_sts <- myjaccard(ct_transpose, site1="CTS", site2="STS")
+
+jpes_pts <- myjaccard(ct_transpose, site1="PES", site2="PTS")
+jpes_ses <- myjaccard(ct_transpose, site1="PES", site2="SES")
+jpes_sts <- myjaccard(ct_transpose, site1="PES", site2="STS")
+
+jpts_ses <- myjaccard(ct_transpose, site1="PTS", site2="SES")
+jpts_sts <- myjaccard(ct_transpose, site1="PTS", site2="STS")
+
+jpts_sts <- myjaccard(ct_transpose, site1="SES", site2 = "STS")
+
+
+summary_commons <- data.frame(
+compara = c("Castril - Pontones", "Castril - Santiago", "Santiago - Pontones", 
+            "Estantes - Trashumantes",
+            "CES - CTS", "CES - PES", "CES - PTS", "CES - SES","CES - STS",
+            "CTS - PES", "CTS - PTS", "CTS - SES", "CTS - STS",
+            "PES - PTS", "PES - SES", "PES - STS",
+            "PTS - SES", "PTS - STS",
+            "SES - STS"
+            ),
+jaccard = c(jcp, jcs, jsp, jshort_long,jces_cts, jces_pes, jces_pts, jces_ses, jces_sts, jcts_pes, jcts_pts, jcts_ses, jcts_sts, jpes_pts, jpes_ses, jpes_sts, jpts_ses, jpts_sts, jpts_sts )
+)
+```
+
+
+```{r}
+summary_commons |> kbl(digits = c(0,3)) |> 
+  kable_styling()
+```
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,28 @@
+---
+title: "dissimilarity"
+output: html_document
+date: "2022-10-19"
+---
+
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+opts_chunk$set(echo = TRUE,
+	             cache = FALSE,
+               prompt = FALSE,
+               tidy = TRUE,
+               comment = NA,
+               message = FALSE,
+               warning = FALSE,
+               autodep = TRUE)
+```
+
+```{r pkg}
+source(here::here("code/load_pkgs.R"))
+source(here::here("code/aux_functions.R"))
+```
+
