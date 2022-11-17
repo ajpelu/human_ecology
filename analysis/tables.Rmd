@@ -128,3 +128,50 @@ DT::datatable(tR2_social,
 ```
 
 
+
+
+## Modeliza Commons 
+
+### ANOVAS
+```{r}
+anovas <- read_csv(here::here("output/anovas_model.csv"), show_col_types = FALSE)
+
+DT::datatable(anovas,
+  extensions = "Buttons",
+  options = list(
+    paging = TRUE,
+    searching = TRUE,
+    fixedColumns = TRUE,
+    autoWidth = TRUE,
+    ordering = TRUE,
+    dom = 'Bfrtip',
+    rownames = FALSE,
+    pageLength = 10,
+    buttons = c("copy", "csv", "excel")
+  )
+) 
+```
+
+### R2 
+```{r}
+tR2 <- read_csv(here::here("output/tablas_R2_model.csv"), show_col_types = FALSE)
+
+DT::datatable(tR2,
+  extensions = "Buttons",
+  options = list(
+    paging = TRUE,
+    searching = TRUE,
+    fixedColumns = TRUE,
+    autoWidth = TRUE,
+    ordering = TRUE,
+    dom = 'Bfrtip',
+    rownames = FALSE,
+    pageLength = 10,
+    buttons = c("copy", "csv", "excel")
+  )
+) |>
+  formatRound(columns = c("AIC","AICc","BIC","R2_conditional","R2_marginal","RMSE","Sigma","ICC"),
+              digits = c(2,2,2,3,3,2,2,2))
+```
+
+
