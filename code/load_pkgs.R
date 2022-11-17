@@ -30,6 +30,7 @@ library(performance)
 library(broom)
 library(broom.mixed)
 library(introdataviz)
+library(DT)
 # annotate packages by pkg annotater
 
 
