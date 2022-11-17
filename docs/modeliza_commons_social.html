@@ -1,0 +1,4386 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Antonio J. Pérez-Luque" />
+
+<meta name="date" content="2022-11-17" />
+
+<title>Models Social</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">human_ecology</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/ajpelu/human_ecology">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Models Social</h1>
+<h4 class="author">Antonio J. Pérez-Luque</h4>
+<h4 class="date">2022-11-17</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#introduction-1" id="toc-introduction-1">Introduction</a></li>
+<li><a href="#richness" id="toc-richness">Richness</a>
+<ul>
+<li><a href="#model" id="toc-model">Model</a></li>
+<li><a href="#posthoc" id="toc-posthoc">Posthoc</a></li>
+</ul></li>
+<li><a href="#diversity-shannon" id="toc-diversity-shannon">Diversity (shannon)</a>
+<ul>
+<li><a href="#model-1" id="toc-model-1">Model</a></li>
+<li><a href="#posthoc-1" id="toc-posthoc-1">Posthoc</a></li>
+</ul></li>
+<li><a href="#total-coverage-rec_total_porc" id="toc-total-coverage-rec_total_porc">Total coverage (rec_total_porc)</a>
+<ul>
+<li><a href="#model-2" id="toc-model-2">Model</a></li>
+<li><a href="#posthoc-2" id="toc-posthoc-2">Posthoc</a></li>
+</ul></li>
+<li><a href="#phytovolumen-fitovol_dm3" id="toc-phytovolumen-fitovol_dm3">Phytovolumen (fitovol_dm3)</a>
+<ul>
+<li><a href="#model-3" id="toc-model-3">Model</a></li>
+<li><a href="#posthoc-3" id="toc-posthoc-3">Posthoc</a></li>
+</ul></li>
+<li><a href="#consumption-ratetasa_cons" id="toc-consumption-ratetasa_cons">Consumption rate(tasa_cons)</a>
+<ul>
+<li><a href="#model-4" id="toc-model-4">Model</a></li>
+<li><a href="#posthoc-4" id="toc-posthoc-4">Posthoc</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks">
+Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-11-17
+</p>
+<p>
+<strong>Checks:</strong>
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+6
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+1
+</p>
+<p>
+<strong>Knit directory:</strong>
+<code>human_ecology/</code>
+<span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the
+reproducibility checks that were applied when the results were created.
+The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<strong>R Markdown file:</strong> uncommitted changes
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git.
+To know which version of the R Markdown file created these
+results, you’ll want to first commit it to the Git repo. If
+you’re still working on the analysis, you can ignore this
+warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and
+build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Environment:</strong> empty
+</a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global
+environment can affect the analysis in your R Markdown file in unknown ways.
+For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220620code">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Seed:</strong> <code>set.seed(20220620)</code>
+</a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220620code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220620)</code> was run prior to running the code in the R Markdown file.
+Setting a seed ensures that any results that rely on randomness, e.g.
+subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Session information:</strong> recorded
+</a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is
+critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Cache:</strong> none
+</a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident
+that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>File paths:</strong> relative
+</a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project
+makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreeaa11a4057382b49f9563557030ad207581ab6789targetblankaa11a40a">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/aa11a4057382b49f9563557030ad207581ab6789" target="_blank">aa11a40</a>
+</a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreeaa11a4057382b49f9563557030ad207581ab6789targetblankaa11a40a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and
+connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/aa11a4057382b49f9563557030ad207581ab6789" target="_blank">aa11a40</a>.
+See the <em>Past versions</em> tab to see a history of the changes made to the
+R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the
+analysis have been committed to Git prior to generating the results (you can
+use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only
+checks the R Markdown file, but you know if there are other scripts or data
+files that it depends on. Below is the status of the Git repository when the
+results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/modeliza_commons_social.Rmd
+
+Unstaged changes:
+    Modified:   analysis/modeliza_commons.Rmd
+    Modified:   glmulti.analysis.modgen.back
+    Modified:   glmulti.analysis.mods.back
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in
+this status report because it is ok for generated content to have uncommitted
+changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+</div>
+<div id="introduction-1" class="section level2">
+<h2>Introduction</h2>
+<pre class="r"><code>source(&quot;code/load_pkgs.R&quot;)
+source(&quot;code/aux_functions.R&quot;)</code></pre>
+<pre class="r"><code>d_raw &lt;- read_csv(here::here(&quot;data/cleaned_data.csv&quot;), show_col_types = FALSE)
+
+selected_vars &lt;- c(&quot;sr.spr&quot;,
+                   &quot;sr.sum&quot;,
+                   &quot;sr.win&quot;,
+                   &quot;cic&quot;,
+                   &quot;fosforo&quot;,
+                   &quot;ph&quot;, 
+                   &quot;potasio&quot;,
+                   &quot;nitrogeno&quot;)</code></pre>
+<p>The potential selected variables are (see <a href="compare_commons.Rmd"><code>compare_commons</code></a>):</p>
+<pre class="r"><code>d_raw |&gt; dplyr::select(one_of(selected_vars)) |&gt; names()</code></pre>
+<pre><code>[1] &quot;sr.spr&quot;    &quot;sr.sum&quot;    &quot;sr.win&quot;    &quot;cic&quot;       &quot;fosforo&quot;   &quot;ph&quot;       
+[7] &quot;potasio&quot;   &quot;nitrogeno&quot;</code></pre>
+<pre class="r"><code>d &lt;- d_raw |&gt; 
+  dplyr::select(one_of(selected_vars),
+                commons, 
+                transh,
+                parcela,
+                quadrat,
+                shannon,
+                fitovol_dm3,
+                rec_total_porc,
+                rec_vegetal_porc,
+                riqueza,
+                tasa_cons) %&gt;% 
+  mutate(parcela = as.factor(parcela))</code></pre>
+<pre class="r"><code>covariates &lt;- c(selected_vars, 
+                &quot;commons&quot;,
+                &quot;transh&quot;)    
+
+full_covariates &lt;- glue::glue_collapse(covariates, sep = &quot;+&quot;)
+
+random_part &lt;- &quot;(1 | parcela)&quot;</code></pre>
+<pre class="r"><code>data_mean &lt;- read_csv(here::here(&quot;data/data_mean.csv&quot;), show_col_types = FALSE)</code></pre>
+</div>
+<div id="richness" class="section level2">
+<h2>Richness</h2>
+<pre class="r"><code>yvar &lt;- &quot;riqueza&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- lm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) </code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-richness-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkmodel-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<ul>
+<li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for richness.</li>
+</ul>
+<div id="model" class="section level3">
+<h3>Model</h3>
+<pre class="r"><code>bm &lt;- lmer(
+  riqueza ~ commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+ICC
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+302.5369
+</td>
+<td style="text-align:right;">
+305.7369
+</td>
+<td style="text-align:right;">
+318.4487
+</td>
+<td style="text-align:right;">
+0.3075993
+</td>
+<td style="text-align:right;">
+0.1994962
+</td>
+<td style="text-align:right;">
+0.1350439
+</td>
+<td style="text-align:right;">
+3.596747
+</td>
+<td style="text-align:right;">
+3.976784
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+               Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
+commons        85.430  42.715     2    12  2.7010 0.10752  
+transh         56.613  56.613     1    12  3.5797 0.08286 .
+commons:transh 22.423  11.212     2    12  0.7089 0.51167  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>tabla_coef(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+effect
+</th>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+22.44
+</td>
+<td style="text-align:right;">
+1.61
+</td>
+<td style="text-align:right;">
+13.97
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones
+</td>
+<td style="text-align:right;">
+-2.22
+</td>
+<td style="text-align:right;">
+2.27
+</td>
+<td style="text-align:right;">
+-0.98
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.347
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago
+</td>
+<td style="text-align:right;">
+-1.89
+</td>
+<td style="text-align:right;">
+2.27
+</td>
+<td style="text-align:right;">
+-0.83
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.422
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+transhshort
+</td>
+<td style="text-align:right;">
+-1.67
+</td>
+<td style="text-align:right;">
+2.27
+</td>
+<td style="text-align:right;">
+-0.73
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.477
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones:transhshort
+</td>
+<td style="text-align:right;">
+-3.00
+</td>
+<td style="text-align:right;">
+3.21
+</td>
+<td style="text-align:right;">
+-0.93
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.369
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago:transhshort
+</td>
+<td style="text-align:right;">
+0.56
+</td>
+<td style="text-align:right;">
+3.21
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.866
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="posthoc" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+3.7222
+</td>
+<td style="text-align:right;">
+1.6063
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.3172
+</td>
+<td style="text-align:right;">
+0.0917
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+1.6111
+</td>
+<td style="text-align:right;">
+1.6063
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.0030
+</td>
+<td style="text-align:right;">
+0.5890
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+-2.1111
+</td>
+<td style="text-align:right;">
+1.6063
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-1.3143
+</td>
+<td style="text-align:right;">
+0.4144
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+2.4815
+</td>
+<td style="text-align:right;">
+1.3116
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.892
+</td>
+<td style="text-align:right;">
+0.0829
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+2.2222
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.9782
+</td>
+<td style="text-align:right;">
+0.6037
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+1.8889
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.8315
+</td>
+<td style="text-align:right;">
+0.6914
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-0.3333
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-0.1467
+</td>
+<td style="text-align:right;">
+0.9882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+5.2222
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.2988
+</td>
+<td style="text-align:right;">
+0.0945
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+1.3333
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.5869
+</td>
+<td style="text-align:right;">
+0.8296
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+-3.8889
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-1.7119
+</td>
+<td style="text-align:right;">
+0.2408
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transhcommons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Castril
+</td>
+<td style="text-align:right;">
+1.6667
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.7337
+</td>
+<td style="text-align:right;">
+0.4772
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Pontones
+</td>
+<td style="text-align:right;">
+4.6667
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.0543
+</td>
+<td style="text-align:right;">
+0.0624
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Santiago
+</td>
+<td style="text-align:right;">
+1.1111
+</td>
+<td style="text-align:right;">
+2.2717
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.4891
+</td>
+<td style="text-align:right;">
+0.6336
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>name_ylab &lt;- &quot;Richness (species number)&quot;
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/plot-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="diversity-shannon" class="section level2">
+<h2>Diversity (shannon)</h2>
+<pre class="r"><code>yvar &lt;- &quot;shannon&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- lm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) </code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-shannon-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkmodel-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<ul>
+<li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for diversity (Shannon index)</li>
+</ul>
+<div id="model-1" class="section level3">
+<h3>Model</h3>
+<pre class="r"><code>bm &lt;- lmer(
+  shannon ~ commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+ICC
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+77.26368
+</td>
+<td style="text-align:right;">
+80.46368
+</td>
+<td style="text-align:right;">
+93.17555
+</td>
+<td style="text-align:right;">
+0.064001
+</td>
+<td style="text-align:right;">
+0.030642
+</td>
+<td style="text-align:right;">
+0.0344136
+</td>
+<td style="text-align:right;">
+0.3671763
+</td>
+<td style="text-align:right;">
+0.3942384
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+                 Sum Sq  Mean Sq NumDF DenDF F value Pr(&gt;F)
+commons        0.033360 0.016680     2    12  0.1073 0.8991
+transh         0.198110 0.198110     1    12  1.2746 0.2810
+commons:transh 0.012153 0.006076     2    12  0.0391 0.9618</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>tabla_coef(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+effect
+</th>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+1.80
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+<td style="text-align:right;">
+13.04
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones
+</td>
+<td style="text-align:right;">
+-0.04
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+-0.22
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.828
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago
+</td>
+<td style="text-align:right;">
+-0.08
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+-0.39
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.701
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+transhshort
+</td>
+<td style="text-align:right;">
+-0.13
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+-0.68
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.506
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones:transhshort
+</td>
+<td style="text-align:right;">
+-0.03
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+<td style="text-align:right;">
+-0.10
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.919
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago:transhshort
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.865
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="posthoc-1" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+0.0577
+</td>
+<td style="text-align:right;">
+0.1383
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.4170
+</td>
+<td style="text-align:right;">
+0.9093
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+0.0530
+</td>
+<td style="text-align:right;">
+0.1383
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.3833
+</td>
+<td style="text-align:right;">
+0.9227
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+-0.0047
+</td>
+<td style="text-align:right;">
+0.1383
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-0.0337
+</td>
+<td style="text-align:right;">
+0.9994
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+0.1275
+</td>
+<td style="text-align:right;">
+0.1129
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.129
+</td>
+<td style="text-align:right;">
+0.281
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.0434
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.2218
+</td>
+<td style="text-align:right;">
+0.9733
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.0770
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.3936
+</td>
+<td style="text-align:right;">
+0.9187
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.0336
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.1718
+</td>
+<td style="text-align:right;">
+0.9839
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.0719
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.3679
+</td>
+<td style="text-align:right;">
+0.9285
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.0290
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.1485
+</td>
+<td style="text-align:right;">
+0.9879
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+-0.0429
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-0.2195
+</td>
+<td style="text-align:right;">
+0.9738
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transhcommons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Castril
+</td>
+<td style="text-align:right;">
+0.1339
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.6848
+</td>
+<td style="text-align:right;">
+0.5065
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Pontones
+</td>
+<td style="text-align:right;">
+0.1625
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.8310
+</td>
+<td style="text-align:right;">
+0.4222
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Santiago
+</td>
+<td style="text-align:right;">
+0.0860
+</td>
+<td style="text-align:right;">
+0.1955
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.4397
+</td>
+<td style="text-align:right;">
+0.6680
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>name_ylab &lt;- &quot;Shannon index&quot;
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/plot-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="total-coverage-rec_total_porc" class="section level2">
+<h2>Total coverage (rec_total_porc)</h2>
+<pre class="r"><code>yvar &lt;- &quot;rec_total_porc&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- glm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-rec_total-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkmodel-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<ul>
+<li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for Total coverage</li>
+</ul>
+<div id="model-2" class="section level3">
+<h3>Model</h3>
+<pre class="r"><code>bm &lt;- lmer(
+  rec_total_porc ~ commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+ICC
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+409.8984
+</td>
+<td style="text-align:right;">
+413.0984
+</td>
+<td style="text-align:right;">
+425.8102
+</td>
+<td style="text-align:right;">
+0.4941514
+</td>
+<td style="text-align:right;">
+0.4070263
+</td>
+<td style="text-align:right;">
+0.1469291
+</td>
+<td style="text-align:right;">
+10.92852
+</td>
+<td style="text-align:right;">
+12.11901
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+               Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)   
+commons         500.1  250.04     2    12  1.7025 0.22342   
+transh            0.1    0.11     1    12  0.0007 0.97863   
+commons:transh 3629.4 1814.71     2    12 12.3559 0.00122 **
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>tabla_coef(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+effect
+</th>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+55.00
+</td>
+<td style="text-align:right;">
+4.98
+</td>
+<td style="text-align:right;">
+11.06
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones
+</td>
+<td style="text-align:right;">
+18.33
+</td>
+<td style="text-align:right;">
+7.04
+</td>
+<td style="text-align:right;">
+2.61
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.023
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago
+</td>
+<td style="text-align:right;">
+12.22
+</td>
+<td style="text-align:right;">
+7.04
+</td>
+<td style="text-align:right;">
+1.74
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+transhshort
+</td>
+<td style="text-align:right;">
+28.67
+</td>
+<td style="text-align:right;">
+7.04
+</td>
+<td style="text-align:right;">
+4.07
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones:transhshort
+</td>
+<td style="text-align:right;">
+-43.11
+</td>
+<td style="text-align:right;">
+9.95
+</td>
+<td style="text-align:right;">
+-4.33
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago:transhshort
+</td>
+<td style="text-align:right;">
+-42.56
+</td>
+<td style="text-align:right;">
+9.95
+</td>
+<td style="text-align:right;">
+-4.28
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="posthoc-2" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+3.2222
+</td>
+<td style="text-align:right;">
+4.975
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.6477
+</td>
+<td style="text-align:right;">
+0.7972
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+9.0556
+</td>
+<td style="text-align:right;">
+4.975
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.8202
+</td>
+<td style="text-align:right;">
+0.2047
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+5.8333
+</td>
+<td style="text-align:right;">
+4.975
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.1725
+</td>
+<td style="text-align:right;">
+0.4908
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+-0.1111
+</td>
+<td style="text-align:right;">
+4.0621
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-0.0274
+</td>
+<td style="text-align:right;">
+0.9786
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-18.3333
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-2.6057
+</td>
+<td style="text-align:right;">
+0.0558
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-12.2222
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-1.7372
+</td>
+<td style="text-align:right;">
+0.2320
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+6.1111
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.8686
+</td>
+<td style="text-align:right;">
+0.6693
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+24.7778
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+3.5217
+</td>
+<td style="text-align:right;">
+0.0109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+30.3333
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4.3113
+</td>
+<td style="text-align:right;">
+0.0027
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+5.5556
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.7896
+</td>
+<td style="text-align:right;">
+0.7162
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transhcommons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Castril
+</td>
+<td style="text-align:right;">
+-28.6667
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-4.0744
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Pontones
+</td>
+<td style="text-align:right;">
+14.4444
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2.0530
+</td>
+<td style="text-align:right;">
+0.0625
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Santiago
+</td>
+<td style="text-align:right;">
+13.8889
+</td>
+<td style="text-align:right;">
+7.0358
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.9740
+</td>
+<td style="text-align:right;">
+0.0718
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>name_ylab &lt;- &quot;Total Coverage (%)&quot;
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/plot-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="phytovolumen-fitovol_dm3" class="section level2">
+<h2>Phytovolumen (fitovol_dm3)</h2>
+<pre class="r"><code>yvar &lt;- &quot;fitovol_dm3&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- glm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-fitvol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-fitvol-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkmodel-fitvol-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<ul>
+<li>It seems that there are no problems of normality or homocedasticity, so we use an LMM for Phytovolumen</li>
+</ul>
+<div id="model-3" class="section level3">
+<h3>Model</h3>
+<pre class="r"><code>bm &lt;- lmer(
+  fitovol_dm3 ~ commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:left;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+339.3991
+</td>
+<td style="text-align:right;">
+342.8277
+</td>
+<td style="text-align:right;">
+354.8537
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+0.0670276
+</td>
+<td style="text-align:right;">
+7.166538
+</td>
+<td style="text-align:right;">
+7.629362
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+                Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)
+commons         30.741  15.370     2    45  0.2641 0.7691
+transh          39.185  39.185     1    45  0.6732 0.4163
+commons:transh 136.501  68.250     2    45  1.1725 0.3189</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>tabla_coef(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+effect
+</th>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+16.61
+</td>
+<td style="text-align:right;">
+2.54
+</td>
+<td style="text-align:right;">
+6.53
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+3.60
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+0.890
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago
+</td>
+<td style="text-align:right;">
+2.45
+</td>
+<td style="text-align:right;">
+3.71
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+0.512
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+transhshort
+</td>
+<td style="text-align:right;">
+2.45
+</td>
+<td style="text-align:right;">
+3.84
+</td>
+<td style="text-align:right;">
+0.64
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+0.528
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones:transhshort
+</td>
+<td style="text-align:right;">
+-4.45
+</td>
+<td style="text-align:right;">
+5.26
+</td>
+<td style="text-align:right;">
+-0.84
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+0.403
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago:transhshort
+</td>
+<td style="text-align:right;">
+-8.18
+</td>
+<td style="text-align:right;">
+5.34
+</td>
+<td style="text-align:right;">
+-1.53
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+0.133
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="posthoc-3" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+1.7230
+</td>
+<td style="text-align:right;">
+2.6378
+</td>
+<td style="text-align:right;">
+12.0826
+</td>
+<td style="text-align:right;">
+0.6532
+</td>
+<td style="text-align:right;">
+0.7941
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+1.6362
+</td>
+<td style="text-align:right;">
+2.6794
+</td>
+<td style="text-align:right;">
+12.5979
+</td>
+<td style="text-align:right;">
+0.6107
+</td>
+<td style="text-align:right;">
+0.8170
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+-0.0868
+</td>
+<td style="text-align:right;">
+2.5863
+</td>
+<td style="text-align:right;">
+11.2445
+</td>
+<td style="text-align:right;">
+-0.0336
+</td>
+<td style="text-align:right;">
+0.9994
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+1.761
+</td>
+<td style="text-align:right;">
+2.1513
+</td>
+<td style="text-align:right;">
+11.9731
+</td>
+<td style="text-align:right;">
+0.8186
+</td>
+<td style="text-align:right;">
+0.429
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-0.5000
+</td>
+<td style="text-align:right;">
+3.5965
+</td>
+<td style="text-align:right;">
+10.7331
+</td>
+<td style="text-align:right;">
+-0.1390
+</td>
+<td style="text-align:right;">
+0.9894
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-2.4514
+</td>
+<td style="text-align:right;">
+3.7175
+</td>
+<td style="text-align:right;">
+11.7560
+</td>
+<td style="text-align:right;">
+-0.6594
+</td>
+<td style="text-align:right;">
+0.7908
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+-1.9514
+</td>
+<td style="text-align:right;">
+3.7175
+</td>
+<td style="text-align:right;">
+11.7560
+</td>
+<td style="text-align:right;">
+-0.5249
+</td>
+<td style="text-align:right;">
+0.8608
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+3.9460
+</td>
+<td style="text-align:right;">
+3.8597
+</td>
+<td style="text-align:right;">
+13.4527
+</td>
+<td style="text-align:right;">
+1.0224
+</td>
+<td style="text-align:right;">
+0.5760
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+5.7238
+</td>
+<td style="text-align:right;">
+3.8597
+</td>
+<td style="text-align:right;">
+13.4527
+</td>
+<td style="text-align:right;">
+1.4830
+</td>
+<td style="text-align:right;">
+0.3295
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+1.7778
+</td>
+<td style="text-align:right;">
+3.5965
+</td>
+<td style="text-align:right;">
+10.7331
+</td>
+<td style="text-align:right;">
+0.4943
+</td>
+<td style="text-align:right;">
+0.8755
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transhcommons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Castril
+</td>
+<td style="text-align:right;">
+-2.4460
+</td>
+<td style="text-align:right;">
+3.8597
+</td>
+<td style="text-align:right;">
+13.4527
+</td>
+<td style="text-align:right;">
+-0.6337
+</td>
+<td style="text-align:right;">
+0.5369
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Pontones
+</td>
+<td style="text-align:right;">
+2.0000
+</td>
+<td style="text-align:right;">
+3.5965
+</td>
+<td style="text-align:right;">
+10.7331
+</td>
+<td style="text-align:right;">
+0.5561
+</td>
+<td style="text-align:right;">
+0.5896
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Santiago
+</td>
+<td style="text-align:right;">
+5.7292
+</td>
+<td style="text-align:right;">
+3.7175
+</td>
+<td style="text-align:right;">
+11.7560
+</td>
+<td style="text-align:right;">
+1.5411
+</td>
+<td style="text-align:right;">
+0.1498
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>name_ylab &lt;- expression(Fitovolumen~(m^3))
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/plot-fitovol-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="consumption-ratetasa_cons" class="section level2">
+<h2>Consumption rate(tasa_cons)</h2>
+<pre class="r"><code>yvar &lt;- &quot;tasa_cons&quot;
+covariates_lmer &lt;- glue::glue_collapse(c(covariates, random_part),
+                                       sep = &quot; + &quot;)
+
+f &lt;- reformulate(covariates_lmer, response = yvar)
+
+m &lt;- lmer(glue::glue_collapse(c(f, random_part), &quot; + &quot;),
+          data = d)</code></pre>
+<ul>
+<li>GLMM or LMM?</li>
+</ul>
+<pre class="r"><code>faux &lt;- reformulate(
+  glue::glue_collapse(covariates, sep = &quot; + &quot;), response = yvar)
+
+maux &lt;- glm(faux, data = d) 
+simulated_resid &lt;- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkGLM-tasacons-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>check_model(maux)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/checkmodel-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(maux, faux, simulated_resid) # remove </code></pre>
+<div id="model-4" class="section level3">
+<h3>Model</h3>
+<pre class="r"><code>bm &lt;- lmer(
+  tasa_cons ~ commons + transh + commons:transh + (1 | parcela), data = d
+)
+
+performance(bm) %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+R2_conditional
+</th>
+<th style="text-align:right;">
+R2_marginal
+</th>
+<th style="text-align:right;">
+ICC
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+<th style="text-align:right;">
+Sigma
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+122.5895
+</td>
+<td style="text-align:right;">
+125.7895
+</td>
+<td style="text-align:right;">
+138.5013
+</td>
+<td style="text-align:right;">
+0.4109353
+</td>
+<td style="text-align:right;">
+0.1366174
+</td>
+<td style="text-align:right;">
+0.3177247
+</td>
+<td style="text-align:right;">
+0.5001391
+</td>
+<td style="text-align:right;">
+0.5739356
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
+<pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
+                Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)
+commons        1.25244 0.62622     2    12  1.9011 0.1918
+transh         0.10883 0.10883     1    12  0.3304 0.5761
+commons:transh 0.32788 0.16394     2    12  0.4977 0.6199</code></pre>
+<pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
+<pre class="r"><code>tabla_coef(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+effect
+</th>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+1.21
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+<td style="text-align:right;">
+4.09
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+-0.14
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.891
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago
+</td>
+<td style="text-align:right;">
+-0.38
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+-0.91
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.380
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+transhshort
+</td>
+<td style="text-align:right;">
+0.46
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+1.10
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsPontones:transhshort
+</td>
+<td style="text-align:right;">
+-0.58
+</td>
+<td style="text-align:right;">
+0.59
+</td>
+<td style="text-align:right;">
+-0.98
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.346
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fixed
+</td>
+<td style="text-align:left;">
+commonsSantiago:transhshort
+</td>
+<td style="text-align:right;">
+-0.38
+</td>
+<td style="text-align:right;">
+0.59
+</td>
+<td style="text-align:right;">
+-0.64
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.531
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="posthoc-4" class="section level3">
+<h3>Posthoc</h3>
+<pre class="r"><code>tabla_postHoc_commons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:right;">
+0.3494
+</td>
+<td style="text-align:right;">
+0.2962
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.1795
+</td>
+<td style="text-align:right;">
+0.4868
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:right;">
+0.5730
+</td>
+<td style="text-align:right;">
+0.2962
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.9344
+</td>
+<td style="text-align:right;">
+0.1715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:right;">
+0.2236
+</td>
+<td style="text-align:right;">
+0.2962
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.7549
+</td>
+<td style="text-align:right;">
+0.7365
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transh(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:right;">
+-0.139
+</td>
+<td style="text-align:right;">
+0.2418
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-0.5748
+</td>
+<td style="text-align:right;">
+0.5761
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_int(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.0586
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.1398
+</td>
+<td style="text-align:right;">
+0.9893
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.3821
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.9121
+</td>
+<td style="text-align:right;">
+0.6432
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+long
+</td>
+<td style="text-align:right;">
+0.3235
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.7723
+</td>
+<td style="text-align:right;">
+0.7263
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Pontones
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.6402
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.5283
+</td>
+<td style="text-align:right;">
+0.3129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Castril - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.7639
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.8236
+</td>
+<td style="text-align:right;">
+0.2037
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pontones - Santiago
+</td>
+<td style="text-align:left;">
+short
+</td>
+<td style="text-align:right;">
+0.1237
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.2953
+</td>
+<td style="text-align:right;">
+0.9533
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabla_postHoc_transhcommons(bm)</code></pre>
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+transh
+</th>
+<th style="text-align:left;">
+commons
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+t.ratio
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Castril
+</td>
+<td style="text-align:right;">
+-0.4601
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-1.0985
+</td>
+<td style="text-align:right;">
+0.2935
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Pontones
+</td>
+<td style="text-align:right;">
+0.1215
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.2900
+</td>
+<td style="text-align:right;">
+0.7768
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+long - short
+</td>
+<td style="text-align:left;">
+Santiago
+</td>
+<td style="text-align:right;">
+-0.0784
+</td>
+<td style="text-align:right;">
+0.4189
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-0.1871
+</td>
+<td style="text-align:right;">
+0.8547
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>name_ylab &lt;- &quot;Consumption rate&quot;
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
+<p><img src="figure/modeliza_commons_social.Rmd/plot-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>anovas &lt;- mget(apropos(&quot;anova_&quot;), envir = globalenv()) |&gt; 
+  bind_rows() |&gt; 
+  remove_rownames() |&gt; 
+  relocate(variable, factor) |&gt; 
+  mutate_at(3, ~round(.,2)) |&gt; 
+  mutate_at(4, ~round(.,3))</code></pre>
+<pre class="r"><code>anovas |&gt; 
+  kbl(col.names = 
+        c(&quot;Response&quot;, &quot;variables&quot;, &quot;F&quot;, &quot;p.value&quot;)) %&gt;% 
+  kable_styling() </code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Response
+</th>
+<th style="text-align:left;">
+variables
+</th>
+<th style="text-align:right;">
+F
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+0.769
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+<td style="text-align:right;">
+0.416
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fitovol_dm3
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+1.17
+</td>
+<td style="text-align:right;">
+0.319
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+<td style="text-align:right;">
+0.223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.979
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rec_total_porc
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+12.36
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+2.70
+</td>
+<td style="text-align:right;">
+0.108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:right;">
+0.083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+riqueza
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+<td style="text-align:right;">
+0.512
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shannon
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+0.899
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shannon
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+1.27
+</td>
+<td style="text-align:right;">
+0.281
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shannon
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+0.962
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+commons
+</td>
+<td style="text-align:right;">
+1.90
+</td>
+<td style="text-align:right;">
+0.192
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+transh
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+<td style="text-align:right;">
+0.576
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tasa_cons
+</td>
+<td style="text-align:left;">
+commons:transh
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+0.620
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.1 (2022-06-23)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Monterey 12.3.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] introdataviz_0.0.0.9003 broom.mixed_0.2.9.4     lmerTest_3.1-3         
+ [4] car_3.1-0               carData_3.0-5           emmeans_1.8.1-1        
+ [7] glmulti_1.0.8           rJava_1.0-6             arm_1.13-1             
+[10] MASS_7.3-57             multilevelmod_1.0.0     yardstick_1.1.0        
+[13] workflowsets_1.0.0      workflows_1.1.0         tune_1.0.1             
+[16] rsample_1.1.0           recipes_1.0.1           parsnip_1.0.2          
+[19] modeldata_1.0.1         infer_1.0.3             dials_1.0.0            
+[22] scales_1.2.1            broom_1.0.1             tidymodels_1.0.0       
+[25] MuMIn_1.47.1            lme4_1.1-30             Matrix_1.5-1           
+[28] glue_1.6.2              rmdformats_1.0.4        knitr_1.40             
+[31] leaps_3.1               factoextra_1.0.7        nlme_3.1-157           
+[34] DHARMa_0.4.6            performance_0.10.0      kableExtra_1.3.4       
+[37] corrplot_0.92           correlation_0.8.2       patchwork_1.1.2        
+[40] vegan_2.6-4             lattice_0.20-45         permute_0.9-7          
+[43] fuzzySim_4.3            janitor_2.1.0           here_1.0.1             
+[46] forcats_0.5.2           stringr_1.4.1           dplyr_1.0.10           
+[49] purrr_0.3.5             readr_2.1.3             tidyr_1.2.1            
+[52] tibble_3.1.8            ggplot2_3.4.0           tidyverse_1.3.2        
+[55] workflowr_1.7.0        
+
+loaded via a namespace (and not attached):
+  [1] utf8_1.2.2           tidyselect_1.2.0     grid_4.2.1          
+  [4] munsell_0.5.0        codetools_0.2-18     future_1.28.0       
+  [7] withr_2.5.0          colorspace_2.0-3     qgam_1.3.4          
+ [10] highr_0.9            rstudioapi_0.14      stats4_4.2.1        
+ [13] listenv_0.8.0        labeling_0.4.2       git2r_0.30.1        
+ [16] farver_2.1.1         bit64_4.0.5          DiceDesign_1.9      
+ [19] datawizard_0.6.2     gap.datasets_0.0.5   rprojroot_2.0.3     
+ [22] coda_0.19-4          parallelly_1.32.1    vctrs_0.5.1         
+ [25] generics_0.1.3       ipred_0.9-13         xfun_0.35           
+ [28] randomForest_4.7-1.1 doParallel_1.0.17    R6_2.5.1            
+ [31] lhs_1.1.5            cachem_1.0.6         assertthat_0.2.1    
+ [34] vroom_1.6.0          promises_1.2.0.1     nnet_7.3-17         
+ [37] googlesheets4_1.0.1  gtable_0.3.1         globals_0.16.1      
+ [40] processx_3.7.0       timeDate_4021.106    rlang_1.0.6         
+ [43] systemfonts_1.0.4    splines_4.2.1        gargle_1.2.1        
+ [46] yaml_2.3.6           abind_1.4-5          modelr_0.1.9        
+ [49] backports_1.4.1      httpuv_1.6.6         tools_4.2.1         
+ [52] lava_1.6.10          bookdown_0.30        ellipsis_0.3.2      
+ [55] jquerylib_0.1.4      plyr_1.8.7           Rcpp_1.0.9          
+ [58] ps_1.7.1             rpart_4.1.16         haven_2.5.1         
+ [61] ggrepel_0.9.1        cluster_2.1.3        fs_1.5.2            
+ [64] furrr_0.3.1          magrittr_2.0.3       reprex_2.0.2        
+ [67] GPfit_1.0-8          googledrive_2.0.0    mvtnorm_1.1-3       
+ [70] whisker_0.4          mime_0.12            hms_1.1.2           
+ [73] evaluate_0.18        xtable_1.8-4         pbkrtest_0.5.1      
+ [76] readxl_1.4.1         compiler_4.2.1       crayon_1.5.2        
+ [79] minqa_1.2.4          htmltools_0.5.3      mgcv_1.8-40         
+ [82] later_1.3.0          tzdb_0.3.0           lubridate_1.8.0     
+ [85] DBI_1.1.3            dbplyr_2.2.1         see_0.7.3           
+ [88] boot_1.3-28          modEvA_3.5           cli_3.4.1           
+ [91] parallel_4.2.1       insight_0.18.4       gower_1.0.0         
+ [94] pkgconfig_2.0.3      getPass_0.2-2        numDeriv_2016.8-1.1 
+ [97] terra_1.6-17         xml2_1.3.3           foreach_1.5.2       
+[100] svglite_2.1.0        bslib_0.4.1          hardhat_1.2.0       
+[103] webshot_0.5.4        estimability_1.4.1   prodlim_2019.11.13  
+[106] rvest_1.0.3          snakecase_0.11.0     callr_3.7.2         
+[109] digest_0.6.30        rmarkdown_2.18       cellranger_1.1.0    
+[112] gap_1.2.3-6          shiny_1.7.3          nloptr_2.0.3        
+[115] lifecycle_1.0.3      jsonlite_1.8.3       viridisLite_0.4.1   
+[118] fansi_1.0.3          pillar_1.8.1         fastmap_1.1.0       
+[121] httr_1.4.4           survival_3.3-1       bayestestR_0.13.0   
+[124] iterators_1.0.14     bit_4.0.4            class_7.3-20        
+[127] stringi_1.7.8        sass_0.4.2           future.apply_1.9.1  </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

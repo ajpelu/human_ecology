@@ -1,0 +1,437 @@
+---
+title: "Models Social"
+author: "Antonio J. Pérez-Luque"
+date: "2022-11-17"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+## Introduction
+```{r, message=FALSE}
+source("code/load_pkgs.R")
+source("code/aux_functions.R")
+```
+
+```{r setup, include=FALSE}
+## Global options
+opts_chunk$set(echo = TRUE,
+	             cache = FALSE,
+               prompt = FALSE,
+               tidy = TRUE,
+               comment = NA,
+               message = FALSE,
+               warning = FALSE,
+               autodep = TRUE)
+```
+
+```{r data-raw} 
+d_raw <- read_csv(here::here("data/cleaned_data.csv"), show_col_types = FALSE)
+
+selected_vars <- c("sr.spr",
+                   "sr.sum",
+                   "sr.win",
+                   "cic",
+                   "fosforo",
+                   "ph", 
+                   "potasio",
+                   "nitrogeno")
+```
+
+The potential selected variables are (see [`compare_commons`](compare_commons.Rmd)): 
+
+```{r variables}
+d_raw |> dplyr::select(one_of(selected_vars)) |> names()
+```
+
+```{r data}
+d <- d_raw |> 
+  dplyr::select(one_of(selected_vars),
+                commons, 
+                transh,
+                parcela,
+                quadrat,
+                shannon,
+                fitovol_dm3,
+                rec_total_porc,
+                rec_vegetal_porc,
+                riqueza,
+                tasa_cons) %>% 
+  mutate(parcela = as.factor(parcela))
+```
+
+```{r prepare-covariates}
+covariates <- c(selected_vars, 
+                "commons",
+                "transh")    
+
+full_covariates <- glue::glue_collapse(covariates, sep = "+")
+
+random_part <- "(1 | parcela)"
+```
+
+```{r data-plot}
+data_mean <- read_csv(here::here("data/data_mean.csv"), show_col_types = FALSE)
+```
+
+## Richness
+
+```{r modeliza-richness}
+yvar <- "riqueza"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-richness}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- lm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) 
+```
+
+```{r checkmodel-richness, fig.height=8}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+- It seems that there are no problems of normality or homocedasticity, so we use an LMM for richness. 
+
+### Model 
+
+```{r model-richenss}
+bm <- lmer(
+  riqueza ~ commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+```
+
+```{r anova-richness}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+```{r coef-richness}
+tabla_coef(bm)
+```
+
+### Posthoc 
+```{r posthoc-richness}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
+```
+
+```{r plot-richness}
+name_ylab <- "Richness (species number)"
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
+```
+
+## Diversity (shannon)
+
+```{r modeliza-shannon}
+yvar <- "shannon"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-shannon}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- lm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux) 
+```
+
+```{r checkmodel-shannon, fig.height=8}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+- It seems that there are no problems of normality or homocedasticity, so we use an LMM for diversity (Shannon index) 
+
+### Model 
+
+```{r model-shannon}
+bm <- lmer(
+  shannon ~ commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+```
+
+```{r anova-shannon}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+```{r coef-shannon}
+tabla_coef(bm)
+```
+
+### Posthoc 
+```{r posthoc-shannon}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
+```
+
+```{r plot-shannon}
+name_ylab <- "Shannon index"
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
+```
+
+
+## Total coverage (rec_total_porc) 
+
+```{r modeliza-rec_total}
+yvar <- "rec_total_porc"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-rec_total}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- glm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
+```
+
+```{r checkmodel-rec_total, fig.height=8}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+- It seems that there are no problems of normality or homocedasticity, so we use an LMM for Total coverage 
+
+### Model  
+
+```{r model-rec_total}
+bm <- lmer(
+  rec_total_porc ~ commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+```
+
+```{r anova-rec_total}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+```{r coef-rec_total}
+tabla_coef(bm)
+```
+
+### Posthoc 
+```{r posthoc-rec_total}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
+```
+
+```{r plot-rec_total}
+name_ylab <- "Total Coverage (%)"
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
+```
+
+## Phytovolumen (fitovol_dm3)
+
+```{r modeliza-fitvol}
+yvar <- "fitovol_dm3"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-fitvol}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- glm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
+```
+
+```{r checkmodel-fitvol, fig.height=8}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+- It seems that there are no problems of normality or homocedasticity, so we use an LMM for Phytovolumen 
+
+### Model 
+
+```{r model-fitovol}
+bm <- lmer(
+  fitovol_dm3 ~ commons + transh + commons:transh + (1 | parcela), 
+  data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+
+```
+
+```{r anova-fitvol}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+```{r coef-fitvol}
+tabla_coef(bm)
+```
+
+### Posthoc 
+```{r posthoc-fitovol}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
+```
+
+```{r plot-fitovol}
+name_ylab <- expression(Fitovolumen~(m^3))
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
+```
+
+## Consumption rate(tasa_cons)
+
+```{r modeliza-tasacons}
+yvar <- "tasa_cons"
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+m <- lmer(glue::glue_collapse(c(f, random_part), " + "),
+          data = d)
+```
+
+- GLMM or LMM? 
+
+```{r checkGLM-tasacons}
+faux <- reformulate(
+  glue::glue_collapse(covariates, sep = " + "), response = yvar)
+
+maux <- glm(faux, data = d) 
+simulated_resid <- DHARMa::simulateResiduals(maux, n = 1000)
+plot(simulated_resid)
+
+plot(performance::check_distribution(maux), panel = FALSE)[[1]] + labs(subtitle = faux)
+```
+
+```{r checkmodel-tasacons, fig.height=8}
+check_model(maux)
+rm(maux, faux, simulated_resid) # remove 
+```
+
+ 
+### Model  
+
+
+```{r model-tasacons}
+bm <- lmer(
+  tasa_cons ~ commons + transh + commons:transh + (1 | parcela), data = d
+)
+
+performance(bm) %>% 
+  kbl() %>% 
+  kable_styling()
+
+```
+
+```{r anova-tasacons}
+anova(as_lmerModLmerTest(bm))
+formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
+```
+
+
+```{r coef-tasacons}
+tabla_coef(bm)
+```
+
+
+### Posthoc 
+```{r posthoc-tasacons}
+tabla_postHoc_commons(bm)
+tabla_postHoc_transh(bm)
+tabla_postHoc_int(bm)
+tabla_postHoc_transhcommons(bm)
+```
+
+```{r plot-tasacons}
+name_ylab <- "Consumption rate"
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
+```
+
+```{r}
+anovas <- mget(apropos("anova_"), envir = globalenv()) |> 
+  bind_rows() |> 
+  remove_rownames() |> 
+  relocate(variable, factor) |> 
+  mutate_at(3, ~round(.,2)) |> 
+  mutate_at(4, ~round(.,3))
+```
+
+```{r}
+anovas |> 
+  kbl(col.names = 
+        c("Response", "variables", "F", "p.value")) %>% 
+  kable_styling() 
+```
