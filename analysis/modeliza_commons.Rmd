@@ -226,6 +226,9 @@ bm <- lmer(
 performance(bm) %>% 
   kbl() %>% 
   kable_styling()
+
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
+
 ```
 
 ```{r anova-richness}
@@ -235,6 +238,10 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 
 ```{r coef-richness}
 tabla_coef(bm)
+```
+
+```{r r2-richness}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
 ```
 
 
@@ -252,7 +259,8 @@ tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-richness}
-plot_inter(df = data_mean, response = "Richness~(species~number)")
+name_ylab <- "Richness (species number)"
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
 ```
 
 ## Diversity (shannon)
@@ -407,6 +415,10 @@ bm <- lmer(
 performance(bm) %>% 
   kbl() %>% 
   kable_styling()
+
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
+
+
 ```
 
 ```{r anova-shannon}
@@ -417,6 +429,11 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```{r coef-shannon}
 tabla_coef(bm)
 ```
+
+```{r r2-shannon}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
+```
+
 
 ```{r clean-shannon}
 rm(list = apropos("best_mod"))
@@ -432,7 +449,8 @@ tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-shannon}
-plot_inter(df = data_mean, response = "Shannon~index")
+name_ylab <- "Shannon index"
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
 ```
 
 
@@ -588,6 +606,9 @@ performance(bm) %>%
   kbl() %>% 
   kable_styling()
 
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
+
+
 ```
 
 ```{r anova-rec_total}
@@ -599,6 +620,9 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 tabla_coef(bm)
 ```
 
+```{r r2-rec_total}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
+```
 
 ```{r clean-rec_total}
 rm(list = apropos("best_mod"))
@@ -614,7 +638,8 @@ tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-rec_total}
-plot_inter(df = data_mean, response = "Total~Coverage~('%')")
+name_ylab <- "Total Coverage (%)"
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
 ```
 
 ## Phytovolumen (fitovol_dm3)
@@ -761,13 +786,16 @@ abline(v = 0.5, col = "blue")
 
 ```{r model-fitovol}
 bm <- lmer(
-  fitovol_dm3 ~ sr.sum + sr.spr + commons + transh + commons:transh + (1 | parcela), 
+  fitovol_dm3 ~ sr.sum + cic + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
 performance(bm) %>% 
   kbl() %>% 
   kable_styling()
+
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
+
 
 ```
 
@@ -778,6 +806,10 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 
 ```{r coef-fitvol}
 tabla_coef(bm)
+```
+
+```{r r2-fitvol}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
 ```
 
 
@@ -795,7 +827,8 @@ tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-fitovol}
-plot_inter(df = data_mean, response = "Fitovolumen~(m^3)")
+name_ylab <- expression(Fitovolumen~(m^3))
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
 ```
 
 ## Consumption rate(tasa_cons)
@@ -948,6 +981,8 @@ performance(bm) %>%
   kbl() %>% 
   kable_styling()
 
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
+
 ```
 
 ```{r anova-tasacons}
@@ -960,6 +995,9 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 tabla_coef(bm)
 ```
 
+```{r r2-tasacons}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
+```
 
 ```{r clean-tasacons}
 rm(list = apropos("best_mod"))
@@ -975,9 +1013,13 @@ tabla_postHoc_transhcommons(bm)
 ```
 
 ```{r plot-tasacons}
-plot_inter(df = data_mean, response = "Consumption~rate")
+name_ylab <- "Consumption rate"
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
 ```
 
+
+## Tablas 
+### ANOVAS
 
 ```{r}
 anovas <- mget(apropos("anova_"), envir = globalenv()) |> 
@@ -996,11 +1038,30 @@ anovas |>
 ```
 
 
+### Tablas Glance 
+
+```{r}
+tablas_glance <- mget(apropos("table_glance"), envir = globalenv()) |> 
+  bind_rows() |> 
+  remove_rownames()
+```
+
+### Tablas Glance 
+
+```{r}
+tablas_R2 <- mget(apropos("table_performance"), envir = globalenv()) |> 
+  bind_rows() |> 
+  remove_rownames()
+```
 
 
 
-
-
+```{r}
+# export tables 
+write.csv(anovas, file=here::here("output/anovas_model.csv"), row.names = FALSE)
+write.csv(tablas_glance, file=here::here("output/tablas_glance_model.csv"), row.names = FALSE)
+write.csv(tablas_R2, file=here::here("output/tablas_R2_model.csv"), row.names = FALSE)
+```
 
 
 
