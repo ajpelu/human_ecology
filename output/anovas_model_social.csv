@@ -1,0 +1,16 @@
+"variable","factor","fvalue","p"
+"fitovol_dm3","commons",0.26,0.769
+"fitovol_dm3","transh",0.67,0.416
+"fitovol_dm3","commons:transh",1.17,0.319
+"rec_total_porc","commons",1.7,0.223
+"rec_total_porc","transh",0,0.979
+"rec_total_porc","commons:transh",12.36,0.001
+"riqueza","commons",2.7,0.108
+"riqueza","transh",3.58,0.083
+"riqueza","commons:transh",0.71,0.512
+"shannon","commons",0.11,0.899
+"shannon","transh",1.27,0.281
+"shannon","commons:transh",0.04,0.962
+"tasa_cons","commons",1.9,0.192
+"tasa_cons","transh",0.33,0.576
+"tasa_cons","commons:transh",0.5,0.62
