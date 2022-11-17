@@ -19,8 +19,10 @@ editor_options:
 ## Analysis
 - [Compare commons](compare_commons.html)
 - [Models](modeliza_commons.html)
+- [Models (social)](modeliza_commons_social.html)
 - [NMDS](nmds.html)
 
 ## Others
+- Tables [tables.html]
 - See [output folder](https://github.com/ajpelu/human_ecology/tree/main/output) to get the tables of the models.  
 
