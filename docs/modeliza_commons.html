@@ -194,8 +194,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -203,16 +203,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -337,6 +330,12 @@ $(document).ready(function () {
 <li><a href="#model-selection-4" id="toc-model-selection-4">Model selection</a></li>
 <li><a href="#posthoc-4" id="toc-posthoc-4">Posthoc</a></li>
 </ul></li>
+<li><a href="#tablas" id="toc-tablas">Tablas</a>
+<ul>
+<li><a href="#anovas" id="toc-anovas">ANOVAS</a></li>
+<li><a href="#tablas-glance" id="toc-tablas-glance">Tablas Glance</a></li>
+<li><a href="#tablas-glance-1" id="toc-tablas-glance-1">Tablas Glance</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -344,7 +343,7 @@ $(document).ready(function () {
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
 workflowr
-<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -354,7 +353,7 @@ workflowr
 </li>
 <li>
 <a data-toggle="tab" href="#checks">
-Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </a>
 </li>
 <li>
@@ -364,14 +363,14 @@ Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidde
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-10-20
+<strong>Last updated:</strong> 2022-11-17
 </p>
 <p>
 <strong>Checks:</strong>
 <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-6
+7
 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
-1
+0
 </p>
 <p>
 <strong>Knit directory:</strong>
@@ -394,21 +393,16 @@ The <em>Past versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
-<strong>R Markdown file:</strong> uncommitted changes
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<strong>R Markdown file:</strong> up-to-date
 </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes.
-To know which version of the R Markdown file created these
-results, you’ll want to first commit it to the Git repo. If
-you’re still working on the analysis, you can ignore this
-warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and
-build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you
+know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -497,20 +491,20 @@ makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree865ad63396bb8c5ad68c828f557fd1c6d05728c9targetblank865ad63a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree84c2826da8de82d25c5070b508c5088932efaa4btargetblank84c2826a">
 <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/865ad63396bb8c5ad68c828f557fd1c6d05728c9" target="_blank">865ad63</a>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/84c2826da8de82d25c5070b508c5088932efaa4b" target="_blank">84c2826</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree865ad63396bb8c5ad68c828f557fd1c6d05728c9targetblank865ad63a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree84c2826da8de82d25c5070b508c5088932efaa4btargetblank84c2826a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and
 connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/865ad63396bb8c5ad68c828f557fd1c6d05728c9" target="_blank">865ad63</a>.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/84c2826da8de82d25c5070b508c5088932efaa4b" target="_blank">84c2826</a>.
 See the <em>Past versions</em> tab to see a history of the changes made to the
 R Markdown and HTML files.
 </p>
@@ -527,13 +521,15 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
+Untracked files:
+    Untracked:  output/anovas_model.csv
+    Untracked:  output/tablas_R2_model.csv
+    Untracked:  output/tablas_glance_model.csv
+
 Unstaged changes:
-    Modified:   analysis/modeliza_commons.Rmd
     Modified:   glmulti.analysis.modgen.back
     Modified:   glmulti.analysis.mods.back
-    Modified:   output/best_models_aic_fitovol_dm3.csv
-    Modified:   output/best_models_fitovol_dm3.csv
-    Modified:   output/best_models_rec_total_porc.csv
+    Modified:   output/best_models_aic_tasa_cons.csv
     Modified:   output/best_models_tasa_cons.csv
 
 </code></pre>
@@ -579,6 +575,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/84c2826da8de82d25c5070b508c5088932efaa4b/analysis/modeliza_commons.Rmd" target="_blank">84c2826</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-11-17
+</td>
+<td>
+update new tablas and new models for fitovol
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/analysis/modeliza_commons.Rmd" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+<td>
+update and fix errors
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/human_ecology/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/modeliza_commons.html" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+<td>
+update and fix errors
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -806,6 +853,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkGLM-richness-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-richness-1.png" target="_blank">e0e5d9e</a>
 </td>
 <td>
@@ -904,6 +962,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkmodel-richness-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-richness-1.png" target="_blank">e0e5d9e</a>
@@ -1229,6 +1298,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/varImp-richness-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-richness-1.png" target="_blank">e0e5d9e</a>
 </td>
 <td>
@@ -1339,6 +1419,8 @@ NA
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                 Sum Sq Mean Sq NumDF DenDF F value   Pr(&gt;F)   
@@ -1588,6 +1670,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
 rm(lista_model)</code></pre>
 </div>
@@ -1994,7 +2077,8 @@ Santiago
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Richness~(species~number)&quot;)</code></pre>
+<pre class="r"><code>name_ylab &lt;- &quot;Richness (species number)&quot;
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-richness-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-richness-1">
@@ -2077,6 +2161,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkGLM-shannon-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-shannon-1.png" target="_blank">e0e5d9e</a>
@@ -2177,6 +2272,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkmodel-shannon-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-shannon-1.png" target="_blank">e0e5d9e</a>
@@ -2513,6 +2619,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/varImp-shannon-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-shannon-1.png" target="_blank">e0e5d9e</a>
 </td>
 <td>
@@ -2612,6 +2729,8 @@ NA
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                 Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
@@ -2837,6 +2956,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
 rm(lista_model)</code></pre>
 </div>
@@ -3243,7 +3363,8 @@ Santiago
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Shannon~index&quot;)</code></pre>
+<pre class="r"><code>name_ylab &lt;- &quot;Shannon index&quot;
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-shannon-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-shannon-1">
@@ -3326,6 +3447,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkGLM-rec_total-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-rec_total-1.png" target="_blank">e0e5d9e</a>
@@ -3426,6 +3558,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkmodel-rec_total-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-rec_total-1.png" target="_blank">e0e5d9e</a>
@@ -3722,6 +3865,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/varImp-rec_total-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-rec_total-1.png" target="_blank">e0e5d9e</a>
 </td>
 <td>
@@ -3826,6 +3980,7 @@ Sigma
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)
@@ -4097,6 +4252,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
 rm(lista_model)</code></pre>
 </div>
@@ -4503,7 +4659,8 @@ Santiago
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Total~Coverage~(&#39;%&#39;)&quot;)</code></pre>
+<pre class="r"><code>name_ylab &lt;- &quot;Total Coverage (%)&quot;
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-rec_total-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-rec_total-1">
@@ -4586,6 +4743,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkGLM-fitvol-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-fitvol-1.png" target="_blank">e0e5d9e</a>
@@ -4686,6 +4854,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkmodel-fitvol-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-fitvol-1.png" target="_blank">e0e5d9e</a>
@@ -5202,6 +5381,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/varImp-fitovol-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-fitovol-1.png" target="_blank">e0e5d9e</a>
 </td>
 <td>
@@ -5241,7 +5431,7 @@ ajpelu
 <li>Select the best and most parsimonious model</li>
 </ul>
 <pre class="r"><code>bm &lt;- lmer(
-  fitovol_dm3 ~ sr.sum + sr.spr + commons + transh + commons:transh + (1 | parcela), 
+  fitovol_dm3 ~ sr.sum + cic + commons + transh + commons:transh + (1 | parcela), 
   data = d
 )
 
@@ -5278,37 +5468,39 @@ Sigma
 <tbody>
 <tr>
 <td style="text-align:right;">
-330.4638
+338.0793
 </td>
 <td style="text-align:right;">
-335.9638
+343.5793
 </td>
 <td style="text-align:right;">
-349.7821
+357.3975
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:right;">
-0.1572522
+0.1274322
 </td>
 <td style="text-align:right;">
-6.75066
+6.885369
 </td>
 <td style="text-align:right;">
-7.351857
+7.498564
 </td>
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
-               Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
-sr.sum         238.56 238.555     1    43  4.4136 0.04155 *
-sr.spr         114.04 114.037     1    43  2.1099 0.15361  
-commons        212.51 106.255     2    43  1.9659 0.15242  
-transh         189.57 189.575     1    43  3.5074 0.06790 .
-commons:transh 110.84  55.423     2    43  1.0254 0.36726  
+                Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
+sr.sum         185.258 185.258     1    43  3.2947 0.07648 .
+cic             20.355  20.355     1    43  0.3620 0.55055  
+commons        118.328  59.164     2    43  1.0522 0.35798  
+transh         123.920 123.920     1    43  2.2039 0.14496  
+commons:transh  44.032  22.016     2    43  0.3915 0.67840  
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)</code></pre>
@@ -5348,19 +5540,19 @@ fixed
 (Intercept)
 </td>
 <td style="text-align:right;">
-30.15
+29.29
 </td>
 <td style="text-align:right;">
-6.30
+8.64
 </td>
 <td style="text-align:right;">
-4.79
+3.39
 </td>
 <td style="text-align:right;">
 43
 </td>
 <td style="text-align:right;">
-0.000
+0.002
 </td>
 </tr>
 <tr>
@@ -5371,19 +5563,19 @@ fixed
 sr.sum
 </td>
 <td style="text-align:right;">
--5.03
+-1.92
 </td>
 <td style="text-align:right;">
-2.39
+1.06
 </td>
 <td style="text-align:right;">
--2.10
+-1.82
 </td>
 <td style="text-align:right;">
 43
 </td>
 <td style="text-align:right;">
-0.042
+0.076
 </td>
 </tr>
 <tr>
@@ -5391,22 +5583,22 @@ sr.sum
 fixed
 </td>
 <td style="text-align:left;">
-sr.spr
+cic
 </td>
 <td style="text-align:right;">
-9.99
+-0.22
 </td>
 <td style="text-align:right;">
-6.88
+0.36
 </td>
 <td style="text-align:right;">
-1.45
+-0.60
 </td>
 <td style="text-align:right;">
 43
 </td>
 <td style="text-align:right;">
-0.154
+0.551
 </td>
 </tr>
 <tr>
@@ -5417,19 +5609,19 @@ fixed
 commonsPontones
 </td>
 <td style="text-align:right;">
--6.85
+-2.30
 </td>
 <td style="text-align:right;">
-4.91
+3.87
 </td>
 <td style="text-align:right;">
--1.40
+-0.59
 </td>
 <td style="text-align:right;">
 43
 </td>
 <td style="text-align:right;">
-0.170
+0.556
 </td>
 </tr>
 <tr>
@@ -5440,19 +5632,19 @@ fixed
 commonsSantiago
 </td>
 <td style="text-align:right;">
--0.60
+-1.10
 </td>
 <td style="text-align:right;">
-3.85
+4.23
 </td>
 <td style="text-align:right;">
--0.15
+-0.26
 </td>
 <td style="text-align:right;">
 43
 </td>
 <td style="text-align:right;">
-0.878
+0.797
 </td>
 </tr>
 <tr>
@@ -5463,19 +5655,19 @@ fixed
 transhshort
 </td>
 <td style="text-align:right;">
--11.98
+-0.97
 </td>
 <td style="text-align:right;">
-8.79
+4.19
 </td>
 <td style="text-align:right;">
--1.36
+-0.23
 </td>
 <td style="text-align:right;">
 43
 </td>
 <td style="text-align:right;">
-0.180
+0.819
 </td>
 </tr>
 <tr>
@@ -5486,19 +5678,19 @@ fixed
 commonsPontones:transhshort
 </td>
 <td style="text-align:right;">
-0.08
+-2.57
 </td>
 <td style="text-align:right;">
-5.48
+5.29
 </td>
 <td style="text-align:right;">
-0.02
+-0.49
 </td>
 <td style="text-align:right;">
 43
 </td>
 <td style="text-align:right;">
-0.988
+0.629
 </td>
 </tr>
 <tr>
@@ -5509,23 +5701,24 @@ fixed
 commonsSantiago:transhshort
 </td>
 <td style="text-align:right;">
--6.34
+-5.14
 </td>
 <td style="text-align:right;">
-5.22
+5.83
 </td>
 <td style="text-align:right;">
--1.21
+-0.88
 </td>
 <td style="text-align:right;">
 43
 </td>
 <td style="text-align:right;">
-0.232
+0.383
 </td>
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
 rm(lista_model)</code></pre>
 </div>
@@ -5561,19 +5754,19 @@ p.value
 Castril - Pontones
 </td>
 <td style="text-align:right;">
-6.8095
+3.5874
 </td>
 <td style="text-align:right;">
-3.5338
+2.7899
 </td>
 <td style="text-align:right;">
-9.9770
+9.6286
 </td>
 <td style="text-align:right;">
-1.9270
+1.2859
 </td>
 <td style="text-align:right;">
-0.1816
+0.4351
 </td>
 </tr>
 <tr>
@@ -5581,19 +5774,19 @@ Castril - Pontones
 Castril - Santiago
 </td>
 <td style="text-align:right;">
-3.7639
+3.6682
 </td>
 <td style="text-align:right;">
-2.7719
+2.8439
 </td>
 <td style="text-align:right;">
-10.2208
+9.9215
 </td>
 <td style="text-align:right;">
-1.3579
+1.2899
 </td>
 <td style="text-align:right;">
-0.3969
+0.4322
 </td>
 </tr>
 <tr>
@@ -5601,19 +5794,19 @@ Castril - Santiago
 Pontones - Santiago
 </td>
 <td style="text-align:right;">
--3.0456
+0.0808
 </td>
 <td style="text-align:right;">
-3.1871
+2.5755
 </td>
 <td style="text-align:right;">
-9.4679
+9.4770
 </td>
 <td style="text-align:right;">
--0.9556
+0.0314
 </td>
 <td style="text-align:right;">
-0.6203
+0.9995
 </td>
 </tr>
 </tbody>
@@ -5648,19 +5841,19 @@ p.value
 long - short
 </td>
 <td style="text-align:right;">
-14.0684
+3.5359
 </td>
 <td style="text-align:right;">
-7.5314
+2.3889
 </td>
 <td style="text-align:right;">
-10.7948
+10.799
 </td>
 <td style="text-align:right;">
-1.868
+1.4802
 </td>
 <td style="text-align:right;">
-0.0891
+0.1674
 </td>
 </tr>
 </tbody>
@@ -5701,19 +5894,19 @@ Castril - Pontones
 long
 </td>
 <td style="text-align:right;">
-6.8518
+2.3014
 </td>
 <td style="text-align:right;">
-4.9165
+3.8763
 </td>
 <td style="text-align:right;">
-10.3061
+9.3816
 </td>
 <td style="text-align:right;">
-1.3936
+0.5937
 </td>
 <td style="text-align:right;">
-0.3793
+0.8267
 </td>
 </tr>
 <tr>
@@ -5724,19 +5917,19 @@ Castril - Santiago
 long
 </td>
 <td style="text-align:right;">
-0.5952
+1.0982
 </td>
 <td style="text-align:right;">
-3.8680
+4.2452
 </td>
 <td style="text-align:right;">
-10.4720
+10.1153
 </td>
 <td style="text-align:right;">
-0.1539
+0.2587
 </td>
 <td style="text-align:right;">
-0.9870
+0.9639
 </td>
 </tr>
 <tr>
@@ -5747,19 +5940,19 @@ Pontones - Santiago
 long
 </td>
 <td style="text-align:right;">
--6.2566
+-1.2032
 </td>
 <td style="text-align:right;">
-4.5445
+4.0219
 </td>
 <td style="text-align:right;">
-9.6400
+9.9844
 </td>
 <td style="text-align:right;">
--1.3767
+-0.2992
 </td>
 <td style="text-align:right;">
-0.3896
+0.9521
 </td>
 </tr>
 <tr>
@@ -5770,19 +5963,19 @@ Castril - Pontones
 short
 </td>
 <td style="text-align:right;">
-6.7672
+4.8734
 </td>
 <td style="text-align:right;">
-3.9825
+3.8201
 </td>
 <td style="text-align:right;">
-10.4989
+10.8824
 </td>
 <td style="text-align:right;">
-1.6992
+1.2757
 </td>
 <td style="text-align:right;">
-0.2506
+0.4370
 </td>
 </tr>
 <tr>
@@ -5793,19 +5986,19 @@ Castril - Santiago
 short
 </td>
 <td style="text-align:right;">
-6.9326
+6.2382
 </td>
 <td style="text-align:right;">
-3.7576
+3.9050
 </td>
 <td style="text-align:right;">
-10.8026
+11.3304
 </td>
 <td style="text-align:right;">
-1.8449
+1.5975
 </td>
 <td style="text-align:right;">
-0.2014
+0.2862
 </td>
 </tr>
 <tr>
@@ -5816,19 +6009,19 @@ Pontones - Santiago
 short
 </td>
 <td style="text-align:right;">
-0.1655
+1.3648
 </td>
 <td style="text-align:right;">
-3.6613
+3.6366
 </td>
 <td style="text-align:right;">
-9.1043
+9.1392
 </td>
 <td style="text-align:right;">
-0.0452
+0.3753
 </td>
 <td style="text-align:right;">
-0.9989
+0.9259
 </td>
 </tr>
 </tbody>
@@ -5869,19 +6062,19 @@ long - short
 Castril
 </td>
 <td style="text-align:right;">
-11.9842
+0.9653
 </td>
 <td style="text-align:right;">
-8.8128
+4.2039
 </td>
 <td style="text-align:right;">
-11.8720
+12.7423
 </td>
 <td style="text-align:right;">
-1.3599
+0.2296
 </td>
 <td style="text-align:right;">
-0.1991
+0.8220
 </td>
 </tr>
 <tr>
@@ -5892,19 +6085,19 @@ long - short
 Pontones
 </td>
 <td style="text-align:right;">
-11.8995
+3.5372
 </td>
 <td style="text-align:right;">
-6.9884
+3.6484
 </td>
 <td style="text-align:right;">
-10.1415
+9.1048
 </td>
 <td style="text-align:right;">
-1.7028
+0.9695
 </td>
 <td style="text-align:right;">
-0.1190
+0.3573
 </td>
 </tr>
 <tr>
@@ -5915,24 +6108,25 @@ long - short
 Santiago
 </td>
 <td style="text-align:right;">
-18.3216
+6.1053
 </td>
 <td style="text-align:right;">
-8.4857
+4.2020
 </td>
 <td style="text-align:right;">
-10.0812
+10.0827
 </td>
 <td style="text-align:right;">
-2.1591
+1.4529
 </td>
 <td style="text-align:right;">
-0.0560
+0.1766
 </td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Fitovolumen~(m^3)&quot;)</code></pre>
+<pre class="r"><code>name_ylab &lt;- expression(Fitovolumen~(m^3))
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-fitovol-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-fitovol-1">
@@ -6015,6 +6209,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkGLM-tasacons-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkGLM-tasacons-1.png" target="_blank">e0e5d9e</a>
@@ -6117,6 +6322,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/checkmodel-tasacons-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/checkmodel-tasacons-1.png" target="_blank">e0e5d9e</a>
 </td>
 <td>
@@ -6199,7 +6415,7 @@ Completed.</code></pre>
 top &lt;- weightable(mm)
 top &lt;- top[top$aic &lt;= (min(top$aic) + 2),]</code></pre>
 <ul>
-<li>Get the best models (maximum 22 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
+<li>Get the best models (maximum 21 models (<span class="math inline">\(\Delta_{AIC}&lt;2\)</span>))</li>
 </ul>
 <pre class="r"><code># Get the ten best models 
 maxmodels &lt;- nrow(top)
@@ -6292,7 +6508,7 @@ weight
 0.000
 </td>
 <td style="text-align:right;">
-0.080
+0.082
 </td>
 </tr>
 <tr>
@@ -6312,7 +6528,7 @@ weight
 0.129
 </td>
 <td style="text-align:right;">
-0.075
+0.077
 </td>
 </tr>
 <tr>
@@ -6332,7 +6548,7 @@ weight
 0.200
 </td>
 <td style="text-align:right;">
-0.072
+0.074
 </td>
 </tr>
 <tr>
@@ -6352,7 +6568,7 @@ weight
 0.560
 </td>
 <td style="text-align:right;">
-0.060
+0.062
 </td>
 </tr>
 <tr>
@@ -6372,7 +6588,7 @@ weight
 0.801
 </td>
 <td style="text-align:right;">
-0.053
+0.055
 </td>
 </tr>
 <tr>
@@ -6392,7 +6608,7 @@ weight
 0.825
 </td>
 <td style="text-align:right;">
-0.053
+0.054
 </td>
 </tr>
 <tr>
@@ -6412,7 +6628,7 @@ weight
 0.923
 </td>
 <td style="text-align:right;">
-0.050
+0.052
 </td>
 </tr>
 <tr>
@@ -6432,7 +6648,7 @@ weight
 0.965
 </td>
 <td style="text-align:right;">
-0.049
+0.051
 </td>
 </tr>
 <tr>
@@ -6452,7 +6668,7 @@ weight
 1.063
 </td>
 <td style="text-align:right;">
-0.047
+0.048
 </td>
 </tr>
 <tr>
@@ -6472,7 +6688,7 @@ weight
 1.180
 </td>
 <td style="text-align:right;">
-0.044
+0.046
 </td>
 </tr>
 <tr>
@@ -6492,7 +6708,7 @@ weight
 1.222
 </td>
 <td style="text-align:right;">
-0.043
+0.045
 </td>
 </tr>
 <tr>
@@ -6512,7 +6728,7 @@ weight
 1.311
 </td>
 <td style="text-align:right;">
-0.041
+0.043
 </td>
 </tr>
 <tr>
@@ -6532,7 +6748,7 @@ weight
 1.397
 </td>
 <td style="text-align:right;">
-0.040
+0.041
 </td>
 </tr>
 <tr>
@@ -6552,7 +6768,7 @@ weight
 1.454
 </td>
 <td style="text-align:right;">
-0.039
+0.040
 </td>
 </tr>
 <tr>
@@ -6572,7 +6788,7 @@ weight
 1.646
 </td>
 <td style="text-align:right;">
-0.035
+0.036
 </td>
 </tr>
 <tr>
@@ -6592,7 +6808,7 @@ weight
 1.694
 </td>
 <td style="text-align:right;">
-0.034
+0.035
 </td>
 </tr>
 <tr>
@@ -6612,7 +6828,7 @@ weight
 1.728
 </td>
 <td style="text-align:right;">
-0.034
+0.035
 </td>
 </tr>
 <tr>
@@ -6632,27 +6848,7 @@ weight
 1.784
 </td>
 <td style="text-align:right;">
-0.033
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1 + sr.sum + fosforo + ph + (commons + transh)
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
--41.34
-</td>
-<td style="text-align:right;">
-100.68
-</td>
-<td style="text-align:right;">
-1.917
-</td>
-<td style="text-align:right;">
-0.031
+0.034
 </td>
 </tr>
 <tr>
@@ -6692,7 +6888,7 @@ weight
 1.999
 </td>
 <td style="text-align:right;">
-0.029
+0.030
 </td>
 </tr>
 <tr>
@@ -6712,7 +6908,7 @@ weight
 2.000
 </td>
 <td style="text-align:right;">
-0.029
+0.030
 </td>
 </tr>
 </tbody>
@@ -6746,6 +6942,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/964314649f8cec92d0ce4a7d9e27b1fadf5d16a5/docs/figure/modeliza_commons.Rmd/varImp-tasacons-1.png" target="_blank">9643146</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/ajpelu/human_ecology/blob/e0e5d9ed8a5035b5e8fe0264ceb1ee22e74caf6c/docs/figure/modeliza_commons.Rmd/varImp-tasacons-1.png" target="_blank">e0e5d9e</a>
@@ -6851,6 +7058,7 @@ Sigma
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
@@ -7100,6 +7308,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>rm(list = apropos(&quot;best_mod&quot;))
 rm(lista_model)</code></pre>
 </div>
@@ -7506,7 +7715,8 @@ Santiago
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_inter(df = data_mean, response = &quot;Consumption~rate&quot;)</code></pre>
+<pre class="r"><code>name_ylab &lt;- &quot;Consumption rate&quot;
+plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)</code></pre>
 <p><img src="figure/modeliza_commons.Rmd/plot-tasacons-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-tasacons-1">
@@ -7545,6 +7755,12 @@ ajpelu
 </table>
 </div>
 </div>
+</div>
+</div>
+<div id="tablas" class="section level2">
+<h2>Tablas</h2>
+<div id="anovas" class="section level3">
+<h3>ANOVAS</h3>
 <pre class="r"><code>anovas &lt;- mget(apropos(&quot;anova_&quot;), envir = globalenv()) |&gt; 
   bind_rows() |&gt; 
   remove_rownames() |&gt; 
@@ -7581,10 +7797,10 @@ fitovol_dm3
 sr.sum
 </td>
 <td style="text-align:right;">
-4.41
+3.29
 </td>
 <td style="text-align:right;">
-0.042
+0.076
 </td>
 </tr>
 <tr>
@@ -7592,13 +7808,13 @@ sr.sum
 fitovol_dm3
 </td>
 <td style="text-align:left;">
-sr.spr
+cic
 </td>
 <td style="text-align:right;">
-2.11
+0.36
 </td>
 <td style="text-align:right;">
-0.154
+0.551
 </td>
 </tr>
 <tr>
@@ -7609,10 +7825,10 @@ fitovol_dm3
 commons
 </td>
 <td style="text-align:right;">
-1.97
+1.05
 </td>
 <td style="text-align:right;">
-0.152
+0.358
 </td>
 </tr>
 <tr>
@@ -7623,10 +7839,10 @@ fitovol_dm3
 transh
 </td>
 <td style="text-align:right;">
-3.51
+2.20
 </td>
 <td style="text-align:right;">
-0.068
+0.145
 </td>
 </tr>
 <tr>
@@ -7637,10 +7853,10 @@ fitovol_dm3
 commons:transh
 </td>
 <td style="text-align:right;">
-1.03
+0.39
 </td>
 <td style="text-align:right;">
-0.367
+0.678
 </td>
 </tr>
 <tr>
@@ -7981,6 +8197,22 @@ commons:transh
 </tr>
 </tbody>
 </table>
+</div>
+<div id="tablas-glance" class="section level3">
+<h3>Tablas Glance</h3>
+<pre class="r"><code>tablas_glance &lt;- mget(apropos(&quot;table_glance&quot;), envir = globalenv()) |&gt; 
+  bind_rows() |&gt; 
+  remove_rownames()</code></pre>
+</div>
+<div id="tablas-glance-1" class="section level3">
+<h3>Tablas Glance</h3>
+<pre class="r"><code>tablas_R2 &lt;- mget(apropos(&quot;table_performance&quot;), envir = globalenv()) |&gt; 
+  bind_rows() |&gt; 
+  remove_rownames()</code></pre>
+<pre class="r"><code># export tables 
+write.csv(anovas, file=here::here(&quot;output/anovas_model.csv&quot;), row.names = FALSE)
+write.csv(tablas_glance, file=here::here(&quot;output/tablas_glance_model.csv&quot;), row.names = FALSE)
+write.csv(tablas_R2, file=here::here(&quot;output/tablas_R2_model.csv&quot;), row.names = FALSE)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -8005,68 +8237,71 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] broom.mixed_0.2.9.4 lmerTest_3.1-3      car_3.1-0          
- [4] carData_3.0-5       emmeans_1.8.1-1     glmulti_1.0.8      
- [7] rJava_1.0-6         arm_1.13-1          MASS_7.3-57        
-[10] multilevelmod_1.0.0 yardstick_1.1.0     workflowsets_1.0.0 
-[13] workflows_1.1.0     tune_1.0.1          rsample_1.1.0      
-[16] recipes_1.0.1       parsnip_1.0.2       modeldata_1.0.1    
-[19] infer_1.0.3         dials_1.0.0         scales_1.2.1       
-[22] broom_1.0.1         tidymodels_1.0.0    MuMIn_1.47.1       
-[25] lme4_1.1-30         Matrix_1.5-1        glue_1.6.2         
-[28] rmdformats_1.0.4    knitr_1.40          leaps_3.1          
-[31] factoextra_1.0.7    nlme_3.1-157        DHARMa_0.4.6       
-[34] performance_0.10.0  kableExtra_1.3.4    corrplot_0.92      
-[37] correlation_0.8.2   patchwork_1.1.2     vegan_2.6-4        
-[40] lattice_0.20-45     permute_0.9-7       fuzzySim_4.3       
-[43] janitor_2.1.0       here_1.0.1          forcats_0.5.2      
-[46] stringr_1.4.1       dplyr_1.0.10        purrr_0.3.4        
-[49] readr_2.1.2         tidyr_1.2.1         tibble_3.1.8       
-[52] ggplot2_3.3.6       tidyverse_1.3.2    
+ [1] DT_0.26                 introdataviz_0.0.0.9003 broom.mixed_0.2.9.4    
+ [4] lmerTest_3.1-3          car_3.1-0               carData_3.0-5          
+ [7] emmeans_1.8.1-1         glmulti_1.0.8           rJava_1.0-6            
+[10] arm_1.13-1              MASS_7.3-57             multilevelmod_1.0.0    
+[13] yardstick_1.1.0         workflowsets_1.0.0      workflows_1.1.0        
+[16] tune_1.0.1              rsample_1.1.0           recipes_1.0.1          
+[19] parsnip_1.0.2           modeldata_1.0.1         infer_1.0.3            
+[22] dials_1.0.0             scales_1.2.1            broom_1.0.1            
+[25] tidymodels_1.0.0        MuMIn_1.47.1            lme4_1.1-30            
+[28] Matrix_1.5-1            glue_1.6.2              rmdformats_1.0.4       
+[31] knitr_1.40              leaps_3.1               factoextra_1.0.7       
+[34] nlme_3.1-157            DHARMa_0.4.6            performance_0.10.0     
+[37] kableExtra_1.3.4        corrplot_0.92           correlation_0.8.2      
+[40] patchwork_1.1.2         vegan_2.6-4             lattice_0.20-45        
+[43] permute_0.9-7           fuzzySim_4.3            janitor_2.1.0          
+[46] here_1.0.1              forcats_0.5.2           stringr_1.4.1          
+[49] dplyr_1.0.10            purrr_0.3.5             readr_2.1.3            
+[52] tidyr_1.2.1             tibble_3.1.8            ggplot2_3.4.0          
+[55] tidyverse_1.3.2         workflowr_1.7.0        
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.2.2           tidyselect_1.1.2     grid_4.2.1          
-  [4] munsell_0.5.0        codetools_0.2-18     future_1.28.0       
-  [7] withr_2.5.0          colorspace_2.0-3     qgam_1.3.4          
- [10] highr_0.9            rstudioapi_0.14      stats4_4.2.1        
- [13] listenv_0.8.0        labeling_0.4.2       git2r_0.30.1        
- [16] farver_2.1.1         bit64_4.0.5          DiceDesign_1.9      
- [19] datawizard_0.6.2     gap.datasets_0.0.5   rprojroot_2.0.3     
- [22] coda_0.19-4          parallelly_1.32.1    vctrs_0.4.2         
- [25] generics_0.1.3       ipred_0.9-13         xfun_0.33           
- [28] randomForest_4.7-1.1 doParallel_1.0.17    R6_2.5.1            
- [31] lhs_1.1.5            cachem_1.0.6         assertthat_0.2.1    
- [34] promises_1.2.0.1     vroom_1.5.7          nnet_7.3-17         
- [37] googlesheets4_1.0.1  gtable_0.3.1         globals_0.16.1      
- [40] workflowr_1.7.0      timeDate_4021.106    rlang_1.0.6         
- [43] systemfonts_1.0.4    splines_4.2.1        gargle_1.2.1        
- [46] yaml_2.3.5           abind_1.4-5          modelr_0.1.9        
- [49] backports_1.4.1      httpuv_1.6.6         tools_4.2.1         
- [52] lava_1.6.10          bookdown_0.29        ellipsis_0.3.2      
- [55] jquerylib_0.1.4      plyr_1.8.7           Rcpp_1.0.9          
- [58] rpart_4.1.16         haven_2.5.1          ggrepel_0.9.1       
- [61] cluster_2.1.3        fs_1.5.2             furrr_0.3.1         
- [64] magrittr_2.0.3       reprex_2.0.2         GPfit_1.0-8         
- [67] googledrive_2.0.0    mvtnorm_1.1-3        whisker_0.4         
- [70] mime_0.12            hms_1.1.2            evaluate_0.16       
- [73] xtable_1.8-4         pbkrtest_0.5.1       readxl_1.4.1        
- [76] compiler_4.2.1       crayon_1.5.1         minqa_1.2.4         
- [79] htmltools_0.5.3      mgcv_1.8-40          later_1.3.0         
- [82] tzdb_0.3.0           lubridate_1.8.0      DBI_1.1.3           
- [85] dbplyr_2.2.1         see_0.7.3            boot_1.3-28         
- [88] modEvA_3.5           cli_3.4.1            parallel_4.2.1      
- [91] insight_0.18.4       gower_1.0.0          pkgconfig_2.0.3     
- [94] numDeriv_2016.8-1.1  terra_1.6-17         xml2_1.3.3          
- [97] foreach_1.5.2        svglite_2.1.0        bslib_0.4.0         
-[100] hardhat_1.2.0        webshot_0.5.4        estimability_1.4.1  
-[103] prodlim_2019.11.13   rvest_1.0.3          snakecase_0.11.0    
-[106] digest_0.6.30        rmarkdown_2.16       cellranger_1.1.0    
-[109] gap_1.2.3-6          shiny_1.7.2          nloptr_2.0.3        
-[112] lifecycle_1.0.3      jsonlite_1.8.2       viridisLite_0.4.1   
-[115] fansi_1.0.3          pillar_1.8.1         fastmap_1.1.0       
-[118] httr_1.4.4           survival_3.3-1       bayestestR_0.13.0   
-[121] iterators_1.0.14     bit_4.0.4            class_7.3-20        
-[124] stringi_1.7.8        sass_0.4.2           future.apply_1.9.1  </code></pre>
+  [1] utf8_1.2.2           tidyselect_1.2.0     htmlwidgets_1.5.4   
+  [4] grid_4.2.1           munsell_0.5.0        codetools_0.2-18    
+  [7] future_1.28.0        withr_2.5.0          colorspace_2.0-3    
+ [10] qgam_1.3.4           highr_0.9            rstudioapi_0.14     
+ [13] stats4_4.2.1         listenv_0.8.0        labeling_0.4.2      
+ [16] git2r_0.30.1         farver_2.1.1         bit64_4.0.5         
+ [19] DiceDesign_1.9       datawizard_0.6.2     gap.datasets_0.0.5  
+ [22] rprojroot_2.0.3      coda_0.19-4          parallelly_1.32.1   
+ [25] vctrs_0.5.1          generics_0.1.3       ipred_0.9-13        
+ [28] xfun_0.35            randomForest_4.7-1.1 doParallel_1.0.17   
+ [31] R6_2.5.1             lhs_1.1.5            cachem_1.0.6        
+ [34] assertthat_0.2.1     vroom_1.6.0          promises_1.2.0.1    
+ [37] nnet_7.3-17          googlesheets4_1.0.1  gtable_0.3.1        
+ [40] globals_0.16.1       processx_3.7.0       timeDate_4021.106   
+ [43] rlang_1.0.6          systemfonts_1.0.4    splines_4.2.1       
+ [46] gargle_1.2.1         yaml_2.3.6           abind_1.4-5         
+ [49] modelr_0.1.9         backports_1.4.1      httpuv_1.6.6        
+ [52] tools_4.2.1          lava_1.6.10          bookdown_0.30       
+ [55] ellipsis_0.3.2       jquerylib_0.1.4      plyr_1.8.7          
+ [58] Rcpp_1.0.9           ps_1.7.1             rpart_4.1.16        
+ [61] haven_2.5.1          ggrepel_0.9.1        cluster_2.1.3       
+ [64] fs_1.5.2             furrr_0.3.1          magrittr_2.0.3      
+ [67] reprex_2.0.2         GPfit_1.0-8          googledrive_2.0.0   
+ [70] mvtnorm_1.1-3        whisker_0.4          mime_0.12           
+ [73] hms_1.1.2            evaluate_0.18        xtable_1.8-4        
+ [76] pbkrtest_0.5.1       readxl_1.4.1         compiler_4.2.1      
+ [79] crayon_1.5.2         minqa_1.2.4          htmltools_0.5.3     
+ [82] mgcv_1.8-40          later_1.3.0          tzdb_0.3.0          
+ [85] lubridate_1.8.0      DBI_1.1.3            dbplyr_2.2.1        
+ [88] see_0.7.3            boot_1.3-28          modEvA_3.5          
+ [91] cli_3.4.1            parallel_4.2.1       insight_0.18.4      
+ [94] gower_1.0.0          pkgconfig_2.0.3      getPass_0.2-2       
+ [97] numDeriv_2016.8-1.1  terra_1.6-17         xml2_1.3.3          
+[100] foreach_1.5.2        svglite_2.1.0        bslib_0.4.1         
+[103] hardhat_1.2.0        webshot_0.5.4        estimability_1.4.1  
+[106] prodlim_2019.11.13   rvest_1.0.3          snakecase_0.11.0    
+[109] callr_3.7.2          digest_0.6.30        rmarkdown_2.18      
+[112] cellranger_1.1.0     gap_1.2.3-6          shiny_1.7.3         
+[115] nloptr_2.0.3         lifecycle_1.0.3      jsonlite_1.8.3      
+[118] viridisLite_0.4.1    fansi_1.0.3          pillar_1.8.1        
+[121] fastmap_1.1.0        httr_1.4.4           survival_3.3-1      
+[124] bayestestR_0.13.0    iterators_1.0.14     bit_4.0.4           
+[127] class_7.3-20         stringi_1.7.8        sass_0.4.2          
+[130] future.apply_1.9.1  </code></pre>
 </div>
 </div>
 </div>
