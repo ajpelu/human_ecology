@@ -1,0 +1,130 @@
+---
+title: "Tables"
+author: "Antonio J. Pérez-Luque"
+date: "2022-11-17"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Mean Data 
+
+```{r, message=FALSE}
+source("code/load_pkgs.R")
+source("code/aux_functions.R")
+```
+
+```{r setup, include=FALSE}
+## Global options
+opts_chunk$set(echo = FALSE,
+	             cache = FALSE,
+               prompt = FALSE,
+               tidy = TRUE,
+               comment = NA,
+               message = FALSE,
+               warning = FALSE,
+               autodep = TRUE)
+```
+
+```{r}
+data_mean <- read_csv(here::here("data/data_mean.csv"), show_col_types = FALSE)
+
+d <- read_csv(here::here("data/cleaned_data.csv"), show_col_types = FALSE)
+```
+
+```{r}
+vi <- c("shannon", "riqueza", "fitovol_dm3", 
+        "rec_total_porc", "rec_vegetal_porc",
+        "tasa_cons", "estiercol_kg_ha", 
+        "sr.win","sr.spr","sr.sum","sr.aut",
+        "altitud_m","cic","fosforo","mo","ph","potasio","nitrogeno","carbono")
+
+
+data_mean <- d |> 
+  dplyr::select(one_of(vi), commonsSort, transh) |>
+  pivot_longer(-c(commonsSort, transh)) |> 
+  group_by(name, commonsSort, transh) |> 
+  summarise(
+    mean = mean(value, na.rm = TRUE),
+    sd = sd(value, na.rm = TRUE), 
+    se = plotrix::std.error(value, na.rm = TRUE)
+  ) |>
+  mutate(commonsF = recode_factor(commonsSort, 
+                           '0_Castril' = "Castril",
+                           '1_Santiago' = "Santiago",
+                           '2_Pontones' = "Pontones"))
+
+write_csv(data_mean, here::here("./data/data_mean.csv"))
+```
+
+
+```{r}
+dm <- data_mean |> 
+  ungroup() |> 
+  dplyr::select(-commonsSort) |> 
+  rename(commons = commonsF) |> 
+  relocate(commons, .after = name) 
+  
+
+DT::datatable(dm,
+  extensions = "Buttons",
+  options = list(
+    paging = TRUE,
+    searching = TRUE,
+    fixedColumns = TRUE,
+    autoWidth = TRUE,
+    ordering = TRUE,
+    dom = 'Bfrtip',
+    rownames = FALSE,
+    buttons = c("copy", "csv", "excel"), 
+    pageLength = 10
+  )
+) |>
+  formatRound(columns = c("mean", "sd", "se"), digits = 2)
+```
+
+## Modeliza Commons (Social)
+
+### ANOVAS
+```{r}
+anovas_social <- read_csv(here::here("output/anovas_model_social.csv"), show_col_types = FALSE)
+
+DT::datatable(anovas_social,
+  extensions = "Buttons",
+  options = list(
+    paging = TRUE,
+    searching = TRUE,
+    fixedColumns = TRUE,
+    autoWidth = TRUE,
+    ordering = TRUE,
+    dom = 'Bfrtip',
+    rownames = FALSE,
+    pageLength = 10,
+    buttons = c("copy", "csv", "excel")
+  )
+) 
+```
+
+### R2 
+```{r}
+ tR2_social <- read_csv(here::here("output/tablas_R2_model_social.csv"), show_col_types = FALSE)
+
+DT::datatable(tR2_social,
+  extensions = "Buttons",
+  options = list(
+    paging = TRUE,
+    searching = TRUE,
+    fixedColumns = TRUE,
+    autoWidth = TRUE,
+    ordering = TRUE,
+    dom = 'Bfrtip',
+    rownames = FALSE,
+    pageLength = 10,
+    buttons = c("copy", "csv", "excel")
+  )
+) |>
+  formatRound(columns = c("AIC","AICc","BIC","R2_conditional","R2_marginal","RMSE","Sigma","ICC"),
+              digits = c(2,2,2,3,3,2,2,2))
+```
+
+
