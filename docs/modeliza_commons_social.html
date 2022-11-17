@@ -305,7 +305,6 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#introduction-1" id="toc-introduction-1">Introduction</a></li>
 <li><a href="#richness" id="toc-richness">Richness</a>
 <ul>
 <li><a href="#model" id="toc-model">Model</a></li>
@@ -330,6 +329,9 @@ $(document).ready(function () {
 <ul>
 <li><a href="#model-4" id="toc-model-4">Model</a></li>
 <li><a href="#posthoc-4" id="toc-posthoc-4">Posthoc</a></li>
+<li><a href="#anovas" id="toc-anovas">ANOVAS</a></li>
+<li><a href="#tablas-glance" id="toc-tablas-glance">Tablas Glance</a></li>
+<li><a href="#tablas-glance-1" id="toc-tablas-glance-1">Tablas Glance</a></li>
 </ul></li>
 </ul>
 </div>
@@ -486,20 +488,20 @@ makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree6d44f34b29e4e568c4fc125c1d015e6348c8d2eetargetblank6d44f34a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree36fa0faf6335846b818a2dfdf48f2d357ce6dc37targetblank36fa0faa">
 <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/6d44f34b29e4e568c4fc125c1d015e6348c8d2ee" target="_blank">6d44f34</a>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/36fa0faf6335846b818a2dfdf48f2d357ce6dc37" target="_blank">36fa0fa</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree6d44f34b29e4e568c4fc125c1d015e6348c8d2eetargetblank6d44f34a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree36fa0faf6335846b818a2dfdf48f2d357ce6dc37targetblank36fa0faa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and
 connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/6d44f34b29e4e568c4fc125c1d015e6348c8d2ee" target="_blank">6d44f34</a>.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/36fa0faf6335846b818a2dfdf48f2d357ce6dc37" target="_blank">36fa0fa</a>.
 See the <em>Past versions</em> tab to see a history of the changes made to the
 R Markdown and HTML files.
 </p>
@@ -517,7 +519,10 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Unstaged changes:
+    Modified:   analysis/index.Rmd
     Modified:   analysis/modeliza_commons.Rmd
+    Modified:   code/load_pkgs.R
+    Modified:   data/data_mean.csv
     Modified:   glmulti.analysis.modgen.back
     Modified:   glmulti.analysis.mods.back
 
@@ -569,6 +574,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/ajpelu/human_ecology/blob/36fa0faf6335846b818a2dfdf48f2d357ce6dc37/analysis/modeliza_commons_social.Rmd" target="_blank">36fa0fa</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-11-17
+</td>
+<td>
+update analysis with tables
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/human_ecology/ae7862558445fc00f8c0d706396b41b90bad61f0/docs/modeliza_commons_social.html" target="_blank">ae78625</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-11-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/ajpelu/human_ecology/blob/6d44f34b29e4e568c4fc125c1d015e6348c8d2ee/analysis/modeliza_commons_social.Rmd" target="_blank">6d44f34</a>
 </td>
 <td>
@@ -606,9 +645,6 @@ add new analysis
 </div>
 </div>
 <div id="introduction" class="section level2">
-<h2>Introduction</h2>
-</div>
-<div id="introduction-1" class="section level2">
 <h2>Introduction</h2>
 <pre class="r"><code>source(&quot;code/load_pkgs.R&quot;)
 source(&quot;code/aux_functions.R&quot;)</code></pre>
@@ -855,6 +891,7 @@ Sigma
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)  
@@ -1032,6 +1069,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 </div>
 <div id="posthoc" class="section level3">
 <h3>Posthoc</h3>
@@ -1685,6 +1723,7 @@ Sigma
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                  Sum Sq  Mean Sq NumDF DenDF F value Pr(&gt;F)
@@ -1860,6 +1899,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 </div>
 <div id="posthoc-1" class="section level3">
 <h3>Posthoc</h3>
@@ -2513,6 +2553,7 @@ Sigma
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)   
@@ -2690,6 +2731,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 </div>
 <div id="posthoc-2" class="section level3">
 <h3>Posthoc</h3>
@@ -3338,6 +3380,8 @@ NA
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
+<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                 Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)
@@ -3513,6 +3557,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 </div>
 <div id="posthoc-3" class="section level3">
 <h3>Posthoc</h3>
@@ -4162,6 +4207,7 @@ Sigma
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_performance&#39;, yvar), (performance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 <pre class="r"><code>anova(as_lmerModLmerTest(bm))</code></pre>
 <pre><code>Type III Analysis of Variance Table with Satterthwaite&#39;s method
                 Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)
@@ -4337,6 +4383,7 @@ commonsSantiago:transhshort
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>assign(paste0(&#39;table_glance&#39;, yvar), (glance(bm) |&gt; mutate(yvar = yvar))) </code></pre>
 </div>
 <div id="posthoc-4" class="section level3">
 <h3>Posthoc</h3>
@@ -4781,6 +4828,9 @@ ajpelu
 </table>
 </div>
 </div>
+</div>
+<div id="anovas" class="section level3">
+<h3>ANOVAS</h3>
 <pre class="r"><code>anovas &lt;- mget(apropos(&quot;anova_&quot;), envir = globalenv()) |&gt; 
   bind_rows() |&gt; 
   remove_rownames() |&gt; 
@@ -5021,6 +5071,22 @@ commons:transh
 </tr>
 </tbody>
 </table>
+</div>
+<div id="tablas-glance" class="section level3">
+<h3>Tablas Glance</h3>
+<pre class="r"><code>tablas_glance &lt;- mget(apropos(&quot;table_glance&quot;), envir = globalenv()) |&gt; 
+  bind_rows() |&gt; 
+  remove_rownames()</code></pre>
+</div>
+<div id="tablas-glance-1" class="section level3">
+<h3>Tablas Glance</h3>
+<pre class="r"><code>tablas_R2 &lt;- mget(apropos(&quot;table_performance&quot;), envir = globalenv()) |&gt; 
+  bind_rows() |&gt; 
+  remove_rownames()</code></pre>
+<pre class="r"><code># export tables 
+write.csv(anovas, file=here::here(&quot;output/anovas_model_social.csv&quot;), row.names = FALSE)
+write.csv(tablas_glance, file=here::here(&quot;output/tablas_glance_model_social.csv&quot;), row.names = FALSE)
+write.csv(tablas_R2, file=here::here(&quot;output/tablas_R2_model_social.csv&quot;), row.names = FALSE)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -5045,70 +5111,71 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] introdataviz_0.0.0.9003 broom.mixed_0.2.9.4     lmerTest_3.1-3         
- [4] car_3.1-0               carData_3.0-5           emmeans_1.8.1-1        
- [7] glmulti_1.0.8           rJava_1.0-6             arm_1.13-1             
-[10] MASS_7.3-57             multilevelmod_1.0.0     yardstick_1.1.0        
-[13] workflowsets_1.0.0      workflows_1.1.0         tune_1.0.1             
-[16] rsample_1.1.0           recipes_1.0.1           parsnip_1.0.2          
-[19] modeldata_1.0.1         infer_1.0.3             dials_1.0.0            
-[22] scales_1.2.1            broom_1.0.1             tidymodels_1.0.0       
-[25] MuMIn_1.47.1            lme4_1.1-30             Matrix_1.5-1           
-[28] glue_1.6.2              rmdformats_1.0.4        knitr_1.40             
-[31] leaps_3.1               factoextra_1.0.7        nlme_3.1-157           
-[34] DHARMa_0.4.6            performance_0.10.0      kableExtra_1.3.4       
-[37] corrplot_0.92           correlation_0.8.2       patchwork_1.1.2        
-[40] vegan_2.6-4             lattice_0.20-45         permute_0.9-7          
-[43] fuzzySim_4.3            janitor_2.1.0           here_1.0.1             
-[46] forcats_0.5.2           stringr_1.4.1           dplyr_1.0.10           
-[49] purrr_0.3.5             readr_2.1.3             tidyr_1.2.1            
-[52] tibble_3.1.8            ggplot2_3.4.0           tidyverse_1.3.2        
-[55] workflowr_1.7.0        
+ [1] DT_0.26                 introdataviz_0.0.0.9003 broom.mixed_0.2.9.4    
+ [4] lmerTest_3.1-3          car_3.1-0               carData_3.0-5          
+ [7] emmeans_1.8.1-1         glmulti_1.0.8           rJava_1.0-6            
+[10] arm_1.13-1              MASS_7.3-57             multilevelmod_1.0.0    
+[13] yardstick_1.1.0         workflowsets_1.0.0      workflows_1.1.0        
+[16] tune_1.0.1              rsample_1.1.0           recipes_1.0.1          
+[19] parsnip_1.0.2           modeldata_1.0.1         infer_1.0.3            
+[22] dials_1.0.0             scales_1.2.1            broom_1.0.1            
+[25] tidymodels_1.0.0        MuMIn_1.47.1            lme4_1.1-30            
+[28] Matrix_1.5-1            glue_1.6.2              rmdformats_1.0.4       
+[31] knitr_1.40              leaps_3.1               factoextra_1.0.7       
+[34] nlme_3.1-157            DHARMa_0.4.6            performance_0.10.0     
+[37] kableExtra_1.3.4        corrplot_0.92           correlation_0.8.2      
+[40] patchwork_1.1.2         vegan_2.6-4             lattice_0.20-45        
+[43] permute_0.9-7           fuzzySim_4.3            janitor_2.1.0          
+[46] here_1.0.1              forcats_0.5.2           stringr_1.4.1          
+[49] dplyr_1.0.10            purrr_0.3.5             readr_2.1.3            
+[52] tidyr_1.2.1             tibble_3.1.8            ggplot2_3.4.0          
+[55] tidyverse_1.3.2         workflowr_1.7.0        
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.2.2           tidyselect_1.2.0     grid_4.2.1          
-  [4] munsell_0.5.0        codetools_0.2-18     future_1.28.0       
-  [7] withr_2.5.0          colorspace_2.0-3     qgam_1.3.4          
- [10] highr_0.9            rstudioapi_0.14      stats4_4.2.1        
- [13] listenv_0.8.0        labeling_0.4.2       git2r_0.30.1        
- [16] farver_2.1.1         bit64_4.0.5          DiceDesign_1.9      
- [19] datawizard_0.6.2     gap.datasets_0.0.5   rprojroot_2.0.3     
- [22] coda_0.19-4          parallelly_1.32.1    vctrs_0.5.1         
- [25] generics_0.1.3       ipred_0.9-13         xfun_0.35           
- [28] randomForest_4.7-1.1 doParallel_1.0.17    R6_2.5.1            
- [31] lhs_1.1.5            cachem_1.0.6         assertthat_0.2.1    
- [34] vroom_1.6.0          promises_1.2.0.1     nnet_7.3-17         
- [37] googlesheets4_1.0.1  gtable_0.3.1         globals_0.16.1      
- [40] processx_3.7.0       timeDate_4021.106    rlang_1.0.6         
- [43] systemfonts_1.0.4    splines_4.2.1        gargle_1.2.1        
- [46] yaml_2.3.6           abind_1.4-5          modelr_0.1.9        
- [49] backports_1.4.1      httpuv_1.6.6         tools_4.2.1         
- [52] lava_1.6.10          bookdown_0.30        ellipsis_0.3.2      
- [55] jquerylib_0.1.4      plyr_1.8.7           Rcpp_1.0.9          
- [58] ps_1.7.1             rpart_4.1.16         haven_2.5.1         
- [61] ggrepel_0.9.1        cluster_2.1.3        fs_1.5.2            
- [64] furrr_0.3.1          magrittr_2.0.3       reprex_2.0.2        
- [67] GPfit_1.0-8          googledrive_2.0.0    mvtnorm_1.1-3       
- [70] whisker_0.4          mime_0.12            hms_1.1.2           
- [73] evaluate_0.18        xtable_1.8-4         pbkrtest_0.5.1      
- [76] readxl_1.4.1         compiler_4.2.1       crayon_1.5.2        
- [79] minqa_1.2.4          htmltools_0.5.3      mgcv_1.8-40         
- [82] later_1.3.0          tzdb_0.3.0           lubridate_1.8.0     
- [85] DBI_1.1.3            dbplyr_2.2.1         see_0.7.3           
- [88] boot_1.3-28          modEvA_3.5           cli_3.4.1           
- [91] parallel_4.2.1       insight_0.18.4       gower_1.0.0         
- [94] pkgconfig_2.0.3      getPass_0.2-2        numDeriv_2016.8-1.1 
- [97] terra_1.6-17         xml2_1.3.3           foreach_1.5.2       
-[100] svglite_2.1.0        bslib_0.4.1          hardhat_1.2.0       
-[103] webshot_0.5.4        estimability_1.4.1   prodlim_2019.11.13  
-[106] rvest_1.0.3          snakecase_0.11.0     callr_3.7.2         
-[109] digest_0.6.30        rmarkdown_2.18       cellranger_1.1.0    
-[112] gap_1.2.3-6          shiny_1.7.3          nloptr_2.0.3        
-[115] lifecycle_1.0.3      jsonlite_1.8.3       viridisLite_0.4.1   
-[118] fansi_1.0.3          pillar_1.8.1         fastmap_1.1.0       
-[121] httr_1.4.4           survival_3.3-1       bayestestR_0.13.0   
-[124] iterators_1.0.14     bit_4.0.4            class_7.3-20        
-[127] stringi_1.7.8        sass_0.4.2           future.apply_1.9.1  </code></pre>
+  [1] utf8_1.2.2           tidyselect_1.2.0     htmlwidgets_1.5.4   
+  [4] grid_4.2.1           munsell_0.5.0        codetools_0.2-18    
+  [7] future_1.28.0        withr_2.5.0          colorspace_2.0-3    
+ [10] qgam_1.3.4           highr_0.9            rstudioapi_0.14     
+ [13] stats4_4.2.1         listenv_0.8.0        labeling_0.4.2      
+ [16] git2r_0.30.1         farver_2.1.1         bit64_4.0.5         
+ [19] DiceDesign_1.9       datawizard_0.6.2     gap.datasets_0.0.5  
+ [22] rprojroot_2.0.3      coda_0.19-4          parallelly_1.32.1   
+ [25] vctrs_0.5.1          generics_0.1.3       ipred_0.9-13        
+ [28] xfun_0.35            randomForest_4.7-1.1 doParallel_1.0.17   
+ [31] R6_2.5.1             lhs_1.1.5            cachem_1.0.6        
+ [34] assertthat_0.2.1     vroom_1.6.0          promises_1.2.0.1    
+ [37] nnet_7.3-17          googlesheets4_1.0.1  gtable_0.3.1        
+ [40] globals_0.16.1       processx_3.7.0       timeDate_4021.106   
+ [43] rlang_1.0.6          systemfonts_1.0.4    splines_4.2.1       
+ [46] gargle_1.2.1         yaml_2.3.6           abind_1.4-5         
+ [49] modelr_0.1.9         backports_1.4.1      httpuv_1.6.6        
+ [52] tools_4.2.1          lava_1.6.10          bookdown_0.30       
+ [55] ellipsis_0.3.2       jquerylib_0.1.4      plyr_1.8.7          
+ [58] Rcpp_1.0.9           ps_1.7.1             rpart_4.1.16        
+ [61] haven_2.5.1          ggrepel_0.9.1        cluster_2.1.3       
+ [64] fs_1.5.2             furrr_0.3.1          magrittr_2.0.3      
+ [67] reprex_2.0.2         GPfit_1.0-8          googledrive_2.0.0   
+ [70] mvtnorm_1.1-3        whisker_0.4          mime_0.12           
+ [73] hms_1.1.2            evaluate_0.18        xtable_1.8-4        
+ [76] pbkrtest_0.5.1       readxl_1.4.1         compiler_4.2.1      
+ [79] crayon_1.5.2         minqa_1.2.4          htmltools_0.5.3     
+ [82] mgcv_1.8-40          later_1.3.0          tzdb_0.3.0          
+ [85] lubridate_1.8.0      DBI_1.1.3            dbplyr_2.2.1        
+ [88] see_0.7.3            boot_1.3-28          modEvA_3.5          
+ [91] cli_3.4.1            parallel_4.2.1       insight_0.18.4      
+ [94] gower_1.0.0          pkgconfig_2.0.3      getPass_0.2-2       
+ [97] numDeriv_2016.8-1.1  terra_1.6-17         xml2_1.3.3          
+[100] foreach_1.5.2        svglite_2.1.0        bslib_0.4.1         
+[103] hardhat_1.2.0        webshot_0.5.4        estimability_1.4.1  
+[106] prodlim_2019.11.13   rvest_1.0.3          snakecase_0.11.0    
+[109] callr_3.7.2          digest_0.6.30        rmarkdown_2.18      
+[112] cellranger_1.1.0     gap_1.2.3-6          shiny_1.7.3         
+[115] nloptr_2.0.3         lifecycle_1.0.3      jsonlite_1.8.3      
+[118] viridisLite_0.4.1    fansi_1.0.3          pillar_1.8.1        
+[121] fastmap_1.1.0        httr_1.4.4           survival_3.3-1      
+[124] bayestestR_0.13.0    iterators_1.0.14     bit_4.0.4           
+[127] class_7.3-20         stringi_1.7.8        sass_0.4.2          
+[130] future.apply_1.9.1  </code></pre>
 </div>
 </div>
 </div>
