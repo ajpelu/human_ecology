@@ -8,8 +8,6 @@ editor_options:
 ---
 
 ## Introduction
-
-## Introduction
 ```{r, message=FALSE}
 source("code/load_pkgs.R")
 source("code/aux_functions.R")
@@ -120,6 +118,8 @@ bm <- lmer(
 performance(bm) %>% 
   kbl() %>% 
   kable_styling()
+
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
 ```
 
 ```{r anova-richness}
@@ -130,6 +130,11 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```{r coef-richness}
 tabla_coef(bm)
 ```
+
+```{r r2-richness}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
+```
+
 
 ### Posthoc 
 ```{r posthoc-richness}
@@ -188,6 +193,9 @@ bm <- lmer(
 performance(bm) %>% 
   kbl() %>% 
   kable_styling()
+
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
+
 ```
 
 ```{r anova-shannon}
@@ -198,6 +206,11 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```{r coef-shannon}
 tabla_coef(bm)
 ```
+
+```{r r2-shannon}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
+```
+
 
 ### Posthoc 
 ```{r posthoc-shannon}
@@ -257,6 +270,8 @@ bm <- lmer(
 performance(bm) %>% 
   kbl() %>% 
   kable_styling()
+
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
 ```
 
 ```{r anova-rec_total}
@@ -267,6 +282,11 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```{r coef-rec_total}
 tabla_coef(bm)
 ```
+
+```{r r2-rec_total}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
+```
+
 
 ### Posthoc 
 ```{r posthoc-rec_total}
@@ -326,6 +346,8 @@ performance(bm) %>%
   kbl() %>% 
   kable_styling()
 
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
+
 ```
 
 ```{r anova-fitvol}
@@ -336,6 +358,11 @@ formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```{r coef-fitvol}
 tabla_coef(bm)
 ```
+
+```{r r2-fitvol}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
+```
+
 
 ### Posthoc 
 ```{r posthoc-fitovol}
@@ -394,6 +421,7 @@ performance(bm) %>%
   kbl() %>% 
   kable_styling()
 
+assign(paste0('table_performance', yvar), (performance(bm) |> mutate(yvar = yvar))) 
 ```
 
 ```{r anova-tasacons}
@@ -401,11 +429,13 @@ anova(as_lmerModLmerTest(bm))
 formatAnova(as.data.frame(anova(as_lmerModLmerTest(bm))), yvar)
 ```
 
-
 ```{r coef-tasacons}
 tabla_coef(bm)
 ```
 
+```{r r2-tasacons}
+assign(paste0('table_glance', yvar), (glance(bm) |> mutate(yvar = yvar))) 
+```
 
 ### Posthoc 
 ```{r posthoc-tasacons}
@@ -420,6 +450,7 @@ name_ylab <- "Consumption rate"
 plot_violoin2(df = d, yvar = yvar, name_ylab = name_ylab)
 ```
 
+### ANOVAS 
 ```{r}
 anovas <- mget(apropos("anova_"), envir = globalenv()) |> 
   bind_rows() |> 
@@ -435,3 +466,28 @@ anovas |>
         c("Response", "variables", "F", "p.value")) %>% 
   kable_styling() 
 ```
+
+### Tablas Glance 
+
+```{r}
+tablas_glance <- mget(apropos("table_glance"), envir = globalenv()) |> 
+  bind_rows() |> 
+  remove_rownames()
+```
+
+### Tablas Glance 
+
+```{r}
+tablas_R2 <- mget(apropos("table_performance"), envir = globalenv()) |> 
+  bind_rows() |> 
+  remove_rownames()
+```
+
+
+```{r}
+# export tables 
+write.csv(anovas, file=here::here("output/anovas_model_social.csv"), row.names = FALSE)
+write.csv(tablas_glance, file=here::here("output/tablas_glance_model_social.csv"), row.names = FALSE)
+write.csv(tablas_R2, file=here::here("output/tablas_R2_model_social.csv"), row.names = FALSE)
+```
+
