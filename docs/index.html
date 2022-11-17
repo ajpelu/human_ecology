@@ -190,8 +190,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -199,16 +199,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -336,7 +329,7 @@ Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></sp
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-10-14
+<strong>Last updated:</strong> 2022-11-17
 </p>
 <p>
 <strong>Checks:</strong>
@@ -382,20 +375,20 @@ know the exact version of the code that produced these results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreea2adbf00d6332a574a3c2157c034e5b4e43876ebtargetblanka2adbf0a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree60c8f135408e25ff5299a5779449c240f1bc3fdbtargetblank60c8f13a">
 <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/a2adbf00d6332a574a3c2157c034e5b4e43876eb" target="_blank">a2adbf0</a>
+<strong>Repository version:</strong> <a href="https://github.com/ajpelu/human_ecology/tree/60c8f135408e25ff5299a5779449c240f1bc3fdb" target="_blank">60c8f13</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytreea2adbf00d6332a574a3c2157c034e5b4e43876ebtargetblanka2adbf0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpeluhumanecologytree60c8f135408e25ff5299a5779449c240f1bc3fdbtargetblank60c8f13a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and
 connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/a2adbf00d6332a574a3c2157c034e5b4e43876eb" target="_blank">a2adbf0</a>.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/human_ecology/tree/60c8f135408e25ff5299a5779449c240f1bc3fdb" target="_blank">60c8f13</a>.
 See the <em>Past versions</em> tab to see a history of the changes made to the
 R Markdown and HTML files.
 </p>
@@ -413,6 +406,9 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Unstaged changes:
+    Modified:   analysis/modeliza_commons.Rmd
+    Modified:   code/load_pkgs.R
+    Modified:   data/data_mean.csv
     Modified:   glmulti.analysis.modgen.back
     Modified:   glmulti.analysis.mods.back
 
@@ -459,6 +455,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/human_ecology/blob/60c8f135408e25ff5299a5779449c240f1bc3fdb/analysis/index.Rmd" target="_blank">60c8f13</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-11-17
+</td>
+<td>
+add new links in index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/human_ecology/1eadb27ebdd6b7cddb76dfa6349163d992a95b47/docs/index.html" target="_blank">1eadb27</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-10-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -534,12 +564,14 @@ update
 <ul>
 <li><a href="compare_commons.html">Compare commons</a></li>
 <li><a href="modeliza_commons.html">Models</a></li>
+<li><a href="modeliza_commons_social.html">Models (social)</a></li>
 <li><a href="nmds.html">NMDS</a></li>
 </ul>
 </div>
 <div id="others" class="section level2">
 <h2>Others</h2>
 <ul>
+<li>Tables [tables.html]</li>
 <li>See <a href="https://github.com/ajpelu/human_ecology/tree/main/output">output folder</a> to get the tables of the models.</li>
 </ul>
 </div>
