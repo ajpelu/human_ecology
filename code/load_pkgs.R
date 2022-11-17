@@ -29,6 +29,7 @@ library(kableExtra)
 library(performance)
 library(broom)
 library(broom.mixed)
+library(introdataviz)
 # annotate packages by pkg annotater
 
 

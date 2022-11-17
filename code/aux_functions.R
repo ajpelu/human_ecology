@@ -139,6 +139,50 @@ plot_inter <- function(df, response) {
 
 
 
+# functions to plot individually Violin
+plot_interViolin <- function(df, var_response, ylabel){
+  df |>
+    ggplot(aes_string(y = var_response, x = "commons")) +
+    geom_violin(aes(color = transh), trim = FALSE, width = 1.5,
+                position = position_dodge(0.9)) +
+    geom_boxplot(aes(color = transh), width = 0.1, position = position_dodge(0.9)) +
+    theme_bw() +
+    theme(
+      strip.background = element_blank(),
+      panel.grid = element_blank(),
+      legend.position = "top"
+    ) +
+    labs(x = "", y = parse(text = ylabel)) +
+    scale_colour_manual("Transhumance", values = colores) +
+    guides(color = guide_legend(direction = "horizontal"))
+}
+
+
+## new violion plot
+
+plot_violoin2 <- function(df, yvar,  name_ylab){
+
+  ggplot(df, aes(x = commons, y = .data[[yvar]], fill = transh)) +
+    introdataviz::geom_split_violin(alpha = .4, trim = FALSE, scale = "width") +
+    geom_boxplot(width = .2, alpha = .6, fatten = NULL,
+                 position = position_dodge(.35), show.legend = FALSE) +
+    stat_summary(fun.data = "mean_se", geom = "pointrange", show.legend = F,
+                 position = position_dodge(.35)) +
+    scale_x_discrete(name = "Commons", limits = c("Castril", "Santiago", "Pontones")) +
+    scale_y_continuous(name = name_ylab) +
+    scale_fill_manual(name = "Transhumance", values = colores) +
+    # scale_fill_brewer(palette = "Dark2", name = "Transhumance") +
+    theme_bw() +
+    theme(legend.position = "top",
+          panel.grid.major.x = element_blank())
+}
+
+
+
+
+
+
+
 
 ##### Tabla coeficientes
 tabla_coef <- function(modelo) {
