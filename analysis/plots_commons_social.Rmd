@@ -1,0 +1,188 @@
+---
+title: "plots_commons_social"
+author: "ajpelu"
+date: "2023-01-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+```{r, message=FALSE}
+source("code/load_pkgs.R")
+source("code/aux_functions.R")
+```
+
+```{r setup, include=FALSE}
+## Global options
+opts_chunk$set(
+  echo = TRUE,
+  cache = FALSE,
+  prompt = FALSE,
+  tidy = TRUE,
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  autodep = TRUE
+)
+```
+
+
+```{r data-raw} 
+d_raw <- read_csv(here::here("data/cleaned_data.csv"), show_col_types = FALSE)
+```
+
+```{r data}
+d <- d_raw |>
+  dplyr::select(
+    commons,
+    transh,
+    parcela,
+    quadrat,
+    shannon,
+    fitovol_dm3,
+    rec_total_porc,
+    rec_vegetal_porc,
+    riqueza,
+    tasa_cons
+  ) %>%
+  mutate(parcela = as.factor(parcela))
+```
+
+
+```{r, fig.height=6, fig.width=7}
+dflong <- d |>
+  dplyr::select(commons, transh, riqueza, fitovol_dm3, tasa_cons) |>
+  pivot_longer(cols = c(riqueza:tasa_cons)) |> 
+  mutate(names_var = recode_factor(name, 
+                            riqueza = "A:~Richness~(species~number)",
+                            fitovol_dm3 = "B:~Phytovolumen~(m^3~ha^{-1})",
+                            tasa_cons = "C:~Plant~utilization~rate"))
+
+combined_plot <- dflong |>
+  ggplot(aes(x = commons, y = value, fill = transh)) +
+  introdataviz::geom_split_violin(alpha = .4, trim = FALSE, scale = "width") +
+  geom_boxplot(
+    width = .2, alpha = .6, fatten = NULL,
+    position = position_dodge(.35), show.legend = FALSE
+  ) +
+  stat_summary(
+    fun.data = "mean_se", geom = "pointrange", show.legend = F,
+    position = position_dodge(.35)
+  ) +
+  scale_x_discrete(name = "Commons", limits = c("Castril", "Santiago", "Pontones")) +
+  # scale_y_continuous(name = name_ylab) +
+  scale_fill_manual(name = "Transhumance", values = colores) +
+  # scale_fill_brewer(palette = "Dark2", name = "Transhumance") +
+  theme_bw() +
+  facet_wrap(~names_var, scales = "free_y", 
+    labeller = label_parsed, 
+    ncol = 1) +
+  ylab('') + 
+  theme(
+    legend.position = "top",
+    panel.grid.major.x = element_blank(), 
+    panel.grid.major.y = element_blank(), 
+    strip.background = element_rect("white"),
+    strip.text = element_text(face = "bold", size = 9, hjust = 0)
+  )
+combined_plot
+```
+
+```{r}
+ggsave(plot = combined_plot, 
+       filename = here::here("output/combined_plot.jpg"), 
+       height = 20, width = 12, units = "cm",
+       dpi = 1200, device = "jpeg")
+
+```
+
+## Spider plots 
+
+```{r}
+dd <- d_raw |> dplyr::select(
+  commons, transh, 
+  comp_shannon = "shannon",
+  comp_richness = "riqueza",
+  str_cob = "rec_total_porc",
+  str_phyto = "fitovol_dm3",
+  soil_mo = "mo",
+  soil_cic = "cic",
+  soil_P = "fosforo",
+  soil_pH = "ph",
+  soil_K = "potasio",
+  soil_N = "nitrogeno",
+  soil_C = "carbono",
+  sr_sum = "sr.sum",
+  sr_aut = "sr.aut",
+  sr_win = "sr.win",
+  sr_spr = "sr.spr",
+  sr_estiercol = "estiercol_kg_ha",
+  pur = "tasa_cons") 
+```
+
+```{r}
+spider_transh <- dd |>
+  dplyr::select(-commons) |>
+  group_by(transh) |> 
+  summarise(across(everything(), 
+                   .f= list(mean = mean), 
+                   na.rm=TRUE, 
+                   .names = "{.col}")) |> 
+  ungroup() |> 
+  mutate_at(vars(-transh), scales::rescale) |> 
+  ggradar(
+    base.size = 3,
+    group.line.width = 1, 
+    group.point.size = 2, 
+    axis.label.size = 4,
+    values.radar = c("","",""),
+    label.gridline.mid = FALSE,
+    background.circle.colour = "white",
+    legend.text.size = 10, 
+    group.colours = colores,
+    plot.title = "Transhumance", 
+    legend.position = "bottom"
+  )
+
+```
+
+```{r}
+spider_commons <- dd |>
+  dplyr::select(-transh) |>
+  group_by(commons) |> 
+  summarise(across(everything(), 
+                   .f= list(mean = mean), 
+                   na.rm=TRUE, 
+                   .names = "{.col}")) |> 
+  ungroup() |> 
+  mutate_at(vars(-commons), scales::rescale) |> 
+  ggradar(
+    base.size = 3,
+    group.line.width = 1, 
+    group.point.size = 2, 
+    axis.label.size = 4,
+    values.radar = c("","",""),
+    label.gridline.mid = FALSE,
+    background.circle.colour = "white",
+    legend.text.size = 10, 
+    plot.title = "Commons",
+   #  group.colours = c("#542788","#ff7f00", "#01665e"),
+    legend.position = "bottom"
+  )
+```
+
+```{r}
+plot_spider <- spider_commons + spider_transh
+plot_spider
+```
+
+```{r}
+ggsave(plot = plot_spider, 
+       filename = here::here("output/spider_plot.jpg"), 
+       height = 20, width = 27, units = "cm",
+       dpi = 600, device = "jpeg")
+```
+
+
+

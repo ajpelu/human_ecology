@@ -15,6 +15,7 @@ editor_options:
 
 ## Data Exploration 
 - [Exploratory plots](exploratory_plots.html)
+- [Final plots (social)](plots_commons_social.html) 
 
 ## Analysis
 - [Compare commons](compare_commons.html)
