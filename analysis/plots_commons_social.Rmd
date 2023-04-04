@@ -56,8 +56,8 @@ dflong <- d |>
   pivot_longer(cols = c(riqueza:tasa_cons)) |> 
   mutate(names_var = recode_factor(name, 
                             riqueza = "A:~Richness~(species~number)",
-                            fitovol_dm3 = "B:~Phytovolumen~(m^3~ha^{-1})",
-                            tasa_cons = "C:~Plant~utilization~rate"))
+                            fitovol_dm3 = "B:~Phytovolume~(m^3~ha^{-1})",
+                            tasa_cons = "C:~Plant~utilization~rate~(degrees)"))
 
 combined_plot <- dflong |>
   ggplot(aes(x = commons, y = value, fill = transh)) +
@@ -75,9 +75,9 @@ combined_plot <- dflong |>
   scale_fill_manual(name = "Transhumance", values = colores) +
   # scale_fill_brewer(palette = "Dark2", name = "Transhumance") +
   theme_bw() +
-  facet_wrap(~names_var, scales = "free_y", 
+  lemon::facet_rep_wrap(~names_var, scales = "free_y", 
     labeller = label_parsed, 
-    ncol = 1) +
+    ncol = 1, repeat.tick.labels = T) +
   ylab('') + 
   theme(
     legend.position = "top",
@@ -95,11 +95,16 @@ ggsave(plot = combined_plot,
        height = 20, width = 12, units = "cm",
        dpi = 1200, device = "jpeg")
 
+ggsave(plot = combined_plot, 
+       filename = here::here("output/combined_plot.svg"), 
+       height = 20, width = 12, units = "cm",
+       dpi = 1200, device = "svg")
+
 ```
 
 ## Spider plots 
 
-```{r}
+```{r, eval = FALSE}
 dd <- d_raw |> dplyr::select(
   commons, transh, 
   comp_shannon = "shannon",
@@ -121,6 +126,36 @@ dd <- d_raw |> dplyr::select(
   pur = "tasa_cons") 
 ```
 
+
+```{r}
+dd <- d_raw |> dplyr::select(
+  commons, transh, 
+  Diversity = "shannon",
+  Richness = "riqueza",
+  'Plant cover' = "rec_total_porc",
+  Phytovolume = "fitovol_dm3",
+  SOM = "mo",
+  CEC = "cic",
+  P = "fosforo",
+  pH = "ph",
+  K = "potasio",
+  N = "nitrogeno",
+  C = "carbono",
+  SSR = "sr.sum",
+  ASR = "sr.aut",
+  WSR = "sr.win",
+  SpSR = "sr.spr",
+  Manure = "estiercol_kg_ha",
+  PUR = "tasa_cons") 
+
+```
+
+
+```{r}
+
+```
+
+
 ```{r}
 spider_transh <- dd |>
   dplyr::select(-commons) |>
@@ -131,6 +166,8 @@ spider_transh <- dd |>
                    .names = "{.col}")) |> 
   ungroup() |> 
   mutate_at(vars(-transh), scales::rescale) |> 
+  dplyr::select(transh, Richness, Diversity, Phytovolume, `Plant cover`, SOM,
+                pH, CEC, P, K, C, N, WSR, ASR, SpSR, PUR, Manure) |> 
   ggradar(
     base.size = 3,
     group.line.width = 1, 
@@ -157,6 +194,8 @@ spider_commons <- dd |>
                    .names = "{.col}")) |> 
   ungroup() |> 
   mutate_at(vars(-commons), scales::rescale) |> 
+  dplyr::select(commons, Richness, Diversity, Phytovolume, `Plant cover`, SOM,
+                pH, CEC, P, K, C, N, WSR, ASR, SpSR, PUR, Manure) |> 
   ggradar(
     base.size = 3,
     group.line.width = 1, 
@@ -182,6 +221,12 @@ ggsave(plot = plot_spider,
        filename = here::here("output/spider_plot.jpg"), 
        height = 20, width = 27, units = "cm",
        dpi = 600, device = "jpeg")
+
+
+ggsave(plot = plot_spider, 
+       filename = here::here("output/spider_plot.svg"), 
+       height = 20, width = 27, units = "cm",
+       dpi = 600, device = "svg")
 ```
 
 
