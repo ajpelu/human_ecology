@@ -167,7 +167,7 @@ spider_transh <- dd |>
   ungroup() |> 
   mutate_at(vars(-transh), scales::rescale) |> 
   dplyr::select(transh, Richness, Diversity, Phytovolume, `Plant cover`, SOM,
-                pH, CEC, P, K, C, N, WSR, ASR, SpSR, PUR, Manure) |> 
+                pH, CEC, P, K, C, N, WSR, ASR, SSR, SpSR, PUR, Manure) |> 
   ggradar(
     base.size = 3,
     group.line.width = 1, 
@@ -195,7 +195,7 @@ spider_commons <- dd |>
   ungroup() |> 
   mutate_at(vars(-commons), scales::rescale) |> 
   dplyr::select(commons, Richness, Diversity, Phytovolume, `Plant cover`, SOM,
-                pH, CEC, P, K, C, N, WSR, ASR, SpSR, PUR, Manure) |> 
+                pH, CEC, P, K, C, N, WSR, ASR, SSR, SpSR, PUR, Manure) |> 
   ggradar(
     base.size = 3,
     group.line.width = 1, 
